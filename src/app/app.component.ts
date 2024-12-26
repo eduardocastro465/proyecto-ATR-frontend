@@ -37,21 +37,21 @@ export class AppComponent implements OnInit {
   //   'Thank you for contacting us. We will get back to you shortly.'
   // ];
   // responseIndex = -1;
-  // loading = false; 
+  // loading = false;
   // config = {
   //   title: 'Chat Bot',
   //   subTitle: 'Welcome!',
   // };
-  
+
   // setData(message: string) {
   //   this.loading = true;
   //   setTimeout(() => {
 
   //     this.responseIndex = (this.responseIndex + 1) % this.responses.length;
-  //     this.loading = false; 
-  //   }, 1000); 
+  //     this.loading = false;
+  //   }, 1000);
   // }
-  
+
   // onMessageInput(message: string) {
   //   this.setData(message);
   // }
@@ -60,7 +60,7 @@ export class AppComponent implements OnInit {
     // Stop the foreground loading after 5s
     setTimeout(() => {
       this.ngxService.stop(); // stop foreground spinner of the master loader with 'default' taskId
-    }, 3000);
+    }, 1000);
 
     // OR
     this.ngxService.startBackground("do-background-things");
@@ -71,7 +71,7 @@ export class AppComponent implements OnInit {
     // Stop the foreground loading after 5s
     setTimeout(() => {
       this.ngxService.stopLoader("loader-01"); // stop foreground spinner of the loader "loader-01" with 'default' taskId
-    }, 3000);
+    }, 1000);
   }
 }
 

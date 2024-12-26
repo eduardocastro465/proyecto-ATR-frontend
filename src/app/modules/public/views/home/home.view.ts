@@ -35,79 +35,7 @@ export class HomeView implements OnInit {
   datosEmpresa: any = {};
 
   productos :any;
-  //   {
-  //     id: 1,
-  //     nombre: 'Producto 1',
-  //     descripcion: 'Descripción del producto 1',
-  //     precio: 100,
-  //     imagen:
-  //       'https://res.cloudinary.com/dvvhnrvav/image/upload/v1726509885/images-AR/mpcff7aljvb00pndcor5.jpg',
-  //   },
-  //   {
-  //     id: 2,
-  //     nombre: 'Producto 2',
-  //     descripcion: 'Descripción del producto 2',
-  //     precio: 200,
-  //     imagen:
-  //       'https://res.cloudinary.com/dvvhnrvav/image/upload/v1726505353/images-AR/oaefwpo5njza8ytxfpzz.png',
-  //   },
-  //   {
-  //     id: 3,
-  //     nombre: 'Producto 3',
-  //     descripcion: 'Descripción del producto 3',
-  //     precio: 150,
-  //     imagen:
-  //       'https://res.cloudinary.com/dvvhnrvav/image/upload/v1726509885/images-AR/mpcff7aljvb00pndcor5.jpg',
-  //   },
-  //   {
-  //     id: 3,
-  //     nombre: 'Producto 3',
-  //     descripcion: 'Descripción del producto 3',
-  //     precio: 150,
-  //     imagen:
-  //       'https://res.cloudinary.com/dvvhnrvav/image/upload/v1726509885/images-AR/mpcff7aljvb00pndcor5.jpg',
-  //   },
-  //   {
-  //     id: 3,
-  //     nombre: 'Producto 3',
-  //     descripcion: 'Descripción del producto 3',
-  //     precio: 150,
-  //     imagen:
-  //       'https://res.cloudinary.com/dvvhnrvav/image/upload/v1726509885/images-AR/mpcff7aljvb00pndcor5.jpg',
-  //   },
-  //   {
-  //     id: 3,
-  //     nombre: 'Producto 3',
-  //     descripcion: 'Descripción del producto 3',
-  //     precio: 150,
-  //     imagen:
-  //       'https://res.cloudinary.com/dvvhnrvav/image/upload/v1726509885/images-AR/mpcff7aljvb00pndcor5.jpg',
-  //   },
-  //   {
-  //     id: 3,
-  //     nombre: 'Producto 3',
-  //     descripcion: 'Descripción del producto 3',
-  //     precio: 150,
-  //     imagen:
-  //       'https://res.cloudinary.com/dvvhnrvav/image/upload/v1726509885/images-AR/mpcff7aljvb00pndcor5.jpg',
-  //   },
-  //   {
-  //     id: 3,
-  //     nombre: 'Producto 3',
-  //     descripcion: 'Descripción del producto 3',
-  //     precio: 150,
-  //     imagen:
-  //       'https://res.cloudinary.com/dvvhnrvav/image/upload/v1726509885/images-AR/mpcff7aljvb00pndcor5.jpg',
-  //   },
-  //   // {
-  //   //   id: 4,
-  //   //   nombre: 'Producto 4',
-  //   //   descripcion: 'Descripción del producto 4',
-  //   //   precio: 250,
-  //   //   imagen: 'https://res.cloudinary.com/dvvhnrvav/image/upload/v1726505353/images-AR/oaefwpo5njza8ytxfpzz.png',
-  //   // },
-  // ];
-
+  
   constructor(
     private router: Router,
     private sessionService: SessionService,
@@ -129,6 +57,7 @@ export class HomeView implements OnInit {
       if (this.isMobile) {
         heroImageElement.classList.add('hide-hero-img'); // Oculta en móviles
       } else {
+
         heroImageElement.classList.remove('hide-hero-img'); // Muestra en pantallas grandes
       }
     }

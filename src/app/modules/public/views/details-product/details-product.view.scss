@@ -1,13 +1,15 @@
 .product-detail-container {
+  background: white;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20px;
+  margin: 50px auto; /* Centrado horizontal */
   border: none;
   padding: 20px;
   width: 80%;
   max-width: 1200px;
-  margin: 0 auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Para un pequeño efecto de sombra */
+  // margin: 0 auto;
 
   .image-carousel {
     display: none;
@@ -40,7 +42,6 @@
   overflow: hidden;
   // border: solid 0.5px #ccc;
   flex-direction: row;
-
 
   .thumbnail-images {
     display: flex;

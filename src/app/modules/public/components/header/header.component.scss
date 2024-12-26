@@ -75,7 +75,7 @@ nav {
 }
 .navbar-one {
   color: var(--text-style-color);
-  height: 40px;
+  height: 25px;
   .right > div {
     cursor: pointer;
     // border: dashed red;
@@ -125,8 +125,9 @@ span {
   display: flex;
   justify-content: left;
   // border: dashed red;
-  border-bottom: 1px solid #faf7f7;
+  border-bottom: 1px solid #faf7f7f0;
   // border: solid 1px #faf7f7;
+  // border: var(--color-brd) solid 1px;
 
   background-color: var(--style-navbar-second);
 
@@ -351,10 +352,10 @@ p-sidebar {
   }
   .sticky {
     .logo > .logo1 {
-      background-image: url("https://res.cloudinary.com/dvvhnrvav/image/upload/v1730395938/images-AR/wyicw2mh3xxocscx0diz.png");
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
+      // background-image: url("https://res.cloudinary.com/dvvhnrvav/image/upload/v1730395938/images-AR/wyicw2mh3xxocscx0diz.png");
+      // background-size: contain;
+      // background-repeat: no-repeat;
+      // background-position: center;
       width: 50px;
       height: 50px;
       border-radius: 500%;

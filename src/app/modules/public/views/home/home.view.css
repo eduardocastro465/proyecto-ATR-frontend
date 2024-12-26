@@ -15,6 +15,9 @@
   /* flex-grow: 1; */
   flex-grow: 1;
   padding: 10px;
+  background: white;
+  margin-left: 10px;
+  border: var(--color-brd) solid 1px;
 
   .products-header {
     display: flex;
@@ -233,6 +236,7 @@ p {
     border: none;
     padding: 0px;
     background-color: transparent !important;
+    margin: 0px;
 
     .listado-productos {
       display: flex;

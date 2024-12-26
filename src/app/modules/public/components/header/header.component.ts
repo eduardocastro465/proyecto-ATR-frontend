@@ -229,8 +229,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   checkScreenSize() {
     if (isPlatformBrowser(this.platformId)) {
       const isNowMobile = window.innerWidth <= 608;
+      this.isMobile = isNowMobile;
       if (isNowMobile !== this.isMobile) {
-        this.isMobile = isNowMobile;
         this.cdr.detectChanges();
       }
     }
