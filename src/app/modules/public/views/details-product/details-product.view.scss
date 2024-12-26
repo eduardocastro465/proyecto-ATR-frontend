@@ -39,6 +39,7 @@
   width: 100%;
   overflow: hidden;
   // border: solid 0.5px #ccc;
+  flex-direction: row;
 
 
   .thumbnail-images {
@@ -94,7 +95,7 @@
   .product-detail-container {
     margin: 0px;
     // border: dashed 1px #ccc;
-    
+
   border:none;
     padding: 0px;
     width: 100%;
@@ -115,7 +116,7 @@
       width: 100%;
       // border: dashed 1px red;
     }
-  
+
   }
 
   .product-img {

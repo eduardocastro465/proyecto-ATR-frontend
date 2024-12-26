@@ -11,6 +11,7 @@ import { DetailsProductView } from './views/details-product/details-product.view
 import { PerfilView } from './views/perfil/perfil.view';
 import { TerminosComponent } from './views/terminos/terminos.component';
 import { PoliticasComponent } from './views/politicas/politicas.component';
+import { CitasProbadorView } from './views/citas-probador/citas-probador.view';
 
 const routes: Routes = [
   {
@@ -87,8 +88,21 @@ const routes: Routes = [
           ],
         },
       },
+      {
+        path: 'CitasProbador',
+        component: CitasProbadorView,
+        data: {
+          title: 'Mi perfil',
+          breadcrumb: [
+            {
+              label: 'Mi-perfil',
+              path: '/public/Mi-perfil',
+            },
+          ],
+        },
+      },
       { path: 'Config', component: ConfigView },
-      { path: 'Detail', component: DetailsProductView },
+      { path: 'Detail/:id', component: DetailsProductView },
     ],
   },
 ];

@@ -1,5 +1,4 @@
-
-<div class="box">
+<main class="box">
   <div class="hero-img">
     <div class="text">
       <img
@@ -10,86 +9,105 @@
       <h1 class="sequence leFadeIn text-info">Bienvenido a Nuestra Página!</h1>
     </div>
   </div>
+  <!-- section class="products" -->
+  <aside *ngIf="!isMobile" class="sidebar">
+    <div class="filter-section">
+      <h3>Categorías</h3>
+      <ul class="category-list">
+        <!-- <li><strong>MUJER</strong> (96)</li> -->
+        <li><strong>OFERTAS 🔥</strong> (15)</li>
+        <li><strong>NUEVAS LLEGADAS</strong> (150)</li>
+      </ul>
+    </div>
 
-  <div class="contiene-all">
-    <div *ngIf="!isMobile" class="sidebar">
-      <div class="filter-section">
-        <h3>Categorías</h3>
-        <ul class="category-list">
-          <!-- <li><strong>MUJER</strong> (96)</li> -->
-          <li><strong>OFERTAS 🔥</strong> (15)</li>
-          <li><strong>NUEVAS LLEGADAS</strong> (150)</li>
-        </ul>
-      </div>
-
-      <!-- Color -->
-      <div class="filter-section">
-        <h3>Color</h3>
-        <div class="color-options">
-          <span class="color black"></span>
-          <span class="color gray"></span>
-          <span class="color pink"></span>
-          <span class="color red"></span>
-          <span class="color green"></span>
-          <span class="color blue"></span>
-          <span class="color yellow"></span>
-          <span class="color purple"></span>
-        </div>
-      </div>
-
-      <!-- Filtro por precio -->
-      <div class="filter-section">
-        <h3>Rango de precios(MXN)</h3>
-        <div class="price-filter">
-          <input type="range" min="10" max="1000" step="10" />
-          <div class="price-values">
-            <span>$10</span>
-            <span>$1000</span>
-          </div>
-          <button class="filter-button">Filtrar</button>
-        </div>
-      </div>
-
-      <!-- Tamaño -->
-      <div class="filter-section">
-        <h3>Tamaño</h3>
-        <div class="size-options">
-          <label><input type="checkbox" /> Todas las tallas</label>
-          <label><input type="checkbox" /> XS</label>
-          <label><input type="checkbox" /> S</label>
-          <label><input type="checkbox" /> M</label>
-          <label><input type="checkbox" /> L</label>
-          <label><input type="checkbox" /> XL</label>
-        </div>
-      </div>
-      <div class="anuncio-content">
-        <img width="100%" height="400vh" src="https://scontent-qro1-1.xx.fbcdn.net/v/t39.30808-6/419051880_122120889080124868_2582592136299487104_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=833d8c&_nc_ohc=Z-qlqPuW6egQ7kNvgHBrAX_&_nc_zt=23&_nc_ht=scontent-qro1-1.xx&_nc_gid=ANfbnGrcMH54LP82XfFOOqj&oh=00_AYC-3KTn-XZb4gxORLEhLbgSjwD2QWIYgJtQnC4uNMmjwg&oe=674673FD" alt="imagen de promocion" class="">
+    <!-- Color -->
+    <div class="filter-section">
+      <h3>Color</h3>
+      <div class="color-options">
+        <span class="color black"></span>
+        <span class="color gray"></span>
+        <span class="color pink"></span>
+        <span class="color red"></span>
+        <span class="color green"></span>
+        <span class="color blue"></span>
+        <span class="color yellow"></span>
+        <span class="color purple"></span>
       </div>
     </div>
 
-    <div class="container-productos">
-      <h1 class="titulo">Encuentra tu estilo</h1>
+    <!-- Filtro por precio -->
+    <div class="filter-section">
+      <h3>Rango de precios(MXN)</h3>
+      <div class="price-filter">
+        <input type="range" min="10" max="1000" step="10" />
+        <div class="price-values">
+          <span>$10</span>
+          <span>$1000</span>
+        </div>
+        <button class="filter-button">Filtrar</button>
+      </div>
+    </div>
+
+    <!-- Tamaño -->
+    <div class="filter-section">
+      <h3>Tamaño</h3>
+      <div class="size-options">
+        <label><input type="checkbox" /> Todas las tallas</label>
+        <label><input type="checkbox" /> XS</label>
+        <label><input type="checkbox" /> S</label>
+        <label><input type="checkbox" /> M</label>
+        <label><input type="checkbox" /> L</label>
+        <label><input type="checkbox" /> XL</label>
+      </div>
+    </div>
+    <div class="anuncio-content">
+      <img
+        width="100%"
+        height="400vh"
+        src="https://scontent-qro1-1.xx.fbcdn.net/v/t39.30808-6/419051880_122120889080124868_2582592136299487104_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=833d8c&_nc_ohc=Z-qlqPuW6egQ7kNvgHBrAX_&_nc_zt=23&_nc_ht=scontent-qro1-1.xx&_nc_gid=ANfbnGrcMH54LP82XfFOOqj&oh=00_AYC-3KTn-XZb4gxORLEhLbgSjwD2QWIYgJtQnC4uNMmjwg&oe=674673FD"
+        alt="imagen de promocion"
+        class=""
+      />
+    </div>
+  </aside>
+
+  <section class="productos">
+ <header class="products-header">
+      <h2>Productos</h2>
+      <div class="sort-options">
+        <label for="sort">Sort by</label>
+        <select id="sort">
+          <option value="featured">Featured</option>
+        </select>
+        <label for="show">Show</label>
+        <select id="show">
+          <option value="12">12</option>
+        </select>
+      </div>
+    </header>
+    <div class="listado-productos">
       <!--
     <div data-aos="zoom-out-up" class="productos-container"> -->
-      <div class="productos-container">
-        <div *ngFor="let producto of productos" class="producto-card p-mb-4">
-          <div class="product-image">
-            <img
-              (click)="verDetalles()"
-              [src]="producto.imagenPrincipal"
-              alt="{{ producto.nombre }}"
-            />
-            <!-- Etiqueta "Nuevo" -->
-            <span class="nuevo-label">Nuevo</span>
-          </div>
-          <div class="product-content">
-            <p>{{ producto.descripcion }}</p>
-            <p><strong>MX$:</strong> {{ producto.precio | currency }}</p>
-          </div>
+      <!-- <div class="productos-container"> -->
+      <div   *ngFor="let producto of productos" class="producto-card p-mb-4">
+        <div class="ribbon">Nuevo</div>
 
+        <div class="product-image">
+          <img
+            (click)="verDetalles(producto._id)"
+            [src]="producto.imagenPrincipal"
+            alt="{{ producto.nombre }}"
+          />
+          <!-- Etiqueta "Nuevo" -->
+          <!-- <span class="nuevo-label">Nuevo</span> -->
+        </div>
+        <div class="product-content">
+          <p>{{ producto.descripcion }}</p>
+          <p>MX$:<strong style="color: #fd6f9e;"> {{ producto.precio | currency }}</strong></p>
         </div>
       </div>
-      <p-paginator
+      <!-- </div> -->
+      <!-- <p-paginator
         [showFirstLastIcon]="false"
         [rows]="rows"
         [totalRecords]="productos.length"
@@ -98,13 +116,13 @@
         [style]="{ 'background-color': 'var(--blur-bg)', 'border-radius': '8px' ,'border':'2px var(--bg-color-card)', 'padding': '8px' }"
         currentPageReportTemplate="Producto {first} a {last} de {totalRecords}"
       >
-      </p-paginator>
+      </p-paginator> -->
     </div>
     <!-- (onPageChange)="cambiarPagina($event)" -->
-  </div>
-</div>
+  </section>
+</main>
 
-<div class="cards-info">
+<!-- <div class="cards-info">
   <div class="card">
     <img
       src="https://via.placeholder.com/100"
@@ -134,5 +152,5 @@
     <h2 style="text-align: center">Combinaciones</h2>
     Nuestros catálogos siempre están actualizados a la temporada.
   </div>
-</div>
+</div> -->
 <app-tag></app-tag>

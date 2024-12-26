@@ -97,8 +97,10 @@ i.fa-tiktok {
 // }
 .app-footer {
 
-  color: #f0ebe5;
-background: radial-gradient(circle at top, #4b535b 0%, #2b2d36 60%); 
+  color: #010101; /* Color oscuro para TikTok */
+  // color: #f0ebe5;
+// background: radial-gradient(circle at top, #4b535b 0%, #2b2d36 60%);
+background: #ede6de;
   padding: 20px;
   text-align: center;
 
@@ -116,7 +118,9 @@ background: radial-gradient(circle at top, #4b535b 0%, #2b2d36 60%);
         font-size: 1.2rem;
         font-weight: 400px;
         text-transform: uppercase;
-        color: #f0ebe5;
+        // color: #f0ebe5;
+        color: #333b43; /* Color oscuro para TikTok */
+
 
       }
 
@@ -128,7 +132,9 @@ background: radial-gradient(circle at top, #4b535b 0%, #2b2d36 60%);
           margin: 10px 0;
 
           a {
-            color: #f0ebe5;
+            color: #4b535b; /* Color oscuro para TikTok */
+
+            // color: #f0ebe5;
 
 
             text-decoration: none;
@@ -136,7 +142,7 @@ background: radial-gradient(circle at top, #4b535b 0%, #2b2d36 60%);
 
             &:hover {
               text-decoration: revert-layer;
-              color: #7b7b8b;
+              color: #272727;
             }
           }
         }

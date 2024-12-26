@@ -1,47 +1,60 @@
-/* @import url(https://fonts.googleapis.com/css2?family=Sacramento&display=swap); */
-
-/* body {
-  font-family: 'Sacramento', handwriting;
-} */
-/* @import url(https://fonts.googleapis.com/css2?family=Passion+One:wght@100;200;300;400;500;600;800;900&display=swap); */
-
-body {
-  font-family: "Passion One", display;
-}
-/* @import url(https://fonts.googleapis.com/css2?family=Passion+One:wght@100;200;300;400;500;600;800;900&display=swap); */
-
-body {
-  font-family: "Passion One", display;
+.box {
+  display: flex;
+  margin: 20px;
 }
 
 .titulo {
-  display: none;
-  text-align: center;
+  /* display: none; */
+  text-align: start;
   color: --color-text;
 }
-.contiene-all {
+.productos {
   display: flex;
-  flex-direction: row;
-padding: 60px 80px;
-  border: 0.5px solid var(--color-brd);
-  border-bottom: 4px solid #ebe3db;
-  background: var(--blur-bg);
-}
-.box {
-  /* box-shadow: 0px 0px 10px 10px rgb(255, 248, 240); */
-  box-shadow: var(--box-sw);
-}
-.container-productos {
-  padding: 20px;
-}
+  flex-direction: column;
+  /* padding: 60px 80px; */
+  /* flex-grow: 1; */
+  flex-grow: 1;
+  padding: 10px;
 
+  .products-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h2 {
+      margin: 0;
+    }
+
+    .sort-options {
+      label {
+        margin-right: 10px;
+      }
+
+      select {
+        margin-right: 10px;
+      }
+    }
+  }
+  .listado-productos {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+
+    gap: 2rem;
+    /* margin-top: 20px; */
+    /* margin-left: 50px; */
+
+    padding: 20px;
+  }
+}
 
 .hero-img {
   display: none;
 }
 
 .imagen-logo {
-  max-width:20%;
+  max-width: 20%;
 }
 .text-anuncio {
   margin-right: 10px;
@@ -78,14 +91,9 @@ p {
   margin-left: 50px;
   margin-right: 300px;
 }
-
+/*
 .productos-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5rem;
-  margin-top: 20px;
-  margin-left: 50px;
-}
+} */
 
 .producto-card {
   backdrop-filter: blur(1px);
@@ -93,13 +101,15 @@ p {
   padding-bottom: 16px;
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(136, 136, 136, 0.1);
-  max-width: 200px;
+  max-width: 220px;
   margin-bottom: 20px;
-  background: var(--blur-bg);
+  padding: 5px;
+  /* background: var(--blur-bg); */
   transition: transform 0.3s, box-shadow 0.3s;
+  background: white;
   &:hover {
     transform: scale(1.02); /* Zoom al 105% */
-    background-color: var(--color-bg);
+    /* background-color: var(--color-bg); */
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
 }
@@ -162,10 +172,11 @@ p {
   display: flex;
   flex-direction: row;
   /* border: dashed; */
-  /* gap: 50px; */
+  gap: 30px;
+
   align-items: center;
   justify-content: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   /* padding: 20px; */
   /* margin-inline: 0vw; */
   /* padding-inline: 5vw; */
@@ -211,28 +222,32 @@ p {
   .IsMobile {
     visibility: hidden;
   }
-  .productos-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin-left: 0px;
-    margin: 5px;
-    gap: 5px;
-    justify-content: space-around;
-    flex-wrap: wrap;
-  }
-  .contiene-all {
-    border: none;
-    padding: 10px;
-    background-color: transparent !important;
-  }
-  .container-productos {
-    padding: 0;
+  .box {
+    display: inline;
     margin: 0;
-    background: var(--blur-bg);
-    border: var(--color-brd) solid 1px;
-    box-shadow: 0 2px 8px rgba(136, 136, 136, 0.1);
-    border-radius: 5px;
+  }
+
+  /* .productos-container {
+    } */
+  .productos {
+    border: none;
+    padding: 0px;
+    background-color: transparent !important;
+
+    .listado-productos {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      margin-left: 0px;
+      margin: 5px;
+      gap: 4px;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      padding: 0px;
+      margin: 0;
+      box-shadow: 0 2px 8px rgba(136, 136, 136, 0.1);
+      border-radius: 5px;
+    }
   }
 
   .producto-card {
@@ -240,23 +255,23 @@ p {
 
     padding-bottom: 0px;
     box-shadow: 0 2px 8px rgba(136, 136, 136, 0.1);
-    width: 175px;
+    /* width: 175px; */
     justify-content: space-between;
+    max-width: 200px;
 
     margin-bottom: 20px;
     background: var(--blur-bg);
 
     &:hover {
-      background-color: var(--color-bg);
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
     .product-image {
       img {
-        border-radius: 5px 5px 0 0;
+        border-radius: 5px;
       }
     }
   }
-  .contiene-all {
+  .productos {
     border-radius: 2px;
     margin-top: 10px;
   }
@@ -341,4 +356,24 @@ p {
     filter: blur(0);
   }
 }
+.ribbon {
+  font-size: 8px;
+  font-weight: bold;
+  color: #fff;
+}
+.ribbon {
+  --f: .5em; /* control the folded part */
 
+  position: absolute;
+  top: 0;
+  right: 0;
+  line-height: 1.8;
+  padding-inline: 1lh;
+  padding-bottom: var(--f);
+  border-image: conic-gradient(#0008 0 0) 51%/var(--f);
+  clip-path: polygon(
+    100% calc(100% - var(--f)),100% 100%,calc(100% - var(--f)) calc(100% - var(--f)),var(--f) calc(100% - var(--f)), 0 100%,0 calc(100% - var(--f)),999px calc(100% - var(--f) - 999px),calc(100% - 999px) calc(100% - var(--f) - 999px));
+  transform: translate(calc((1 - cos(45deg))*100%), -100%) rotate(45deg);
+  transform-origin: 0% 100%;
+  background-color: #ff5580; /* the main color  */
+}

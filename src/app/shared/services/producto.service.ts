@@ -32,4 +32,7 @@ export class ProductoService {
   obtenerProductos(): Observable<Producto[]> {
     return this.http.get<Producto[]>(`${environment.api}/producto/`);
   }
+  obtenerDetalleProductoById(id:any): Observable<Producto[]> {
+    return this.http.get<Producto[]>(`${environment.api}/producto/byId/${id}`);
+  }
 }

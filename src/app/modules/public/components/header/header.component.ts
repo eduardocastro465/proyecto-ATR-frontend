@@ -59,7 +59,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   isDarkThemeOn = signal(false);
   passwordStrengthClass: string = ''; // Clase CSS que se aplica dinámicamente
   passwordStrengthMessage: string = ''; // Mensaje dinámico que se muestra debajo del campo
-  
+
   darkMode = false;
   constructor(
     private msgs: mensageservice,
@@ -87,7 +87,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       password: ['', Validators.required],
     });
   }
-  
+
   // Método para acceder al control del email
   get email() {
     return this.loginForm.get('email');
@@ -100,7 +100,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   // ) {}
   visible: boolean = false;
 
-  
+
   openModal() {
     this.visible = true;
     this.robot = true;
@@ -109,6 +109,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.getCaptchaToken();
     this.checkLockState();
     this.traerDatos();
+
+
+
+
   }
   closeModal() {
     this.visible = false; // Cierra el modal
@@ -142,7 +146,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
    this.closeModal();
-  
+
     // Verificar si el entorno tiene acceso a localStorage (es decir, que no está en SSR)
     if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
       // Recuperar el tema guardado en localStorage (si existe)
@@ -338,7 +342,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
 
   captchaToken: string | null = null;
-  // 
+  //
 
 
   maxAttempts: number = 5; // Se puede asignar un número o 0 más adelante
@@ -355,21 +359,19 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   loading: boolean = false;
   captchagenerado: boolean = false;
   //datos de la empresa
-  logo: string =
-    'https://res.cloudinary.com/dvvhnrvav/image/upload/v1730395938/images-AR/wyicw2mh3xxocscx0diz.png';
-
+  logo!: string;
   nombreEmpresa: string = 'Atelier';
 
   public robot!: boolean;
   public presionado!: boolean;
 
- 
+
 
   ngOnDestroy(): void {
     this.timerSubscription?.unsubscribe();
   }
 
- 
+
   getCaptchaToken(): string {
     if (typeof grecaptcha !== 'undefined') {
       const token = grecaptcha.getResponse();
@@ -521,7 +523,7 @@ passwordStrength: string = ''; // variable para almacenar la fuerza de la contra
 
   verificarPassword() {
     const password = this.loginForm.get('password')?.value || '';
-  
+
     // Validaciones obligatorias
     this.validacionesPassword.tieneMinuscula = /[a-z]/.test(password); // Al menos una letra minúscula
     this.validacionesPassword.tieneMayuscula = /[A-Z]/.test(password); // Al menos una letra mayúscula
@@ -529,11 +531,11 @@ passwordStrength: string = ''; // variable para almacenar la fuerza de la contra
     this.validacionesPassword.tieneSimbolo = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password); // Al menos un símbolo
     this.validacionesPassword.longitudMinima = password.length >= 15; // Longitud mínima requerida
     this.validacionesPassword.longitudMayor5 = password.length > 5; // Más de 5 caracteres
-  
+
     // Al menos 5 caracteres diferentes
     const caracteresUnicos = new Set(password.split(''));
     this.validacionesPassword.tiene5CaracteresDiferentes = caracteresUnicos.size >= 5;
-  
+
     // Verificar que la contraseña cumpla con todos los criterios
     const allValidations = [
       this.validacionesPassword.tieneMinuscula,
@@ -544,10 +546,10 @@ passwordStrength: string = ''; // variable para almacenar la fuerza de la contra
       this.validacionesPassword.longitudMayor5,
       this.validacionesPassword.tiene5CaracteresDiferentes,
     ];
-  
+
     // Calcular cuántas validaciones se cumplen
     const validacionesCumplidas = allValidations.filter((v) => v).length;
-  
+
     // Asignar nivel de seguridad y mensaje
     if (validacionesCumplidas === allValidations.length) {
       this.passwordStrength = 'strong'; // Contraseña fuerte
@@ -562,13 +564,13 @@ passwordStrength: string = ''; // variable para almacenar la fuerza de la contra
       this.passwordStrengthMessage = 'Demasiado simple';
       this.passwordStrengthClass = 'weak';
     }
-  
+
     // this.verificarCoincidencia(); // Para verificar si la confirmación coincide con la contraseña
   }
 
   login(): void {
      this.captchaToken = this.validateCaptcha();
-    
+
     if (this.isLocked) {
       Swal.fire({
         title: 'Cuenta bloqueada',
@@ -602,8 +604,8 @@ passwordStrength: string = ''; // variable para almacenar la fuerza de la contra
     const email = this.loginForm.value.email;
     const password = this.loginForm.value.password;
     // const captchaT = this.captchaToken;
-    
-    
+
+
     this.signInService.signIn({ email, password,captchaToken: this.captchaToken}).subscribe(
       (response) => {
         if (response) {
@@ -616,7 +618,7 @@ passwordStrength: string = ''; // variable para almacenar la fuerza de la contra
 
             if (this.userROL === ERol.ADMIN) {
               navigateTo = '/admin/home';
-              
+
             } else if (this.userROL === ERol.CLIENTE) {
               navigateTo = '/public/home';
             }
@@ -625,9 +627,9 @@ passwordStrength: string = ''; // variable para almacenar la fuerza de la contra
               if (navigateTo === '/public/home') {
                 window.location.reload();
               }
-             
+
     this.inicia();
-    
+
               window.location.reload();
             });
           }

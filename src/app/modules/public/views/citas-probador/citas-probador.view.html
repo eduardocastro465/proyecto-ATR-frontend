@@ -1,0 +1,77 @@
+<div class="appointment-container">
+  <h1 class="header">Citas en Probador</h1>
+  <p class="subheader">
+    Probador en línea: Elige tus 3 vestidos favoritos y te los llevamos a la tienda que tú quieras (SIN COSTO) para que te los puedas medir
+  </p>
+
+  <div class="content">
+    <!-- Left Column: Dress Summary -->
+    <div class="summary">
+      <h2>Resumen de probador</h2>
+      <div class="dress-item">
+        <img src="https://via.placeholder.com/100" alt="Vestido Lavanda" />
+        <div class="details">
+          <h3>Vestido Largo CGEE32288</h3>
+          <p>Color: LAVANDA</p>
+          <p>Talla: 8</p>
+          <p>Total: $16,999</p>
+        </div>
+        <button class="delete-btn">Eliminar</button>
+      </div>
+      <div class="dress-item">
+        <img src="https://via.placeholder.com/100" alt="Vestido Negro" />
+        <div class="details">
+          <h3>Vestido Largo CGTN2012P1288</h3>
+          <p>Color: NEGRO</p>
+          <p>Talla: 4</p>
+          <p>Total: $8,999</p>
+        </div>
+        <button class="delete-btn">Eliminar</button>
+      </div>
+      <button class="add-dress-btn">Agregar otro vestido</button>
+    </div>
+
+    <!-- Right Column: User Data -->
+    <div class="user-data">
+      <h2>Ayúdanos con tus datos</h2>
+      <form>
+        <div class="form-group">
+          <label for="store">Selecciona la tienda para tu cita</label>
+          <select id="store" required>
+            <option value="">Seleccione</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="date">Fecha</label>
+          <input type="date" id="date" value="2025-01-02" required />
+        </div>
+        <div class="form-group">
+          <label for="time">Hora</label>
+          <select id="time" required>
+            <option value="">Seleccione</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="name">Nombre</label>
+          <input type="text" id="name" required />
+        </div>
+        <div class="form-group">
+          <label for="lastname">Apellidos</label>
+          <input type="text" id="lastname" required />
+        </div>
+        <div class="form-group">
+          <label for="phone">Celular (WhatsApp de preferencia)</label>
+          <input type="tel" id="phone" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" required />
+        </div>
+      </form>
+      <p class="note">
+        <strong>Importante:</strong> Dentro para confirmar tu cita te va a llegar un SMS a tu número de teléfono...
+      </p>
+      <button class="confirm-btn">Confirmar cita</button>
+    </div>
+  </div>
+</div>

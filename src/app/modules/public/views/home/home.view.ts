@@ -229,8 +229,12 @@ export class HomeView implements OnInit {
 
     return false;
   }
-  verDetalles() {
-    this.router.navigate(['/public/Detail']);
+  verDetalles(id:number) {
+
+    // this.PRODUCTOSERVICE_.obtenerDetalleProductoById()
+
+    this.router.navigate(['/public/Detail/'+id]);
+    // this.router.navigate(['/public/Detail']);
   }
 
   redirectTo(route: string): void {

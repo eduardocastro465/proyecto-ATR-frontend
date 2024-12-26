@@ -24,12 +24,12 @@
   [textPosition]="'center-center'"
 ></ngx-ui-loader>
 
-<!-- <p-dialog 
-header="Header" 
-[modal]="true" 
-[(visible)]="visible" 
-[style]="{ width: '50rem' }" 
-[breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" 
+<!-- <p-dialog
+header="Header"
+[modal]="true"
+[(visible)]="visible"
+[style]="{ width: '50rem' }"
+[breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
 [maximizable]="true"> -->
 <p-dialog
   (onHide)="closeModal()"
@@ -54,7 +54,7 @@ header="Header"
         <div class="input-group">
           <label for="email">Email</label>
           <p-inputGroup>
-            <!--         
+            <!--
         <p-inputGroupAddon>
           <i class="pi pi-envelope"></i>
         </p-inputGroupAddon> -->
@@ -216,8 +216,9 @@ header="Header"
           'url(' + (isSticky ? imageUrl : defaultImageUrl) + ')'
         "
       ></div> -->
-      <img *ngIf="isSticky" [src]="imageUrl" alt="logo" class="logo1" />
-      <span *ngIf="!isSticky" class="titulo"> {{ nombreDeLaPagina }}</span>
+      <img *ngIf="isSticky" src="https://res.cloudinary.com/dvvhnrvav/image/upload/v1730395938/images-AR/wyicw2mh3xxocscx0diz.png"  alt="logo" class="logo1" />
+      <span *ngIf="!isSticky" class="titulo"> Atelier</span>
+      <!-- <span *ngIf="!isSticky" class="titulo"> {{ nombreDeLaPagina }}</span> -->
     </div>
     <ul *ngIf="!isMobile" class="nav-menu flex">
       <li><a (click)="redirectTo('home')">Home</a></li>
@@ -241,7 +242,7 @@ header="Header"
         </div>
       </li>
       <li>
-        <i class="pi pi-shopping-cart"></i>
+        <i  (click)="redirectTo('CitasProbador')" class="pi pi-calendar"></i>
       </li>
       <li class="IsMobile" *ngIf="!isMobile">
         <!-- <a tabindex="0" class="nav-icon" (click)="openModal()"> -->
@@ -268,7 +269,7 @@ header="Header"
 </header>
 
 <!-- <body> -->
-<p-sidebar [(visible)]="sidebarVisible" position="left" styleClass="w-30rem">
+  <p-drawer [(visible)]="sidebarVisible" position="left" [closable]="false" styleClass="w-30rem">
   <ng-template pTemplate="header" style="justify-content: center">
     <!-- <span class="font-semibold text-xl">Atelier</span> -->
     <img
@@ -308,15 +309,20 @@ header="Header"
           <i class="pi pi-cog"></i> Configuración
         </a>
       </li> -->
-      <li>
+      <!-- <li>
         <a tabindex="0" (click)="redirectTo('AcercaDe')">
           <i class="pi pi-info-circle"></i> Acerca de Atelier
         </a>
-      </li>
+      </li> -->
     </ul>
   </div>
-
+  <ng-template #footer>
+    <div class="flex items-center gap-2">
+        <button pButton label="Account" icon="pi pi-user" class="w-full" outlined></button>
+        <button pButton label="Logout" icon="pi pi-sign-out" class="w-full" severity="danger" text></button>
+    </div>
+</ng-template>
   <!-- Mango para redimensionar -->
-</p-sidebar>
+</p-drawer>
 
 <!-- <div class="resize-handle" (mousedown)="startResizing($event)"></div> -->

@@ -1,8 +1,9 @@
 main {
 
   margin-top: 0%;
-  margin-bottom: 0%;
-  background-color: white;
+  margin-bottom: 0%;    background-color: #f9f9f9;
+
+
 }
 .content-all {
   /* padding: 20px; */
@@ -12,7 +13,7 @@ main {
   /* background-color: #f3f5fb; */
 
 
-  background-color:var(--color-by);
+  /* background-color:var(--color-by); */
 }
 .menu-button {
   background-color: #007bff; /* Color de fondo azul */

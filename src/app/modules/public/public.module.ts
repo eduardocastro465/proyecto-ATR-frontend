@@ -52,16 +52,18 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextModule } from 'primeng/inputtext';
 import { PoliticasComponent } from './views/politicas/politicas.component';
 import { TerminosComponent } from './views/terminos/terminos.component';
-
+import { CitasProbadorView } from './views/citas-probador/citas-probador.view';
+import { DrawerModule } from 'primeng/drawer';
+import { ResultsComponent } from './views/results/results.component';
 // import { DialogModule } from 'primeng/dialog';
-    
+
 const MATERIALS =[PasswordModule,
-  InputMaskModule,
+  InputMaskModule,DrawerModule,
   InputTextModule,FormsModule,InputGroupModule,AvatarModule,AvatarGroupModule,PaginatorModule,OverlayPanelModule,TieredMenuModule,SkeletonModule,CardModule,TabMenuModule,ButtonModule,DialogModule,SidebarModule,CheckboxModule,MenuModule]
 const COMPONENTS =[FooterComponent,HeaderComponent]
 const VIEWS=[HomeView,PublicComponent,PerfilView, AcercaDeView,DetailsProductView]
 @NgModule({
-  declarations: [VIEWS,COMPONENTS, CarritoView, TagComponent, PoliticasComponent, TerminosComponent],
+  declarations: [VIEWS,COMPONENTS, CarritoView, TagComponent, PoliticasComponent, TerminosComponent, CitasProbadorView, ResultsComponent],
   exports:[COMPONENTS],
   imports: [GalleriaModule,
     CommonModule,ReactiveFormsModule,FormsModule,
