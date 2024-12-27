@@ -24,6 +24,10 @@
 
 <section>
   <h2>Lista de Productos</h2>
+
+  <button type="button" (click)="abrirModal()">Agregar Producto</button>
+  <app-registo-producto [mostrarModalAddVestido]="mostrarModalAddVestido"></app-registo-producto>
+
   <p-table #dt [value]="allProducts" selectionMode="single" dataKey="_id" [rows]="rows" [totalRecords]="totalRecords"
     [first]="first" (onPageChange)="onPageChange($event)">
     <ng-template pTemplate="caption">

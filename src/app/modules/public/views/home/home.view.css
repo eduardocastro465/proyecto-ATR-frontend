@@ -44,7 +44,7 @@
     flex-wrap: wrap;
     flex-direction: row;
 
-    gap: 2rem;
+    gap: 4rem;
     /* margin-top: 20px; */
     /* margin-left: 50px; */
 
@@ -104,7 +104,7 @@ p {
   padding-bottom: 16px;
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(136, 136, 136, 0.1);
-  max-width: 220px;
+  max-width: 240px;
   margin-bottom: 20px;
   padding: 5px;
   /* background: var(--blur-bg); */
@@ -378,6 +378,6 @@ p {
   clip-path: polygon(
     100% calc(100% - var(--f)),100% 100%,calc(100% - var(--f)) calc(100% - var(--f)),var(--f) calc(100% - var(--f)), 0 100%,0 calc(100% - var(--f)),999px calc(100% - var(--f) - 999px),calc(100% - 999px) calc(100% - var(--f) - 999px));
   transform: translate(calc((1 - cos(45deg))*100%), -100%) rotate(45deg);
-  transform-origin: 0% 100%;
+  transform-origin:3% 105%;
   background-color: #ff5580; /* the main color  */
 }

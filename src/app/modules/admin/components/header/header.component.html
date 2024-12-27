@@ -23,7 +23,7 @@
   <ul class="nav flex-column">
     <!-- Inicio -->
     <li>
-      <a 
+      <a
         tabindex="0"
         routerLink="/admin/home"
         class="nav-link"
@@ -65,7 +65,7 @@
       >
         <i *ngIf="!isCollapsed" class="pi pi-sort-down-fill submenu-toggle" [class.open]="openSubmenu === 'productos-submenu'"></i>
         <i class="pi pi-tags"></i>
-        <span class="link-text">Productos</span>
+        <span class="link-text">Vestidos</span>
       </a>
       <ul *ngIf="openSubmenu === 'productos-submenu'" class="submenu" id="productos-submenu">
         <li>
@@ -80,10 +80,35 @@
         </li>
       </ul>
     </li>
+    <!-- Accesorios -->
+    <li class="nav-item">
+      <a
+        tabindex="0"
+        class="nav-link"
+        [class.open]="openSubmenu === 'Accesorios-submenu'"
+        (click)="toggleSubmenu('Accesorios-submenu');setActiveLink($event)"
+      >
+        <i *ngIf="!isCollapsed" class="pi pi-sort-down-fill submenu-toggle" [class.open]="openSubmenu === 'Accesorios-submenu'"></i>
+        <i class="pi pi-briefcase"></i>
+        <span class="link-text">Accesorios</span>
+      </a>
+      <ul *ngIf="openSubmenu === 'Accesorios-submenu'" class="submenu" id="Accesorios-submenu">
+        <li>
+          <a tabindex="0" (click)="redirectToAccesorios('lista-Accesorios');setActiveLink($event)" class="nav-link">
+            <i class="pi pi-list"></i> Listado de accesorios
+          </a>
+        </li>
+        <li>
+          <a tabindex="0" (click)="redirectToAccesorios('registro-Accesorios');setActiveLink($event)" class="nav-link">
+            <i class="pi pi-plus"></i> Agregar accesorio
+          </a>
+        </li>
+      </ul>
+    </li>
 
     <!-- Renta de Productos -->
     <li class="nav-item">
-      <a 
+      <a
         tabindex="0"
         class="nav-link"
         [class.open]="openSubmenu === 'renta-submenu'"
@@ -109,7 +134,7 @@
 
     <!-- Ventas -->
     <li class="nav-item">
-      <a 
+      <a
         tabindex="0"
         class="nav-link"
         [class.open]="openSubmenu === 'ventas-submenu'"
@@ -135,7 +160,7 @@
 
     <!-- Reportes -->
     <li class="nav-item">
-      <a 
+      <a
         tabindex="0"
         class="nav-link"
         [class.open]="openSubmenu === 'reportes-submenu'"
@@ -161,7 +186,7 @@
 
     <!-- Configuración -->
     <li class="nav-item">
-      <a 
+      <a
         tabindex="0"
         class="nav-link"
         [class.open]="openSubmenu === 'configuracion-submenu'"
@@ -195,7 +220,7 @@
       </ul>
     </li>
   </ul>
-  
+
   <button class="toggle-btn" (click)="toggleCollapse()">
     <i [ngClass]="isCollapsed ? 'pi pi-angle-double-left' : 'pi pi-angle-double-right'"></i>
   </button>

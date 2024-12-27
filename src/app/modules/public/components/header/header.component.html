@@ -269,7 +269,7 @@ header="Header"
 </header>
 
 <!-- <body> -->
-  <p-sidebar [(visible)]="sidebarVisible" position="left" [closable]="false" styleClass="w-30rem">
+  <p-sidebar *ngIf="isMobile"  [(visible)]="sidebarVisible" position="left"  styleClass="w-30rem">
   <ng-template pTemplate="header" style="justify-content: center">
     <!-- <span class="font-semibold text-xl">Atelier</span> -->
     <img

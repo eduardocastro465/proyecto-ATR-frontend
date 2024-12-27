@@ -31,6 +31,9 @@ import { ListadoDeslindeLegalComponent } from './components/listado-deslinde-leg
 import { HistorialDeslindeLegalComponent } from './components/historial-deslinde-legal/historial-deslinde-legal.component';
 import { adminGuard } from '../../shared/guards/auth.guard';
 import { RegistroPoliComponent } from './components/registro-poli/registro-poli.component';
+import { AddAccesorioComponent } from './components/add-accesorio/add-accesorio.component';
+import { ControlAccesorioView } from './views/control-accesorio/control-accesorio.view';
+import { ListadoAccesorioComponent } from './components/listado-accesorio/listado-accesorio.component';
 
 const routes: Routes = [
   {
@@ -86,7 +89,26 @@ const routes: Routes = [
           },
           {
             path: 'registro-producto',
-            component: RegistoProductoComponent,
+            component:RegistoProductoComponent,
+          },
+          {
+            path: '',
+            redirectTo: 'registro-producto',
+            pathMatch: 'full',
+          },
+        ],
+      },
+      {
+        path: 'control-Accesorios',
+        component: ControlAccesorioView,
+        children: [
+          {
+            path: 'lista-Accesorios',
+            component: ListadoAccesorioComponent,
+          },
+          {
+            path: 'registro-Accesorios',
+            component: AddAccesorioComponent,
           },
           {
             path: '',

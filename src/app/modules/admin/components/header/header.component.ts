@@ -9,7 +9,7 @@ import { StorageService } from "../../../../shared/services/storage.service";
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss',"menuLateral.scss"],
-  
+
   encapsulation: ViewEncapsulation.None,
 })
 export class HeaderComponent implements OnInit {
@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit {
     private storageService: StorageService,
     private clientesService: ClientesService,
     private router: Router,
-    private renderer: Renderer2, 
+    private renderer: Renderer2,
     private sessionService: SessionService,
   ) {
     this.fechaSeleccionada = new Date();
@@ -114,7 +114,7 @@ resizeSidebar(event: MouseEvent) {
     this.isTextVisible = !this.isTextVisible; // Cambia la visibilidad del texto
   }
 
-  
+
   // isCollapsed = false;
 
   toggleSidebar() {
@@ -126,7 +126,7 @@ resizeSidebar(event: MouseEvent) {
     this.mostrarCalendario = !this.mostrarCalendario;
   }
 
- 
+
 
   setActiveLink(event: Event): void {
     const target = event.currentTarget as HTMLElement;
@@ -154,6 +154,9 @@ resizeSidebar(event: MouseEvent) {
 
   redirectToProductos(route: string): void {
     this.router.navigate([route === "login" ? "/auth/login" : `/admin/control-productos/${route}`]);
+  }
+  redirectToAccesorios(route: string): void {
+    this.router.navigate([route === "login" ? "/auth/login" : `/admin/control-Accesorios/${route}`]);
   }
 
   redirectToRenta(route: string): void {

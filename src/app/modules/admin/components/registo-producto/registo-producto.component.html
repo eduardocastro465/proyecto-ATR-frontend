@@ -1,9 +1,11 @@
-<form
-  class="form-container"
-  enctype="multipart/form-data"
-  [formGroup]="productoForm"
->
-  <h2>Agregar vestido</h2>
+<p-dialog [(visible)]="mostrarModalAddVestido" [style]="{width: '50vw'}" [modal]="true" [draggable]="false" [resizable]="false">
+  <ng-template pTemplate="header">
+    <h2>Agregar Vestido</h2>
+  </ng-template>
+
+  <form class="form-container" enctype="multipart/form-data" [formGroup]="productoForm">
+
+  <!-- <h2>Agregar vestido</h2> -->
   <div class="image-section">
     <!-- Imagen principal -->
     <div class="img-principal">
@@ -135,3 +137,4 @@
     Agregar Producto
   </button>
 </form>
+</p-dialog>

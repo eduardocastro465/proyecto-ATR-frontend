@@ -16,6 +16,9 @@ body {
 body {
   overscroll-behavior: none;
 }
+::ng-deep .p-sidebar .p-sidebar-close {
+  display: none !important;
+}
 
 ::selection {
   pointer-events: none;

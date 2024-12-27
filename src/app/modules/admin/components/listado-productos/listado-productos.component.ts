@@ -16,6 +16,7 @@ declare const $: any;
 export class ListadoProductosComponent implements OnInit {
   allProducts: Producto[] = [];
   visible: boolean = false;
+  mostrarModalAddVestido: boolean = false;
   totalRecords: number = 0;
   rows: number = 5; // Número de registros por página
   first: number = 0; // Índice del primer registro de la página actual
@@ -25,7 +26,10 @@ export class ListadoProductosComponent implements OnInit {
   idProducto!: string;
 
   constructor(private productoS: ProductoService) {}
-
+  abrirModal(){
+    // console.log( this.mostrarModalAddVestido)
+    this.mostrarModalAddVestido=!this.mostrarModalAddVestido;
+  }
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
@@ -89,7 +93,6 @@ export class ListadoProductosComponent implements OnInit {
       .modal({
         closable: false, // Evita cerrar haciendo clic fuera del modal
         onApprove: () => {
-          // this.us.eliminarUsuario(id)
           this.confirmarEliminar(); // Ejecuta la confirmación cuando se aprueba
         },
       })
@@ -97,19 +100,17 @@ export class ListadoProductosComponent implements OnInit {
   }
 
   confirmarEliminar() {
-    // this.usuarioId = id;
     this.productoS.eliminarProducto(this.idProducto).subscribe((response) => {
+      this.getProductos();
       Swal.fire(
         'Eliminado',
         'El producto se ha eliminado correctamente.',
         'success'
       );
-      this.getProductos();
+      $('.basic.test.modal').modal('hide'); // Cierra el modal después de la eliminación
     });
-    // console.log(`Usuario con ID ${this.usuarioId} eliminado.`);
-    //
-    // Aquí puedes llamar a tu servicio para eliminar el usuario
   }
+
 
   editProduct(id: any) {
     // this.visible = true;

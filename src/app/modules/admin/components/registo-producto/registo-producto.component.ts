@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ProductoService } from '../../../../shared/services/producto.service';
 import { Producto } from '../../../../shared/models/Producto.model';
@@ -9,6 +9,13 @@ import { Producto } from '../../../../shared/models/Producto.model';
   styleUrls: ['./registo-producto.component.scss'],
 })
 export class RegistoProductoComponent implements OnInit {
+
+  @Input() mostrarModalAddVestido: boolean = false;
+
+  // abrirModal() {
+  //   this.mostrarModalAddVestido = true;
+
+  // }
   productoForm: FormGroup;
 
   imagenPrincipal: File | null = null; // Inicializa con null
@@ -35,7 +42,9 @@ export class RegistoProductoComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+  }
 
   get otrasImagenes(): FormArray {
     return this.productoForm.get('otrasImagenes') as FormArray;

@@ -10,6 +10,9 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   signal,
+  Input,
+  SimpleChanges,
+  OnChanges,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem, MenuItemCommandEvent, MessageService } from 'primeng/api';
@@ -38,10 +41,10 @@ import Swal from 'sweetalert2';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent implements OnInit, AfterViewInit {
+export class HeaderComponent implements OnInit, AfterViewInit,OnChanges  {
   isScrolled = false;
   sidebarVisible = false;
-  isMobile = false;
+    @Input() isMobile = false;
   items: MenuItem[] = [];
   isLoggedIn = false;
   userROL!: string;
@@ -183,14 +186,26 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     }
     this.loadCompanyData(); // Cargar los datos de la empresa al iniciar
 
-    if (isPlatformBrowser(this.platformId)) {
-      this.checkScreenSize();
-      // AOS.init();
-      this.renderer.listen('window', 'resize', () => this.checkScreenSize());
-      this.updateMenuItems();
+    // if (isPlatformBrowser(this.platformId)) {
+    //   this.checkScreenSize();
+    //   // AOS.init();
+    //   this.renderer.listen('window', 'resize', () => this.checkScreenSize());
+    //   this.updateMenuItems();
+    // }
+  }
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['isMobile']) {
+      this.onMobileChange(changes['isMobile'].currentValue);
     }
   }
+  onMobileChange(isMobile: boolean) {
+    // Aquí puedes poner la lógica que quieres ejecutar cuando cambia isMobile
+    console.log('isMobile changed:', isMobile);
+    // Por ejemplo, podrías llamar a updateMenuItems() aquí si es necesario
+    this.updateMenuItems();
+  }
 
+  //
   loadCompanyData() {
     this.datosEmpresaService.traerDatosEmpresa().subscribe(
       (data) => {
@@ -226,15 +241,15 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.isScrolled = scrollTop > 10;
   }
 
-  checkScreenSize() {
-    if (isPlatformBrowser(this.platformId)) {
-      const isNowMobile = window.innerWidth <= 608;
-      this.isMobile = isNowMobile;
-      if (isNowMobile !== this.isMobile) {
-        this.cdr.detectChanges();
-      }
-    }
-  }
+  // checkScreenSize() {
+  //   if (isPlatformBrowser(this.platformId)) {
+  //     const isNowMobile = window.innerWidth <= 608;
+  //     this.isMobile = isNowMobile;
+  //     if (isNowMobile !== this.isMobile) {
+  //       this.cdr.detectChanges();
+  //     }
+  //   }
+  // }
 
   onSearch() {
     this.isLoading = true;

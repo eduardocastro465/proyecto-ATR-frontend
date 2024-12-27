@@ -1,3 +1,4 @@
+<div class="contiendescripcion">
 <div class="product-detail-container">
   <div class="product-img">
     <div class="thumbnail-images">
@@ -58,9 +59,9 @@
   <div class="product-info" *ngIf="Detalles">
     <h1 class="produt-name">{{ Detalles.nombre }}</h1>
 
-    <h2 class="price">${{ Detalles.precio }}</h2>
-
-    <p class="description">{{ Detalles.descripcion }}</p>
+    <h2 class="price">Precio ${{ Detalles.precio }}</h2>
+    <h2 class="description-title">Descripción</h2>
+    <p class="description">{{ Detalles.descripcion | slice:0:100 }}...</p>
 
     <!-- Opciones del Detalles -->
     <div class="product-options">
@@ -115,8 +116,24 @@
       </div>
     </div>
   </div>
+
+
+
 </div>
 
+<div class="description-container">
+  <h2 class="description-title">Descripción</h2>
+  <p class="description-summary">
+    {{ Detalles.descripcion }}
+          <!-- <span class="read-more" (click)="toggleDescription()"> -->
+      <!-- {{ mostrarDescripcionCompleta ? 'Leer menos' : 'Leer más' }} -->
+    <!-- </span> -->
+  </p>
+  <!-- <p class="description-full" *ngIf="mostrarDescripcionCompleta">
+    {{ Detalles.descripcion }}
+  </p> -->
+</div>
+</div>
 <div class="carousel-container">
   <h2 class="carousel-title">Accesorios incluidos en el look</h2>
   <div class="carousel">

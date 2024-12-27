@@ -1,0 +1,22 @@
+
+<p-dialog [(visible)]="displayModal" [modal]="true" [style]="{width: '450px'}" [draggable]="false" [resizable]="false">
+  <ng-template pTemplate="header">
+    <h3>Agregar  accesorio</h3>
+  </ng-template>
+
+  <form [formGroup]="projectForm" (ngSubmit)="createProject()">
+    <div class="p-field">
+      <label for="projectName">Nombre del accesorio</label>
+      <input type="text" id="projectName" pInputText formControlName="projectName" required>
+    </div>
+
+    <div class="p-field">
+      <label for="projectImage">Imagen del accesorio</label>
+      <input type="file" id="projectImage" accept="image/*" formControlName="projectImage" required>
+    </div>
+
+    <div class="p-grid p-justify-end">
+      <button pButton type="submit" label="Crear Proyecto" [disabled]="projectForm.invalid"></button>
+    </div>
+  </form>
+</p-dialog>

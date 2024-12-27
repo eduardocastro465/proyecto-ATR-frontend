@@ -59,6 +59,9 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
 import { HeaderPrincipalComponent } from './components/header-principal/header-principal.component';
 import { RegistroPoliComponent } from './components/registro-poli/registro-poli.component';
+import { AddAccesorioComponent } from './components/add-accesorio/add-accesorio.component';
+import { ListadoAccesorioComponent } from './components/listado-accesorio/listado-accesorio.component';
+import { ControlAccesorioView } from './views/control-accesorio/control-accesorio.view';
   // import { } from '../../shared/services/collapsed-state.service';
 // import {  SmartChartModule } from 'smart-webcomponents-angular/chart';
 // import { SmartChartModule
@@ -103,6 +106,9 @@ const MATERIALS = [ ButtonModule, DropdownModule, InputTextModule, CardModule,Ca
     NotificacionesComponent,
     HeaderPrincipalComponent,
     RegistroPoliComponent,
+    AddAccesorioComponent,
+    ListadoAccesorioComponent,
+    ControlAccesorioView,
 
   ],
   imports: [MATERIALS,ReactiveFormsModule,ToastModule ,FormsModule,CommonModule, FormsModule, AdminRoutingModule, FormsModule,HttpClientModule,],
