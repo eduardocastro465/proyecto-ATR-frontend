@@ -40,7 +40,7 @@ async ngOnInit() {
   async deleteDressItem(id: string) {
     try {
       this.dressItems = this.dressItems.filter(item => item.id !== id);
-      // await this.indexedDbService.eliminarProducto('apartados', id);
+      await this.indexedDbService.eliminarProducto(id);
     } catch (error) {
       console.error('Error al eliminar el producto:', error);
       // Aquí puedes manejar el error, por ejemplo, mostrando un mensaje al usuario

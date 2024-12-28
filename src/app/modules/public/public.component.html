@@ -1,14 +1,11 @@
+<!-- app.component.html -->
 <app-header [isMobile]="isMobile"></app-header>
 <main class="content-all">
-  <router-outlet  [isMobile]="isMobile"></router-outlet>
+  <router-outlet [isMobile]="isMobile"></router-outlet>
 </main>
 
-<app-footer></app-footer>
-<!-- </body> -->
+<button (click)="scrollToTop()" class="scroll-to-top-btn" *ngIf="showScrollButton">
+  <i class="pi pi-chevron-up"></i>
+</button>
 
-<!-- </body> -->
-<!-- <ng-chatbot-angular
-  [chatConfig]="config"
-  (onMessageInput)="onMessageInput($event)"
-  [serverResponse]="responses[responseIndex]">
-</ng-chatbot-angular> -->
+<app-footer></app-footer>

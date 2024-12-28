@@ -88,3 +88,24 @@ main {
 @media only screen and (max-width: 480px) {
   /* Estilos para pantallas muy pequeñas van aquí */
 }
+
+
+
+.scroll-to-top-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #ff5722; /* Color del botón */
+  color: white; /* Color del texto */
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-to-top-btn:hover {
+  background-color: #e64a19; /* Color al pasar el mouse */
+}

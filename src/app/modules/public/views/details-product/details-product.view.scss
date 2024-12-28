@@ -5,16 +5,17 @@ div.contiendescripcion{
   flex-wrap: wrap;
   background: white;
   width: 80%;
-  margin: 50px auto; /* Centrado horizontal */
+  margin: 20px auto; /* Centrado horizontal */
   padding: 20px;
   max-width: 1200px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Para un pequeño efecto de sombra */
+  box-shadow: 0 4px 6px rgba(136, 136, 136, 0.1); /* Para un pequeño efecto de sombra */
   .description-container {
     margin-top: 20px;
     .description-title {
       font-size: 1.5rem;
       font-weight: bold;
       margin-bottom: 10px;
+      // color: #f78b99;
       border-bottom: #cecece 2px solid;
     }
 
@@ -55,7 +56,8 @@ div.contiendescripcion{
 
   .product-info {
     width: 50%;
-    border: none;
+    padding: 10px;
+    // border: none;
 
   }
 
@@ -63,7 +65,7 @@ div.contiendescripcion{
   .actions {
     margin-top: 15px;
     // border: solid 0.5px #ccc;
-
+//
   }
 
   .add-to-cart {
@@ -92,7 +94,7 @@ div.contiendescripcion{
       width: 50px;
       height: 50px;
       cursor: pointer;
-      border: solid 1px #ddd;
+      border: solid 1px #f5f5f5;
       border-radius: 5px;
       transition: transform 0.2s;
 

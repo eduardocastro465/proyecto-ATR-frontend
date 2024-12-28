@@ -295,7 +295,7 @@ p-sidebar {
   // }
 }
 .sticky {
-  position: fixed !important;
+  position: static !important;
   top: 0;
   width: 100%;
   z-index: 10;
@@ -358,6 +358,16 @@ p-sidebar {
 }
 
 @media (max-width: 600px) {
+
+  .sticky {
+    position: fixed !important;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+    // background: var(--style-footer);
+    // box-shadow: 0 2px 5px #ebe3db7a;
+    transition: background-color 0.5s ease;
+  }
   .nav-one {
     background: none;
   }

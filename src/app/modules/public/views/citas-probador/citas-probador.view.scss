@@ -43,12 +43,32 @@
           flex: 1;
         }
 
+        // .delete-btn {
+        //   background-color: transparent;
+        //   border: none;
+        //   cursor: pointer;
+        // }
+
+
         .delete-btn {
-          background-color: transparent;
-          color: #f78b99;
-          border: none;
-          cursor: pointer;
+          display: flex;              // Alinea el ícono y el texto en fila
+          align-items: center;        // Centra verticalmente el contenido
+          background-color: transparent; // Fondo transparente
+          border: none;               // Sin borde
+          cursor: pointer;            // Cambia el cursor al pasar por encima
+          font-size: 14px;            // Tamaño de la fuente
+
+            color: red;
+          &:hover {
+            color: rgb(255, 103, 103);           // Cambia el color al pasar el mouse (opcional)
+          }
+
+          i {
+            margin-right: 5px;        // Espacio entre el ícono y el texto
+            font-size: 14px;          // Ajusta el tamaño del ícono según sea necesario
+          }
         }
+
       }
 
       .add-dress-btn {

@@ -18,7 +18,7 @@ export class PublicComponent implements OnInit {
   constructor(private router: Router,private swPush: SwPush) {}
 
   ngOnInit(): void {
-    this.subscription() 
+    this.subscription()
     const ua = navigator.userAgent;
     console.log(ua);
 
@@ -95,7 +95,7 @@ export class PublicComponent implements OnInit {
   //   this.isScrolled = scrollPosition > 10;
   // }
 
-  
+
   // title = 'chat';
   // responses = [
   //   'Hi! You can contact us via contactchatbot@chat.com',
@@ -103,22 +103,34 @@ export class PublicComponent implements OnInit {
   //   'Thank you for contacting us. We will get back to you shortly.'
   // ];
   // responseIndex = -1;
-  // loading = false; 
+  // loading = false;
   // config = {
   //   title: 'Chat Bot',
   //   subTitle: 'Welcome!',
   // };
-  
+
   // setData(message: string) {
   //   this.loading = true;
   //   setTimeout(() => {
 
   //     this.responseIndex = (this.responseIndex + 1) % this.responses.length;
-  //     this.loading = false; 
-  //   }, 1000); 
+  //     this.loading = false;
+  //   }, 1000);
   // }
-  
+
   // onMessageInput(message: string) {
   //   this.setData(message);
   // }
+  // isMobile: boolean = false; // Cambia esto según tu lógica
+
+  showScrollButton: boolean = false;
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    this.showScrollButton = window.scrollY > 200; // Muestra el botón después de desplazarse 200px
+  }
+
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 }

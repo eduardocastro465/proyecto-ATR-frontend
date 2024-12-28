@@ -1,8 +1,8 @@
 <div class="appointment-container">
-  <h1 class="header">Citas en Probador</h1>
-  <p class="subheader">
+  <!-- <h1 class="header">Citas en Probador</h1> -->
+  <!-- <p class="subheader">
     Probador en línea: Elige tus 3 vestidos favoritos y te los llevamos a la tienda que tú quieras (SIN COSTO) para que te los puedas medir
-  </p>
+  </p> -->
 
   <div class="content">
     <!-- Left Column: Dress Summary -->
@@ -11,12 +11,16 @@
       <div class="dress-item" *ngFor="let item of dressItems">
         <img [src]="item.imagenPrincipal" [alt]="item.nombre" />
         <div class="details">
-          <h3>{{ item.nombre }}</h3>
+          <h5>{{ item.nombre }}</h5>
           <!-- <p>Color: {{ item.color }}</p> -->
           <!-- <p>Talla: {{ item.size }}</p> -->
-          <p>Total: ${{ item.precio }}</p>
+          <p>Precio: ${{ item.precio }}</p>
         </div>
-        <button class="delete-btn" (click)="deleteDressItem(item.id)">Eliminar</button>
+        <button class="delete-btn" (click)="deleteDressItem(item.id)">
+          <i class="pi pi-trash" style="color: red;"></i> <!-- Ícono de basura -->
+          Eliminar
+        </button>
+
       </div>
       <!-- <button class="add-dress-btn" (click)="addDressItem()">Agregar otro vestido</button> -->
     </div>
@@ -27,7 +31,13 @@
       <form>
         <div class="form-group">
           <label for="date">Fecha</label>
-          <input type="date" id="date" name="date" [(ngModel)]="selectedDate" required />
+          <input
+            type="date"
+            id="date"
+            name="date"
+            [(ngModel)]="selectedDate"
+            required
+          />
         </div>
         <div class="form-group">
           <label for="time">Hora</label>
@@ -38,26 +48,61 @@
         </div>
         <div class="form-group">
           <label for="name">Nombre</label>
-          <input type="text" id="name" name="name" [(ngModel)]="name" required />
+          <input
+            type="text"
+            id="name"
+            name="name"
+            [(ngModel)]="name"
+            required
+          />
         </div>
         <div class="form-group">
           <label for="lastname">Apellidos</label>
-          <input type="text" id="lastname" name="lastname" [(ngModel)]="lastName" required />
+          <input
+            type="text"
+            id="lastname"
+            name="lastname"
+            [(ngModel)]="lastName"
+            required
+          />
         </div>
         <div class="form-group">
           <label for="phone">Celular (WhatsApp de preferencia)</label>
-          <input type="tel" id="phone" name="phone" [(ngModel)]="phone" required />
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            [(ngModel)]="phone"
+            required
+          />
         </div>
         <div class="form-group">
           <label for="email">Email</label>
-          <input type="email" id="email" name="email" [(ngModel)]="email" required />
+          <input
+            type="email"
+            id="email"
+            name="email"
+            [(ngModel)]="email"
+            required
+          />
         </div>
       </form>
       <p class="note">
-        <strong>Importante:</strong> Dentro para confirmar tu cita te va a llegar un SMS a tu número de teléfono...
+        <strong>Importante:</strong>Al realizar un apartado tienes 30 días
+        naturales para realizar la liquidación de tu pedido.
+        <br>
+        La liquidación la puedes hacer en tienda o en línea y te recomendamos contactarnos por
+        WhastApp para confirmar la sucursal y/o datos de tu domicilio.
+        <br>
+        Los productos de tu apartado estarán reservados solo para ti y en caso de
+        que tengamos un detalle con tu apartado te lo haremos saber.
+        <br>
+        En caso de que no hagas tu liquidación máximo en 30 días se te hará un rembolso en
+        monedero electrónico a tu cuenta en Carlo Giovanni, saldo que podrá ser
+        utilizado en el momento que tu quieras. En cuanto al vestido que has
+        apartado, este quedará disponible para venta pasando los 30 días.
       </p>
       <!-- <button class="confirm-btn" (click)="confirmAppointment()">Confirmar cita</button> -->
     </div>
-
   </div>
 </div>

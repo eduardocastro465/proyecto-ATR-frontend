@@ -1,140 +1,142 @@
 <div class="contiendescripcion">
-<div class="product-detail-container">
-  <div class="product-img">
-    <div class="thumbnail-images">
-      <ng-container *ngIf="Detalles">
+  <div class="product-detail-container">
+    <div class="product-img">
+      <div class="thumbnail-images">
+        <ng-container *ngIf="Detalles">
+          <img
+            *ngFor="let image of Detalles.otrasImagenes"
+            [src]="image"
+            alt="Thumbnail"
+            (click)="changeMainImage(image)"
+            class="thumbnail"
+          />
+        </ng-container>
+      </div>
+      <div class="product-images">
+        <!-- <ng-container *ngIf="Detalles"> -->
         <img
-          *ngFor="let image of Detalles.otrasImagenes"
-          [src]="image"
-          alt="Thumbnail"
-          (click)="changeMainImage(image)"
-          class="thumbnail"
+          *ngIf="Detalles"
+          [src]="Detalles.imagenPrincipal"
+          alt="Product Main Image"
+          class="main-image"
         />
-      </ng-container>
+        <!-- </ng-container> -->
+      </div>
     </div>
-    <div class="product-images">
-      <!-- <ng-container *ngIf="Detalles"> -->
-      <img
-        *ngIf="Detalles"
-        [src]="Detalles.imagenPrincipal"
-        alt="Product Main Image"
-        class="main-image"
-      />
-      <!-- </ng-container> -->
+
+    <div class="image-carousel" *ngIf="!isLoading && Detalles">
+      <p-galleria
+        [value]="images"
+        [activeIndex]="selectedImageIndex"
+        [showIndicators]="true"
+        [showThumbnails]="false"
+        [responsiveOptions]="responsiveOptions"
+        [circular]="true"
+        class="styled-galleria"
+        (activeIndexChange)="onImageChange($event)"
+        (e2eNext)="nextImage()"
+      >
+        <ng-template pTemplate="item" let-item>
+          <img
+            [src]="item.itemImageSrc"
+            class="carousel-image"
+            alt="Product Image"
+          />
+        </ng-template>
+      </p-galleria>
+
+      <!-- Icono de navegación izquierda -->
+      <button class="carousel-nav left" (click)="prevImage()">
+        <i class="pi pi-chevron-left"></i>
+      </button>
+
+      <!-- Icono de navegación derecha -->
+      <button class="carousel-nav right" (click)="nextImage()">
+        <i class="pi pi-chevron-right"></i>
+      </button>
     </div>
-  </div>
 
-  <div class="image-carousel" *ngIf="!isLoading && Detalles">
-    <p-galleria
-      [value]="images"
-      [activeIndex]="selectedImageIndex"
-      [showIndicators]="true"
-      [showThumbnails]="false"
-      [responsiveOptions]="responsiveOptions"
-      [circular]="true"
-      class="styled-galleria"
-      (activeIndexChange)="onImageChange($event)"
-      (e2eNext)="nextImage()"
-    >
-      <ng-template pTemplate="item" let-item>
-        <img
-          [src]="item.itemImageSrc"
-          class="carousel-image"
-          alt="Product Image"
-        />
-      </ng-template>
-    </p-galleria>
+    <div class="product-info" *ngIf="Detalles">
+      <h1 class="product-name">{{ Detalles.nombre }}</h1>
 
-    <!-- Icono de navegación izquierda -->
-    <button class="carousel-nav left" (click)="prevImage()">
-      <i class="pi pi-chevron-left"></i>
-    </button>
-
-    <!-- Icono de navegación derecha -->
-    <button class="carousel-nav right" (click)="nextImage()">
-      <i class="pi pi-chevron-right"></i>
-    </button>
-  </div>
-
-  <div class="product-info" *ngIf="Detalles">
-    <h1 class="produt-name">{{ Detalles.nombre }}</h1>
-
-    <h2 class="price">Precio ${{ Detalles.precio }}</h2>
-    <h2 class="description-title">Descripción</h2>
-    <p class="description">{{ Detalles.descripcion | slice:0:100 }}...</p>
-
-    <!-- Opciones del Detalles -->
-    <div class="product-options">
-      <!-- Talla -->
-      <div class="product-detail">
-        <label>Talla:</label>
-        <span
-          class="circle-option"
-          *ngFor="let talla of Detalles.tallasDisponibles"
-          >{{ talla }}</span
-        >
+      <div class="availability">
+        <i class="fas fa-store"></i> <!-- Ícono de tienda -->
+        <span>Disponible en tienda</span>
       </div>
+    <!-- </div> -->
+     <p class="price">${{ Detalles.precio }}</p>
+      <!-- <h2 class="description-title">Descripción</h2> -->
+      <!-- <p class="description">{{ Detalles.descripcion | slice:0:100 }}...</p> -->
 
-      <!-- Textura -->
-      <div class="product-detail">
-        <label>Textura:</label>
-        <span class="circle-option">Cuero</span>
-      </div>
+      <!-- Opciones del Detalles -->
+      <div class="product-options">
+        <!-- Talla -->
+        <div class="product-detail">
+          <p>Talla:</p>
+          <span
+            class="circle-option"
+            *ngFor="let talla of Detalles.tallasDisponibles"
+            >{{ talla }}</span
+          >
+        </div>
 
-      <!-- Color -->
-      <div class="product-detail">
-        <label>Color:</label>
-        <span class="color-option" style="background-color: #8b4513"></span>
-        <!-- Color marrón -->
-        <span class="color-option" style="background-color: #c0c0c0"></span>
-        <!-- Color plata -->
-      </div>
+        <!-- Textura -->
+        <div class="product-detail">
+          <p>Textura:</p>
+          <span class="circle-option">Cuero</span>
+        </div>
 
-      <!-- Estado (Nuevo o para Renta) -->
-      <div class="product-detail">
-        <label>Estado:</label>
-        <span class="circle-option"
-          >{{ Detalles.estado.disponible ? 'Nuevo' : 'Para Renta' }}</span
-        >
-      </div>
+        <!-- Color -->
+        <div class="product-detail">
+          <p>Color:</p>
+          <span class="color-option" style="background-color: #8b4513"></span>
+          <!-- Color marrón -->
+          <span class="color-option" style="background-color: #c0c0c0"></span>
+          <!-- Color plata -->
+        </div>
 
-      <!-- Cantidad -->
-      <div class="product-detail">
-        <label>Cantidad:</label>
-        <span class="circle-option">1</span>
-      </div>
+        <!-- Estado (Nuevo o para Renta) -->
+        <div class="product-detail">
+          <p>Estado:</p>
+          <span class="circle-option"
+            >{{ Detalles.estado.disponible ? 'Nuevo' : 'Para Renta' }}</span
+          >
+        </div>
 
-      <!-- Botón para agregar al carrito -->
-      <button class="add-to-cart">Me lo quiero probar</button>
+        <!-- Cantidad -->
+        <div class="product-detail">
+          <p>Cantidad:</p>
+          <span class="circle-option">1</span>
+        </div>
 
-      <!-- Ícono de compartir enlace -->
-      <div class="share-link">
-        <label>Compartir:</label>
-        <button class="share-button" title="Compartir enlace">
-          <i class="pi pi-share-alt"></i>
-        </button>
+        <!-- Botón para agregar al carrito -->
+        <button class="add-to-cart">Me lo quiero probar</button>
+
+        <!-- Ícono de compartir enlace -->
+        <div class="share-link">
+          <p>Compartir:</p>
+          <button class="share-button" title="Compartir enlace">
+            <i class="pi pi-share-alt"></i>
+          </button>
+        </div>
       </div>
     </div>
   </div>
 
-
-
-</div>
-
-<div class="description-container">
+  <!-- <div class="description-container"> -->
   <h2 class="description-title">Descripción</h2>
   <p class="description-summary">
     {{ Detalles.descripcion }}
-          <!-- <span class="read-more" (click)="toggleDescription()"> -->
-      <!-- {{ mostrarDescripcionCompleta ? 'Leer menos' : 'Leer más' }} -->
+    <!-- <span class="read-more" (click)="toggleDescription()"> -->
+    <!-- {{ mostrarDescripcionCompleta ? 'Leer menos' : 'Leer más' }} -->
     <!-- </span> -->
   </p>
   <!-- <p class="description-full" *ngIf="mostrarDescripcionCompleta">
     {{ Detalles.descripcion }}
   </p> -->
-</div>
-</div>
-<div class="carousel-container">
+  <!-- </div> -->
+  <!-- </div> -->
+  <!-- <div class="carousel-container"> -->
   <h2 class="carousel-title">Accesorios incluidos en el look</h2>
   <div class="carousel">
     <div class="carousel-item" *ngFor="let Detalles of productos">
@@ -152,4 +154,5 @@
       <!-- <button class="btn-view">Ver Detalles</button> -->
     </div>
   </div>
+  <!-- </div> -->
 </div>

@@ -50,6 +50,7 @@ import { PublicModule } from '../public/public.module';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { NgClass } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { LoginModalComponent } from './view/login-modal/login-modal.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { RouterModule } from '@angular/router';
     SignInView,
     VerificarCodigoView,
     RegistroView,
+    LoginModalComponent,
   ],
   imports: [
     InputOtpModule,

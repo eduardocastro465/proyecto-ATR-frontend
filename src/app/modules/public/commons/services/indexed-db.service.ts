@@ -49,5 +49,16 @@ export class IndexedDbService {
     }
   }
 
+  async eliminarProducto(producto: any) {
+    try {
+      console.log('Producto to save:', producto);
+      const result = await this.db.delete('apartados', producto);
+      console.log('Producto saved successfully:', result);
+      return result;
+    } catch (error) {
+      console.error('Error saving producto:', error);
+      throw error;
+    }
+  }
   // Add more methods as needed for handling rented products
 }
