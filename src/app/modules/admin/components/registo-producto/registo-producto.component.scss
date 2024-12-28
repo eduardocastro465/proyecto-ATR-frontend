@@ -5,6 +5,14 @@
     border: 1px solid #ccc;
     padding: 20px;
     font-family: Arial, sans-serif;
+
+    .group-input{
+      display: grid; /* Habilita el grid en el contenedor */
+      grid-template-columns: repeat(4, 1fr); /* Dos columnas de igual tamaño */
+      gap: 10px; /* Espacio entre los elementos del grid */
+      // display: flex;
+      flex-direction: row;
+    }
 }
 
 /* Títulos */
@@ -16,21 +24,43 @@
 /* Estilos generales para inputs y select */
 .form-container input[type="text"],
 .form-container input[type="number"],
-.form-container select,
-.form-container textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
+.form-container select{
+  // width: 50%;
+  gap: 10px;
+  // display: g;
+  padding: 10px;
+  margin: 5px 0 20px;
+  border: 1px solid #ccc;
+    border-radius: 2px;
+    font-size: 10px;
 }
-
+.form-container textarea {
+  width: 100%;
+}
 .form-container select {
     appearance: none;
     background-color: #f9f9f9;
     padding-right: 20px;
 }
+.icons-bn{
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+justify-content: space-between;
+}
+.upload-button {
+  display: inline-flex; /* Asegura que el contenido esté en línea y centrado */
+  align-items: center; /* Centra verticalmente el ícono */
+  cursor: pointer; /* Cambia el cursor a pointer al pasar el mouse */
+  margin-right: 10px; /* Espacio entre el ícono de carga y el ícono de eliminar */
+}
+
+.delete-icon {
+  cursor: pointer; /* Cambia el cursor a pointer al pasar el mouse */
+  color: red; /* Cambia el color del ícono de eliminar si lo deseas */
+  font-size: 1.5rem; /* Ajusta el tamaño del ícono de eliminar */
+}
+
 .img-principal{
     display: flex;
     flex-direction: column;
@@ -41,7 +71,7 @@
     .additional-images{
         display: flex;
         flex-direction: column;
-    
+
     }
 }
 

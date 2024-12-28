@@ -158,6 +158,13 @@ resizeSidebar(event: MouseEvent) {
   redirectToAccesorios(route: string): void {
     this.router.navigate([route === "login" ? "/auth/login" : `/admin/control-Accesorios/${route}`]);
   }
+  
+  redirectToAccesoriosYvestidos(route: string): void {
+    this.router.navigate([route === "login" ? "/auth/login" : `/admin/control-asignar-acs-vestido-renta/${route}`]);
+  }
+  redirectToAccesoriosRenta(route: string): void {
+    this.router.navigate([route === "login" ? "/auth/login" : `/admin/${route}`]);
+  }
 
   redirectToRenta(route: string): void {
     this.router.navigate([route === "login" ? "/auth/login" : `/admin/control-renta/${route}`]);

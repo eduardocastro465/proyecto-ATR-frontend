@@ -34,6 +34,8 @@ import { RegistroPoliComponent } from './components/registro-poli/registro-poli.
 import { AddAccesorioComponent } from './components/add-accesorio/add-accesorio.component';
 import { ControlAccesorioView } from './views/control-accesorio/control-accesorio.view';
 import { ListadoAccesorioComponent } from './components/listado-accesorio/listado-accesorio.component';
+import { AsignarAccesoriosVestidoComponent } from './components/asignar-accesorios-vestido/asignar-accesorios-vestido.component';
+import { ListadoAcsVestidoRentaComponent } from './components/listado-acs-vestido-renta/listado-acs-vestido-renta.component';
 
 const routes: Routes = [
   {
@@ -97,6 +99,26 @@ const routes: Routes = [
             pathMatch: 'full',
           },
         ],
+      },
+      {
+        path: 'control-asignar-acs-vestido-renta',
+            component:ControlAccesorioView,
+        children: [
+            {
+
+                path: 'lista-vestidos-acss',
+                component: ListadoAcsVestidoRentaComponent,
+              },
+              {
+                  path: 'asignar-vestido-accesorio',
+              component: AsignarAccesoriosVestidoComponent,
+          },
+        //   {
+        //     path: '',
+        //     redirectTo: 'registro-producto',
+        //     pathMatch: 'full',
+        //   },
+             ]     // ],
       },
       {
         path: 'control-Accesorios',

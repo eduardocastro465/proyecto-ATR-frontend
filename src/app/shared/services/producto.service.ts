@@ -32,6 +32,9 @@ export class ProductoService {
   obtenerProductos(): Observable<Producto[]> {
     return this.http.get<Producto[]>(`${environment.api}/producto/`);
   }
+  obtenerProductosAccesorio(): Observable<any> {
+    return this.http.get<any>(`${environment.api}/vestidos-accesorios/`);
+  }
   obtenerDetalleProductoById(id:any): Observable<Producto[]> {
     return this.http.get<Producto[]>(`${environment.api}/producto/byId/${id}`);
   }

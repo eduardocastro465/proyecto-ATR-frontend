@@ -1,2 +1,42 @@
-<button type="button" (click)="open()">Agregar nuevo accesorio</button>
-<app-add-accesorio [displayModal]="displayModal"></app-add-accesorio>
+<p-toast></p-toast>
+
+<section>
+  <h2>Lista de Productos</h2>
+
+  <button type="button" (click)="open()">Agregar Accesorio</button>
+  <app-add-accesorio [displayModal]="displayModal"></app-add-accesorio>
+
+  <p-table #dt [value]="allProducts" selectionMode="single" dataKey="_id" [rows]="rows" [totalRecords]="totalRecords"
+    [first]="first" (onPageChange)="onPageChange($event)">
+    <ng-template pTemplate="caption">
+      <span class="p-input-icon-left">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input pInputText style="width: 150%; padding-left: 20%;" type="text" (input)="onGlobalFilter($event)" placeholder="Buscar producto..."
+          [(ngModel)]="filterText" />
+      </span>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Imagen</th>
+        <th pSortableColumn="nombre">Nombre <p-sortIcon field="nombre"></p-sortIcon></th>
+        <th>Disponible</th>
+        <th>Acciones</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-product>
+      <tr>
+        <td>
+          <img [src]="product.imagenPrincipal" alt="Imagen del producto" class="product-image" />
+        </td>
+        <td>{{ product.nombre }}</td>
+        <td>{{ product.estado.disponible ? 'Sí' : 'No' }}</td>
+        <td>
+          <button (click)="editProduct(product)" class="custom-btn custom-btn-primary">Editar</button>
+          <button (click)="deleteProduct(product._id)" class="custom-btn custom-btn-danger">Eliminar</button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</section>

@@ -67,13 +67,23 @@ import { ControlAccesorioView } from './views/control-accesorio/control-accesori
 // import { SmartChartModule
 // import { ChartModule } from 'smart-webcomponents-angular/chart'
 
+// import { PickListModule } from 'primeng/picklist';
+// import { PickListModule } from 'primeng/picklist';
+// import { DragDropModule } from 'primeng/dragdrop';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { AsignarAccesoriosVestidoComponent } from './components/asignar-accesorios-vestido/asignar-accesorios-vestido.component';
+
 // import { DropdownModule } from 'primeng/dropdown';
 // import { AvatarModule } from 'primeng/avatar';
 // import { AvatarGroupModule } from 'primeng/avatargroup';
 
+import { PickListModule } from 'primeng/picklist';
+import { ConstrolAccesoriosVestidoView } from './views/constrol-accesorios-vestido/constrol-accesorios-vestido.view';
+import { AsignarAcsVestidoRentaComponent } from './components/asignar-acs-vestido-renta/asignar-acs-vestido-renta.component';
+import { ListadoAcsVestidoRentaComponent } from './components/listado-acs-vestido-renta/listado-acs-vestido-renta.component';
 const VIEWS = [HomeView, FooterComponent];
 
-const MATERIALS = [ ButtonModule, DropdownModule, InputTextModule, CardModule,CalendarModule, InputNumberModule, ToastrModule,TabViewModule,
+const MATERIALS = [ DragDropModule,ButtonModule, DropdownModule, InputTextModule, CardModule,CalendarModule, InputNumberModule, ToastrModule,TabViewModule,
   AvatarModule, PaginatorModule,AvatarGroupModule, DialogModule,TableModule,IconFieldModule,InputIconModule
 ]
 @NgModule({
@@ -109,9 +119,13 @@ const MATERIALS = [ ButtonModule, DropdownModule, InputTextModule, CardModule,Ca
     AddAccesorioComponent,
     ListadoAccesorioComponent,
     ControlAccesorioView,
+    AsignarAccesoriosVestidoComponent,
+    ConstrolAccesoriosVestidoView,
+    AsignarAcsVestidoRentaComponent,
+    ListadoAcsVestidoRentaComponent,
 
   ],
-  imports: [MATERIALS,ReactiveFormsModule,ToastModule ,FormsModule,CommonModule, FormsModule, AdminRoutingModule, FormsModule,HttpClientModule,],
+  imports: [ MATERIALS,ReactiveFormsModule,ToastModule ,FormsModule,CommonModule, FormsModule, AdminRoutingModule, FormsModule,HttpClientModule,],
   providers: [
     UsuarioService,
     ControlAdministrativaService,

@@ -89,7 +89,7 @@
         (click)="toggleSubmenu('Accesorios-submenu');setActiveLink($event)"
       >
         <i *ngIf="!isCollapsed" class="pi pi-sort-down-fill submenu-toggle" [class.open]="openSubmenu === 'Accesorios-submenu'"></i>
-        <i class="pi pi-briefcase"></i>
+        <i class="pi pi-shopping-bag"></i>
         <span class="link-text">Accesorios</span>
       </a>
       <ul *ngIf="openSubmenu === 'Accesorios-submenu'" class="submenu" id="Accesorios-submenu">
@@ -101,6 +101,30 @@
         <li>
           <a tabindex="0" (click)="redirectToAccesorios('registro-Accesorios');setActiveLink($event)" class="nav-link">
             <i class="pi pi-plus"></i> Agregar accesorio
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="nav-item">
+      <a
+        tabindex="0"
+        class="nav-link"
+        [class.open]="openSubmenu === 'Accesorios-renta-submenu'"
+        (click)="toggleSubmenu('Accesorios-renta-submenu');setActiveLink($event)"
+      >
+        <i *ngIf="!isCollapsed" class="pi pi-sort-down-fill submenu-toggle" [class.open]="openSubmenu === 'Accesorios-renta-submenu'"></i>
+        <i class="pi pi-briefcase"></i>
+        <span class="link-text">   Vestidos & Accesorios</span>
+      </a>
+      <ul *ngIf="openSubmenu === 'Accesorios-renta-submenu'" class="submenu" id="Accesorios-renta-submenu">
+        <li>
+          <a tabindex="0"  (click)="redirectToAccesoriosYvestidos('lista-vestidos-acss');setActiveLink($event)" class="nav-link">
+            <i class="pi pi-list"></i>Vestidos & Accesorios
+          </a>
+        </li>
+        <li>
+          <a tabindex="0" (click)="redirectToAccesoriosYvestidos('asignar-vestido-accesorio');setActiveLink($event)" class="nav-link">
+            <i class="pi pi-plus"></i> Incuir A look
           </a>
         </li>
       </ul>

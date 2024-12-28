@@ -9,7 +9,7 @@ declare const $: any;
   selector: 'app-listado-productos',
   templateUrl: './listado-productos.component.html',
   styleUrls: [
-    '../../../../shared/styles/tablePrime.scss',
+    '../../../../shared/styles/tablePrime.scss',  
     '../../../../shared/styles/form.scss',
   ],
 })
@@ -28,7 +28,7 @@ export class ListadoProductosComponent implements OnInit {
   constructor(private productoS: ProductoService) {}
   abrirModal(){
     // console.log( this.mostrarModalAddVestido)
-    this.mostrarModalAddVestido=!this.mostrarModalAddVestido;
+    this.mostrarModalAddVestido=true;
   }
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.

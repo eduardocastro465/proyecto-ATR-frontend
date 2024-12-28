@@ -9,7 +9,6 @@ import { Producto } from '../../../../shared/models/Producto.model';
   styleUrls: ['./registo-producto.component.scss'],
 })
 export class RegistoProductoComponent implements OnInit {
-
   @Input() mostrarModalAddVestido: boolean = false;
 
   // abrirModal() {
@@ -42,9 +41,7 @@ export class RegistoProductoComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
   get otrasImagenes(): FormArray {
     return this.productoForm.get('otrasImagenes') as FormArray;
@@ -65,11 +62,15 @@ export class RegistoProductoComponent implements OnInit {
     }
   }
 
+  // Método para eliminar la imagen principal
+  eliminarImagenPrincipal() {
+    this.productoForm.get('imagenPrincipal')?.setValue(''); // Limpia el valor del control
+  }
 
-
-
-
-
+  // Método para eliminar una imagen del FormArray
+  eliminarImagen(index: number) {
+    this.otrasImagenes.removeAt(index);
+  }
   onFileSelected(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     if (inputElement.files && inputElement.files.length > 0) {
@@ -127,12 +128,14 @@ export class RegistoProductoComponent implements OnInit {
     const productoNombre = this.productoForm.get('nombre')?.value;
     const productoCategoria = this.productoForm.get('categoria')?.value;
     const productoPrecio = this.productoForm.get('precio')?.value;
-    const productoTallasDisponibles	 = this.productoForm.get('talla')?.value;
+    const productoTallasDisponibles = this.productoForm.get('talla')?.value;
     const productoDescripcion = this.productoForm.get('descripcion')?.value;
 
     // Verificar si se ha seleccionado una imagen principal
     if (!this.imagenPrincipal) {
-      console.error('No se ha seleccionado ningún archivo para la imagen principal.');
+      console.error(
+        'No se ha seleccionado ningún archivo para la imagen principal.'
+      );
       return;
     } else {
       console.log('Imagen principal seleccionada:', this.imagenPrincipal);
@@ -177,5 +180,4 @@ export class RegistoProductoComponent implements OnInit {
       }
     );
   }
-
 }

@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
     <div class="hero">
       <div class="hero-content">
         <p class="subtitle">Especial de Verano 2024</p>
-        <h1 class="title">La Mejor Compra de Moda en Línea</h1>
+        <h1 class="title">Venta Y Renta </h1>
         <p class="description">
           LO MÁS TOP DE VESTIDOS EN RENTA PARA FIESTAS, UN ESPACIO DONDE
           ENCONTRARÁS LO QUE ESTÁS BUSCANDO ✨.
@@ -26,20 +26,22 @@ import { Component } from '@angular/core';
     // background-size: 100% auto; // Ajusta el tamaño de la imagen
     background-position: 0 56%;
     background-attachment: fixed; /* Parallax effect */
-
-  // filter: none;
   // background-image: url("https://res.cloudinary.com/dfd0b4jhf/image/upload/v1709327171/public__/m2z2hvzekjw0xrmjnji4.jpg");
-  mask-image: linear-gradient(black  71%, transparent);
-    padding: 0 2rem;
+  mask-image: linear-gradient(black 80%, transparent);
+    padding: 0 2rem;/* Aplicar filtro de desenfoque y tono gris */
+    
   }
-
+  
   .hero-content {
     max-width: 500px;
+    filter: opacity(8);
     color: #fff;
     position: relative;
   z-index: 1;
   /* margin: auto; */
   padding: 2rem;
+  /* Agregar un fondo semi-transparente para mejorar la legibilidad */
+    // background-color: rgba(0,0,0,0.5);
   color: #fff;
   text-align: left;
     animation: fadeIn 1.5s ease-out;
@@ -47,7 +49,7 @@ import { Component } from '@angular/core';
 
   .subtitle {
     font-size: 1.2rem;
-    color: #d1d1d1;
+    color:rgb(243, 243, 243);
     margin-bottom: 1rem;
   }
 
@@ -62,7 +64,7 @@ import { Component } from '@angular/core';
     font-size: 1rem;
     line-height: 1.5;
     margin-bottom: 2rem;
-    color: #dcdcdc;
+    color:rgb(245, 245, 245);
   }
 
   .cta {

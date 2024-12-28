@@ -1,0 +1,51 @@
+<p-toast></p-toast>
+
+<section>
+  <h2>Lista de Productos</h2>
+
+  <p-table #dt [value]="allProducts" selectionMode="single" dataKey="_id">
+    
+    <ng-template pTemplate="caption">
+      <span class="p-input-icon-left">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input pInputText style="width: calc(100% - 30px); padding-left: 20%;" type="text" 
+               (input)="onGlobalFilter($event)" placeholder="Buscar producto..." [(ngModel)]="filterText" />
+      </span>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Imagen</th>
+        <th>Nombre del Vestido</th>
+        <th>Categoría</th>
+        <th>Precio</th>
+        <th>Accesorios</th>
+        <th>Acciones</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-producto>
+      <tr>
+        <td>
+          <img [src]="producto.vestido.imagenPrincipal" alt="Imagen del vestido" class="product-image" />
+        </td>
+        <td>{{ producto.vestido.nombre }}</td>
+        <td>{{ producto.vestido.categoria }}</td>
+        <td>{{ producto.vestido.precio | currency }}</td>
+        <td>
+          <ul>
+            <li *ngFor="let accesorio of producto.accesorios">
+              {{ accesorio.nombre }} 
+              <img [src]="accesorio.imagenPrincipal" alt="Imagen del accesorio" class="product-image-small" />
+            </li>
+          </ul>
+        </td>
+        <td>
+          <button (click)="editProduct(producto)" class="custom-btn custom-btn-primary">Editar</button>
+          <button (click)="deleteProduct(producto._id)" class="custom-btn custom-btn-danger">Eliminar</button>
+        </td>
+      </tr>
+    </ng-template>
+
+   </p-table>
+</section> 

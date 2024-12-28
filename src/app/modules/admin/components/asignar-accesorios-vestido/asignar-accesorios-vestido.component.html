@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Vestidos</h2>
+      <select [(ngModel)]="selectedVestido" class="form-control">
+        <option *ngFor="let vestido of vestidos" [value]="vestido._id">{{ vestido.nombre }}</option>
+      </select>
+    </div>
+    <div class="col-md-6">
+      <button class="btn btn-primary" (click)="guardarAccesorios()">Guardar Accesorios</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Accesorios Disponibles</h2>
+      <div class="container" cdkDropList id="accesorios-disponibles" [cdkDropListConnectedTo]="['accesorios-asignados']" [cdkDropListData]="accesoriosDisponibles" (cdkDropListDropped)="drop($event)">
+        <div class="item" cdkDrag *ngFor="let accesorio of accesoriosDisponibles">
+          {{ accesorio.nombre }}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h2>Accesorios Asignados</h2>
+      <div class="container" cdkDropList id="accesorios-asignados" [cdkDropListConnectedTo]="['accesorios-disponibles']" [cdkDropListData]="accesoriosAsignados" (cdkDropListDropped)="drop($event)">
+        <div class="item" cdkDrag *ngFor="let accesorio of accesoriosAsignados">
+          {{ accesorio.nombre }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
