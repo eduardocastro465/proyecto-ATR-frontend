@@ -242,7 +242,14 @@ header="Header"
         </div>
       </li>
       <li>
-        <i  (click)="redirectTo('CitasProbador')" class="pi pi-calendar"></i>
+        <!-- <i  (click)="redirectTo('CitasProbador')" class="pi pi-calendar">{{dressItems[].length}}</i> -->
+
+        <div class="counter-container" (click)="redirectTo('CitasProbador')">
+          <i class="pi pi-calendar"></i>
+          <span class="counter-badge"><strong>{{ dressItems.length }}</strong></span>
+        </div>
+
+
       </li>
       <li class="IsMobile" *ngIf="!isMobile">
         <!-- <a tabindex="0" class="nav-icon" (click)="openModal()"> -->

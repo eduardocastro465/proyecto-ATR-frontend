@@ -56,6 +56,7 @@ import { CitasProbadorView } from './views/citas-probador/citas-probador.view';
 // import { DrawerModule } from 'primeng/drawer';
 import { ResultsComponent } from './views/results/results.component';
 import { HeroImgComponent } from './components/hero-img/hero-img.component';
+import { IndexedDbService } from './commons/services/indexed-db.service';
 // import { DialogModule } from 'primeng/dialog';
 
 const MATERIALS =[PasswordModule,
@@ -75,7 +76,7 @@ const VIEWS=[HomeView,PublicComponent,PerfilView, AcercaDeView,DetailsProductVie
   mensageservice,
   UsuarioService,
   ToastrService,
-  MessageService,
+  MessageService,IndexedDbService,
   ConfirmationService,SignInService,
   SignUpService,ProductoService,UsuarioService,DatosEmpresaService,ControlAdministrativaService,ThemeServiceService],
 })

@@ -8,27 +8,17 @@
     <!-- Left Column: Dress Summary -->
     <div class="summary">
       <h2>Resumen de probador</h2>
-      <div class="dress-item">
-        <img src="https://via.placeholder.com/100" alt="Vestido Lavanda" />
+      <div class="dress-item" *ngFor="let item of dressItems">
+        <img [src]="item.imagenPrincipal" [alt]="item.nombre" />
         <div class="details">
-          <h3>Vestido Largo CGEE32288</h3>
-          <p>Color: LAVANDA</p>
-          <p>Talla: 8</p>
-          <p>Total: $16,999</p>
+          <h3>{{ item.nombre }}</h3>
+          <!-- <p>Color: {{ item.color }}</p> -->
+          <!-- <p>Talla: {{ item.size }}</p> -->
+          <p>Total: ${{ item.precio }}</p>
         </div>
-        <button class="delete-btn">Eliminar</button>
+        <button class="delete-btn" (click)="deleteDressItem(item.id)">Eliminar</button>
       </div>
-      <div class="dress-item">
-        <img src="https://via.placeholder.com/100" alt="Vestido Negro" />
-        <div class="details">
-          <h3>Vestido Largo CGTN2012P1288</h3>
-          <p>Color: NEGRO</p>
-          <p>Talla: 4</p>
-          <p>Total: $8,999</p>
-        </div>
-        <button class="delete-btn">Eliminar</button>
-      </div>
-      <button class="add-dress-btn">Agregar otro vestido</button>
+      <!-- <button class="add-dress-btn" (click)="addDressItem()">Agregar otro vestido</button> -->
     </div>
 
     <!-- Right Column: User Data -->
@@ -36,42 +26,38 @@
       <h2>Ayúdanos con tus datos</h2>
       <form>
         <div class="form-group">
-          <label for="store">Selecciona la tienda para tu cita</label>
-          <select id="store" required>
-            <option value="">Seleccione</option>
-          </select>
-        </div>
-        <div class="form-group">
           <label for="date">Fecha</label>
-          <input type="date" id="date" value="2025-01-02" required />
+          <input type="date" id="date" name="date" [(ngModel)]="selectedDate" required />
         </div>
         <div class="form-group">
           <label for="time">Hora</label>
-          <select id="time" required>
+          <select id="time" name="time" [(ngModel)]="selectedTime" required>
             <option value="">Seleccione</option>
+            <!-- <option *ngFor="let time of availableTimes" [value]="time">{{ time }}</option> -->
           </select>
         </div>
         <div class="form-group">
           <label for="name">Nombre</label>
-          <input type="text" id="name" required />
+          <input type="text" id="name" name="name" [(ngModel)]="name" required />
         </div>
         <div class="form-group">
           <label for="lastname">Apellidos</label>
-          <input type="text" id="lastname" required />
+          <input type="text" id="lastname" name="lastname" [(ngModel)]="lastName" required />
         </div>
         <div class="form-group">
           <label for="phone">Celular (WhatsApp de preferencia)</label>
-          <input type="tel" id="phone" required />
+          <input type="tel" id="phone" name="phone" [(ngModel)]="phone" required />
         </div>
         <div class="form-group">
           <label for="email">Email</label>
-          <input type="email" id="email" required />
+          <input type="email" id="email" name="email" [(ngModel)]="email" required />
         </div>
       </form>
       <p class="note">
         <strong>Importante:</strong> Dentro para confirmar tu cita te va a llegar un SMS a tu número de teléfono...
       </p>
-      <button class="confirm-btn">Confirmar cita</button>
+      <!-- <button class="confirm-btn" (click)="confirmAppointment()">Confirmar cita</button> -->
     </div>
+
   </div>
 </div>

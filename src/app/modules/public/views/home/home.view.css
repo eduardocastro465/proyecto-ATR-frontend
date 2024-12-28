@@ -381,3 +381,38 @@ p {
   transform-origin:3% 105%;
   background-color: #ff5580; /* the main color  */
 }
+
+
+
+
+
+/*  boton para card renta */
+.btn-apartar-rentar {
+  background-color: #fd6f9e; /* Color primario de la aplicación */
+  color: #fff; /* Color de texto blanco */
+  border: none; /* Sin borde */
+  padding: 8px 16px; /* Padding interno */
+  font-weight: bold; /* Texto en negrita */
+  font-size: 1rem; /* Tamaño de fuente mediano */
+  cursor: pointer; /* Cursor de tipo puntero */
+  transition: background-color 0.3s ease; /* Transición suave al cambiar de color */
+}
+
+.btn-apartar-rentar:hover {
+  background-color: #fd4d86; /* Color de fondo más oscuro al pasar el cursor */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave al pasar el cursor */
+}
+
+.btn-apartar-rentar:active {
+  transform: scale(0.95); /* Reducir ligeramente el tamaño al hacer clic */
+  opacity: 0.8; /* Aumentar la opacidad para dar sensación de presionado */
+}
+
+/* Estilos responsivos */
+@media (max-width: 767px) {
+  .btn-apartar-rentar {
+    padding: 6px 12px; /* Reducir el padding en pantallas más pequeñas */
+    font-size: 0.9rem; /* Reducir el tamaño de fuente en pantallas más pequeñas */
+  }
+}
+

@@ -15,6 +15,8 @@ import { response } from 'express';
 import { error } from 'console';
 import { ProductoService } from '../../../../shared/services/producto.service';
 
+import { IndexedDbService } from '../../commons/services/indexed-db.service';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.view.html',
@@ -34,9 +36,10 @@ export class HomeView implements OnInit {
   rows = 7; // Número de elementos por página
   datosEmpresa: any = {};
 
-  productos :any;
-  
+  productos: any;
+
   constructor(
+    private indexedDbService: IndexedDbService,
     private router: Router,
     private sessionService: SessionService,
     private datosEmpresaService: DatosEmpresaService,
@@ -57,7 +60,6 @@ export class HomeView implements OnInit {
       if (this.isMobile) {
         heroImageElement.classList.add('hide-hero-img'); // Oculta en móviles
       } else {
-
         heroImageElement.classList.remove('hide-hero-img'); // Muestra en pantallas grandes
       }
     }
@@ -158,11 +160,10 @@ export class HomeView implements OnInit {
 
     return false;
   }
-  verDetalles(id:number) {
-
+  verDetalles(id: number) {
     // this.PRODUCTOSERVICE_.obtenerDetalleProductoById()
 
-    this.router.navigate(['/public/Detail/'+id]);
+    this.router.navigate(['/public/Detail/' + id]);
     // this.router.navigate(['/public/Detail']);
   }
 
@@ -176,24 +177,45 @@ export class HomeView implements OnInit {
     }
   }
 
-  agregarProducto() {
-    const nuevoProducto = {
-      id: 5,
-      nombre: 'Producto 5',
-      descripcion: 'Descripción del producto 5',
-      precio: 300,
-      imagen:
-        'https://res.cloudinary.com/dvvhnrvav/image/upload/v1726509885/images-AR/mpcff7aljvb00pndcor5.jpg',
-    };
-    this.productos.push(nuevoProducto);
-    // if (isPlatformBrowser(this.platformId)) {
-    //   AOS.refresh(); // Refresca AOS solo si está en el navegador
-    // }
-  }
+  // agregarProducto() {
+  //   const nuevoProducto = {
+  //     id: 5,
+  //     nombre: 'Producto 5',
+  //     descripcion: 'Descripción del producto 5',
+  //     precio: 300,
+  //     imagen:
+  //       'https://res.cloudinary.com/dvvhnrvav/image/upload/v1726509885/images-AR/mpcff7aljvb00pndcor5.jpg',
+  //   };
+  //   this.productos.push(nuevoProducto);
+  //   // if (isPlatformBrowser(this.platformId)) {
+  //   //   AOS.refresh(); // Refresca AOS solo si está en el navegador
+  //   // }
+  // }
 
   cambiarPagina(event: any) {
     const start = event.first;
     const end = start + event.rows;
     this.productosPaginados = this.productos.slice(start, end);
+  }
+
+  apartarRentar(producto: any) {
+    console.log('primero=>', producto); // Log the data being saved
+    // guardarProducto(productData);
+    const body2 = {
+      id: producto._id,
+      nombre: producto.nombre,
+      precio: producto.precio,
+      imagenPrincipal: producto.imagenPrincipal,
+    };
+    console.log('ssegundo=>', body2); // Log the data being saved
+
+    try {
+      this.indexedDbService.guardarProducto(body2);
+      // this.dbService.guardarProducto(productData);
+    } catch (error) {
+      console.error('Error saving product:', error);
+    }
+
+    // Agregar producto a la lista de "Apartados" o "Rentados"
   }
 }

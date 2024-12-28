@@ -90,35 +90,36 @@
       <!--
     <div data-aos="zoom-out-up" class="productos-container"> -->
       <!-- <div class="productos-container"> -->
-      <div   *ngFor="let producto of productos" class="producto-card p-mb-4">
-        <div class="ribbon">Nuevo</div>
+        <div *ngFor="let producto of productos" class="producto-card p-mb-4">
+          <div class="ribbon">Nuevo</div>
 
-        <div class="product-image">
-          <img
-            (click)="verDetalles(producto._id)"
-            [src]="producto.imagenPrincipal"
-            alt="{{ producto.nombre }}"
-          />
-          <!-- Etiqueta "Nuevo" -->
-          <!-- <span class="nuevo-label">Nuevo</span> -->
+          <div class="product-image">
+            <img
+              (click)="verDetalles(producto._id)"
+              [src]="producto.imagenPrincipal"
+              alt="{{ producto.nombre }}"
+            />
+          </div>
+          <div class="product-content">
+            <p>{{ producto.nombre }}</p>
+            <p>MX$:<strong style="color: #fd6f9e;"> {{ producto.precio | currency }}</strong></p>
+            <button class="btn-apartar-rentar" (click)="apartarRentar(producto)">Apartar/Rentar</button>
+
+          </div>
         </div>
-        <div class="product-content">
-          <p>{{ producto.nombre }}</p>
-          <p>MX$:<strong style="color: #fd6f9e;"> {{ producto.precio | currency }}</strong></p>
-        </div>
-      </div>
+
       <!-- </div> -->
-      <p-paginator
+      <!-- <p-paginator
         [showFirstLastIcon]="false"
         [rows]="rows"
         [totalRecords]="productos.length"
         [rowsPerPageOptions]="[5, 10, 20]"
-        
+
         styleClass="mt-3 custom-paginator"
         [style]="{ 'background-color': 'var(--blur-bg)', 'border-radius': '8px' ,'border':'2px var(--bg-color-card)', 'padding': '8px' }"
         currentPageReportTemplate="Producto {first} a {last} de {totalRecords}"
       >
-      </p-paginator>
+      </p-paginator> -->
     </div>
     <!-- (onPageChange)="cambiarPagina($event)" -->
   </section>

@@ -3,6 +3,37 @@ nav {
   padding: 0 50px;
   width: 100%;
 }
+.counter-container {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;
+
+  .pi {
+    font-size: 14px; // Adjust size of the calendar icon
+    color: #555;     // Icon color
+  }
+
+  .counter-badge {
+    position: absolute;
+    top: -5px;       // Position the badge at the top-right corner
+    right: -5px;
+    background-color: #ff5722; // Badge background color
+    color: #fff;              // Badge text color
+    font-size: 8px;
+    width: 102%;
+    height: 16px;      // Text size
+    font-weight: bold;
+    padding: 2px 6px;         // Padding around the text
+    border-radius: 50%;       // Make it circular
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); // Optional shadow for better visibility
+    display: flex;            // Center the text vertically and horizontally
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+
 
 .flex {
   display: flex;
