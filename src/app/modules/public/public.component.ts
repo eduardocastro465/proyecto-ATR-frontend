@@ -84,45 +84,6 @@ export class PublicComponent implements OnInit {
       .catch((error) => (this.response = error));
   }
 
-  // // Detecta el scroll del usuario
-  // @HostListener('window:scroll', [])
-  // onWindowScroll() {
-  //   const scrollPosition =
-  //     window.pageYOffset ||
-  //     document.documentElement.scrollTop ||
-  //     document.body.scrollTop ||
-  //     0;
-  //   this.isScrolled = scrollPosition > 10;
-  // }
-
-
-  // title = 'chat';
-  // responses = [
-  //   'Hi! You can contact us via contactchatbot@chat.com',
-  //   'Sure! Our customer service team is available 24/7.',
-  //   'Thank you for contacting us. We will get back to you shortly.'
-  // ];
-  // responseIndex = -1;
-  // loading = false;
-  // config = {
-  //   title: 'Chat Bot',
-  //   subTitle: 'Welcome!',
-  // };
-
-  // setData(message: string) {
-  //   this.loading = true;
-  //   setTimeout(() => {
-
-  //     this.responseIndex = (this.responseIndex + 1) % this.responses.length;
-  //     this.loading = false;
-  //   }, 1000);
-  // }
-
-  // onMessageInput(message: string) {
-  //   this.setData(message);
-  // }
-  // isMobile: boolean = false; // Cambia esto según tu lógica
-
   showScrollButton: boolean = false;
 
   @HostListener('window:scroll', [])
@@ -133,4 +94,7 @@ export class PublicComponent implements OnInit {
   scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+
+
 }

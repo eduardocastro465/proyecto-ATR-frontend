@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ProductoService } from '../../../../shared/services/producto.service';
-  import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { ProductoService } from "../../../../shared/services/producto.service";
+import { ActivatedRoute } from "@angular/router";
+import { IndexedDbService } from "../../commons/services/indexed-db.service";
 // import { Producto } from '../../../../shared/models/Producto.model';
 
 interface Producto {
@@ -8,69 +9,78 @@ interface Producto {
   nombre: string;
   imagenPrincipal: any; // Sigue siendo una cadena para representar la imagen en base64
   otrasImagenes: string[]; // Sigue siendo un array de cadenas para imágenes adicionales en base64
-  categoria: 'Ropa' | 'Accesorios' | 'Calzado' | 'Otro';
+  categoria: "Ropa" | "Accesorios" | "Calzado" | "Otro";
   color: string;
   textura?: string;
   tallasDisponibles: Array<{
-    talla: 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'Otro'; // Puede ser una cadena literal
+    talla: "XS" | "S" | "M" | "L" | "XL" | "XXL" | "Otro"; // Puede ser una cadena literal
     medida: string; // La medida sigue siendo una cadena
   }>;
   precio: number;
   estado: {
     disponible: boolean;
-    tipoVenta: 'Venta' | 'Renta';
+    tipoVenta: "Venta" | "Renta";
     nuevo?: boolean; // Nuevo es opcional
   };
   descripcion?: string; // Descripción opcional
 }
 
 @Component({
-  selector: 'app-details-product',
-  templateUrl: './details-product.view.html',
-  styleUrls: ['./details-product.view.scss', './info.scss', './carrucel.scss'],
+  selector: "app-details-product",
+  templateUrl: "./details-product.view.html",
+  styleUrls: ["./details-product.view.scss", "./info.scss", "./carrucel.scss"],
 })
 export class DetailsProductView implements OnInit {
   isLoading: boolean = true;
   images: any[] = []; // Change to any[] to hold the required data
-  productName: string = '';
-  productPrice: string = '';
-  productDescription: string = '';
+  productName: string = "";
+  productPrice: string = "";
+  productDescription: string = "";
   selectedImageIndex: number = 0; // Track the current index for the Galleria
   sizes: any[] = [];
-  selectedColor: string = '';
-  selectedSize: string = '';
+  selectedColor: string = "";
+  selectedSize: string = "";
   // sizes: any[] = [];
-  productId!:any;
+  productId!: any;
   Detalles!: any;
   responsiveOptions: any[] = [
     {
-      breakpoint: '1024px',
+      breakpoint: "1024px",
       numVisible: 3,
       numScroll: 3,
     },
     {
-      breakpoint: '768px',
+      breakpoint: "768px",
       numVisible: 2,
       numScroll: 2,
     },
     {
-      breakpoint: '560px',
+      breakpoint: "560px",
       numVisible: 1,
       numScroll: 1,
     },
   ];
 
   constructor(
+    private indexedDbService: IndexedDbService,
     private productoS_: ProductoService,
     private activatedRoute: ActivatedRoute
   ) {
     // this.id=require.para
   }
   ngOnInit() {
-    this.productId = this.activatedRoute.snapshot.params['id'];
-    this.productoS_.obtenerDetalleProductoById(this.productId).subscribe((response) => {
-      this.Detalles = response;
-    });
+    this.productId = this.activatedRoute.snapshot.params["id"];
+    this.productoS_
+      .obtenerDetalleProductoById(this.productId)
+      .subscribe((response) => {
+        this.Detalles = response;
+      });
+
+    this.scrollToTop();
+  }
+
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   // getProductDetails() {
@@ -84,71 +94,90 @@ export class DetailsProductView implements OnInit {
       (this.selectedImageIndex - 1 + this.images.length) % this.images.length;
   }
   nextImage() {
-    this.selectedImageIndex = (this.selectedImageIndex + 1) % this.images.length;
+    this.selectedImageIndex =
+      (this.selectedImageIndex + 1) % this.images.length;
   }
 
   onImageChange(event: any) {
     this.selectedImageIndex = event.index;
   }
 
-
   // Imagen principal del Detalles
-  // mainImage: string =
-  //   'https://res.cloudinary.com/dvvhnrvav/image/upload/v1726509885/images-AR/mpcff7aljvb00pndcor5.jpg';
 
   // // Lista de imágenes en miniatura
   thumbnailImages!: string[];
-  //   'https://res.cloudinary.com/dvvhnrvav/image/upload/v1726505353/images-AR/oaefwpo5njza8ytxfpzz.png',
-  //   'https://res.cloudinary.com/dvvhnrvav/image/upload/v1730406784/images-AR/umiisnokywuzr8eq9ivc.jpg',
-  //   'https://res.cloudinary.com/dvvhnrvav/image/upload/v1730406784/images-AR/izxgnvwphgdb8gfvdhup.jpg',
-  // ];
   changeMainImage(image: string) {
     // this.mainImage = image;
   }
 
+  apartarRentar(producto: any) {
+    console.log("primero=>", producto); // Log the data being saved
+    // guardarProducto(productData);
+    const body2 = {
+      id: producto._id,
+      nombre: producto.nombre,
+      precio: producto.precio,
+      imagenPrincipal: producto.imagenPrincipal,
+    };
+    console.log("ssegundo=>", body2); // Log the data being saved
+
+    try {
+      this.indexedDbService.guardarProducto(body2);
+      // this.dbService.guardarProducto(productData);
+    } catch (error) {
+      console.error("Error saving product:", error);
+    }
+
+    // Agregar producto a la lista de "Apartados" o "Rentados"
+  }
+
   productos = [
     {
-      nombre: 'Diadema Elegante',
+      nombre: "Diadema Elegante",
       precio: 15,
-      imagen: 'https://img.ltwebstatic.com/images3_spmp/2024/09/05/c4/17254703255ca6e5d5659688c66976ff7fcca3f6ca_thumbnail_720x.jpg',
+      imagen:
+        "https://img.ltwebstatic.com/images3_spmp/2024/09/05/c4/17254703255ca6e5d5659688c66976ff7fcca3f6ca_thumbnail_720x.jpg",
     },
     {
-      nombre: 'Collar de Perlas',
+      nombre: "Collar de Perlas",
       precio: 25,
-      imagen: 'https://img.ltwebstatic.com/images3_spmp/2024/09/05/c4/17254703255ca6e5d5659688c66976ff7fcca3f6ca_thumbnail_720x.jpg',
+      imagen:
+        "https://img.ltwebstatic.com/images3_spmp/2024/09/05/c4/17254703255ca6e5d5659688c66976ff7fcca3f6ca_thumbnail_720x.jpg",
     },
     {
-      nombre: 'Pulsera Brillante',
+      nombre: "Pulsera Brillante",
       precio: 10,
-      imagen: 'https://img.ltwebstatic.com/images3_spmp/2024/09/05/c4/17254703255ca6e5d5659688c66976ff7fcca3f6ca_thumbnail_720x.jpg',
+      imagen:
+        "https://img.ltwebstatic.com/images3_spmp/2024/09/05/c4/17254703255ca6e5d5659688c66976ff7fcca3f6ca_thumbnail_720x.jpg",
     },
     {
-      nombre: 'Renta de Vestido',
+      nombre: "Renta de Vestido",
       precio: 50,
-      imagen: 'https://img.ltwebstatic.com/images3_spmp/2024/09/05/c4/17254703255ca6e5d5659688c66976ff7fcca3f6ca_thumbnail_720x.jpg',
+      imagen:
+        "https://img.ltwebstatic.com/images3_spmp/2024/09/05/c4/17254703255ca6e5d5659688c66976ff7fcca3f6ca_thumbnail_720x.jpg",
     },
   ];
 
   productosRelacionados = [
     {
-      nombre: 'vestido pulpa',
+      nombre: "vestido pulpa",
       precio: 30,
-      imagen: 'https://m.media-amazon.com/images/I/61kC5lqiJOL._AC_SX569_.jpg',
+      imagen: "https://m.media-amazon.com/images/I/61kC5lqiJOL._AC_SX569_.jpg",
     },
     {
-      nombre: 'vestido 2',
+      nombre: "vestido 2",
       precio: 40,
-      imagen: 'https://m.media-amazon.com/images/I/61kC5lqiJOL._AC_SX569_.jpg',
+      imagen: "https://m.media-amazon.com/images/I/61kC5lqiJOL._AC_SX569_.jpg",
     },
     {
-      nombre: 'vestido 3',
+      nombre: "vestido 3",
       precio: 20,
-      imagen: 'https://m.media-amazon.com/images/I/61kC5lqiJOL._AC_SX569_.jpg',
+      imagen: "https://m.media-amazon.com/images/I/61kC5lqiJOL._AC_SX569_.jpg",
     },
     {
-      nombre: 'vestido 3',
+      nombre: "vestido 3",
       precio: 20,
-      imagen: 'https://m.media-amazon.com/images/I/61kC5lqiJOL._AC_SX569_.jpg',
+      imagen: "https://m.media-amazon.com/images/I/61kC5lqiJOL._AC_SX569_.jpg",
     },
   ];
 }

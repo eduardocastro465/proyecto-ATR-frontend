@@ -57,6 +57,7 @@ import { CitasProbadorView } from './views/citas-probador/citas-probador.view';
 import { ResultsComponent } from './views/results/results.component';
 import { HeroImgComponent } from './components/hero-img/hero-img.component';
 import { IndexedDbService } from './commons/services/indexed-db.service';
+import { FigureComponent } from './components/figure/figure.component';
 // import { DialogModule } from 'primeng/dialog';
 
 const MATERIALS =[PasswordModule,
@@ -65,7 +66,7 @@ const MATERIALS =[PasswordModule,
 const COMPONENTS =[FooterComponent,HeaderComponent]
 const VIEWS=[HomeView,PublicComponent,PerfilView, AcercaDeView,DetailsProductView]
 @NgModule({
-  declarations: [VIEWS,COMPONENTS, CarritoView, TagComponent, PoliticasComponent, TerminosComponent, CitasProbadorView, ResultsComponent, HeroImgComponent],
+  declarations: [VIEWS,COMPONENTS, CarritoView, TagComponent, PoliticasComponent, TerminosComponent, CitasProbadorView, ResultsComponent, HeroImgComponent, FigureComponent],
   exports:[COMPONENTS],
   imports: [GalleriaModule,
     CommonModule,ReactiveFormsModule,FormsModule,

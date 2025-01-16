@@ -1,6 +1,7 @@
 // listado-acs-vestido-renta.component.ts
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../../environments/environment';
 
 interface Accesorio {
   _id: string;
@@ -26,7 +27,7 @@ interface Relacion {
   selector: 'app-listado-acs-vestido-renta',
   templateUrl: './listado-acs-vestido-renta.component.html',
   styleUrls: [
-  
+
   '../../../../shared/styles/tablePrime.scss'
 ]
 })
@@ -41,7 +42,7 @@ export class ListadoAcsVestidoRentaComponent implements OnInit {
   }
 
   getRelaciones() {
-    this.http.get<Relacion[]>('http://localhost:4000/api/v1/vestidos-accesorios').subscribe(
+    this.http.get<Relacion[]>(`${environment.api}/vestidos-accesorios`).subscribe(
       (response) => {
         this.allProducts = response; // Asigna las relaciones obtenidas a allProducts
       },
@@ -53,7 +54,7 @@ export class ListadoAcsVestidoRentaComponent implements OnInit {
 
   onGlobalFilter(event:any) {
     const searchValue = event.target.value.toLowerCase();
-    this.allProducts = this.allProducts.filter(producto => 
+    this.allProducts = this.allProducts.filter(producto =>
       producto.vestido.nombre.toLowerCase().includes(searchValue) ||
       producto.accesorios.some(ac => ac.nombre.toLowerCase().includes(searchValue))
     );
@@ -69,7 +70,7 @@ export class ListadoAcsVestidoRentaComponent implements OnInit {
 
   deleteProduct(id: string) {
     if (confirm("¿Estás seguro de que deseas eliminar esta relación?")) {
-      this.http.delete(`http://localhost:4000/api/v1/vestidos-accesorios/${id}`).subscribe(
+      this.http.delete(`${environment.api}/vestidos-accesorios/${id}`).subscribe(
         () => {
           // Eliminar el producto de la lista local después de la eliminación en el servidor
           this.allProducts = this.allProducts.filter(producto => producto._id !== id);

@@ -14,7 +14,6 @@ import { DatosEmpresaService } from '../../../../shared/services/datos-empresa.s
 import { response } from 'express';
 import { error } from 'console';
 import { ProductoService } from '../../../../shared/services/producto.service';
-
 import { IndexedDbService } from '../../commons/services/indexed-db.service';
 
 @Component({
@@ -34,7 +33,7 @@ export class HomeView implements OnInit {
   position: any = 'bottom-left';
   productosPaginados: any = [];
   rows = 7; // Número de elementos por página
-  datosEmpresa: any = {};
+  // datosEmpresa: any = {};
 
   productos: any;
 
@@ -71,6 +70,8 @@ export class HomeView implements OnInit {
       this.isMobile = window.innerWidth <= 600;
     }
   }
+  
+  
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.detectDevice();
@@ -78,7 +79,7 @@ export class HomeView implements OnInit {
 
   ngOnInit() {
     //
-    this.getDatosEmpresa();
+    this.getDatos();
     // ngOnInit() {
     // this.productosPaginados = this.productos.slice(0, this.rows);
     // }
@@ -135,19 +136,19 @@ export class HomeView implements OnInit {
     }
   }
 
-  getDatosEmpresa() {
+  getDatos() {
     this.PRODUCTOSERVICE_.obtenerProductos().subscribe((response) => {
       this.productos = response;
     });
 
-    this.datosEmpresaService.traerDatosEmpresa().subscribe(
-      (respuesta) => {
-        this.datosEmpresa = respuesta[0];
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    // this.datosEmpresaService.traerDatosEmpresa().subscribe(
+    //   (respuesta) => {
+    //     this.datosEmpresa = respuesta[0];
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //   }
+    // );
   }
 
   isUserLoggedIn(): boolean {

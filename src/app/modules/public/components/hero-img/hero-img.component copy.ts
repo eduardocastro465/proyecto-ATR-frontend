@@ -5,72 +5,60 @@ import { Component } from "@angular/core";
   template: `
     <div class="hero">
       <div class="hero-content">
-        <h1 class="title">Venta y Renta</h1>
         <p class="subtitle">Especial de Verano 2024</p>
+        <h1 class="title">Venta Y Renta</h1>
         <p class="description">
           LO MÁS TOP DE VESTIDOS EN RENTA PARA FIESTAS, UN ESPACIO DONDE
           ENCONTRARÁS LO QUE ESTÁS BUSCANDO ✨.
         </p>
         <a href="#" class="cta">Compra Ahora</a>
       </div>
-
-      <!-- <app-figure></app-figure> -->
     </div>
   `,
   styles: `
- .hero {
+    .hero {
     display: flex;
     align-items: center;
-    justify-content: center;
-    height: 55vh;
-    filter: drop-shadow(10px 10px 15px rgb(249, 192, 255)); /* Efecto de sombra */
-
-    /* Imagen de fondo */
-    background-image: url("https://res.cloudinary.com/dvvhnrvav/image/upload/v1736990456/images-AR/gh5ryrsad5fnaxgjgall.jpg");
-    // background-image: url("https://res.cloudinary.com/dvvhnrvav/image/upload/v1736788371/ProductosAtelier/hzrxssa8hcyn94b6vylh.png");
-    background-size: cover; /* Mantén la imagen contenida en el contenedor */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    background-position: center; /* Coloca la imagen en la parte inferior y centrada */
-    // background-color: white; /* Fondo blanco debajo de la imagen */
-    background-color:rgb(255, 237, 237);
-    // background: #ffffff;
-    // background: -webkit-linear-gradient(0deg, #ffffff 0%, #ffeaea 100%);
-    // background-color: linear-gradient(0deg, #ffffff 0%, #ffeaea 100%);
-    /* Otras propiedades */
-    background-attachment: fixed; /* Efecto Parallax */
-    mask-image: linear-gradient(black 70%, transparent);
-    padding: 0 2rem;
-}
-
-
-
-
+    justify-content: flex-rigth;
+    height: 44vh;
+    background-image: url("https://res.cloudinary.com/dvvhnrvav/image/upload/v1736278609/ProductosAtelier/klkphmyapgddoxaywabb.jpg");
+    background-image: url("https://res.cloudinary.com/dvvhnrvav/image/upload/v1736278609/ProductosAtelier/klkphmyapgddoxaywabb.jpg");
+    // background-image: url("https://res.cloudinary.com/dvvhnrvav/image/upload/v1730134285/images-AR/ztq3dpdi1uptc9xxwnjo.jpg");
+    // background-image: url("https://res.cloudinary.com/dvvhnrvav/image/upload/v1730134285/images-AR/ztq3dpdi1uptc9xxwnjo.jpg");
+    background-size: unset;
+    // background-size: 100% auto; // Ajusta el tamaño de la imagen
+    background-position: 0 56%;
+    background-attachment: fixed; /* Parallax effect */
+  // background-image: url("https://res.cloudinary.com/dfd0b4jhf/image/upload/v1709327171/public__/m2z2hvzekjw0xrmjnji4.jpg");
+  mask-image: linear-gradient(black 80%, transparent);
+    padding: 0 2rem;/* Aplicar filtro de desenfoque y tono gris */
+    
+  }
   
   .hero-content {
-    width: 55%;
+    max-width: 500px;
     filter: opacity(8);
-    color:rgb(255, 0, 179);
+    color: #fff;
     position: relative;
   z-index: 1;
   /* margin: auto; */
-  padding: 7rem;
+  padding: 2rem;
   /* Agregar un fondo semi-transparente para mejorar la legibilidad */
-    // background-color: #000000;
-  // color: #fff;
-  text-align: center;
+    // background-color: rgba(0,0,0,0.5);
+  color: #fff;
+  text-align: left;
     animation: fadeIn 1.5s ease-out;
   }
 
   .subtitle {
     font-size: 1.2rem;
-    // color:#f3f3f3;
-    // color:#000000;
+    color:rgb(243, 243, 243);
     margin-bottom: 1rem;
   }
 
   .title {
-    font-size: 6.5rem;
-    font-weight: 999;
+    font-size: 3rem;
+    font-weight: bold;
     margin-bottom: 1rem;
     line-height: 1.2;
   }
@@ -79,18 +67,17 @@ import { Component } from "@angular/core";
     font-size: 1rem;
     line-height: 1.5;
     margin-bottom: 2rem;
-    color:#000000;
-    // color:#f5f5f5;
+    color:rgb(245, 245, 245);
   }
 
   .cta {
     display: inline-block;
     padding: 0.8rem 2rem;
-    background: linear-gradient(90deg, #ffcc00, #ffa500);
+    background-color: #ffcc00;
     color: #000;
     font-weight: bold;
     text-decoration: none;
-    border-radius: 50px;
+    border-radius: 5px;
     transition: background-color 0.3s;
   }
 

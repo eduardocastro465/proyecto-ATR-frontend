@@ -102,8 +102,10 @@
           </div>
           <div class="product-content">
             <p>{{ producto.nombre }}</p>
-            <p>MX$:<strong style="color: #fd6f9e;"> {{ producto.precio | currency }}</strong></p>
-            <button class="btn-apartar-rentar" (click)="apartarRentar(producto)">Apartar/Rentar</button>
+            <p>MX$:<strong> {{ producto.precio | currency }}</strong></p>
+
+            <!-- <p>MX$:<strong style="color: #fd6f9e;"> {{ producto.precio | currency }}</strong></p> -->
+            <!-- <button class="btn-apartar-rentar" (click)="apartarRentar(producto)">Apartar/Rentar</button> -->
 
           </div>
         </div>

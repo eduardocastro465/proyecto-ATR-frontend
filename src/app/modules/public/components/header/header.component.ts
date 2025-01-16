@@ -13,24 +13,25 @@ import {
   Input,
   SimpleChanges,
   OnChanges,
-} from '@angular/core';
-import { Router } from '@angular/router';
-import { MenuItem, MenuItemCommandEvent, MessageService } from 'primeng/api';
+  computed,
+} from "@angular/core";
+import { Router } from "@angular/router";
+import { MenuItem, MenuItemCommandEvent, MessageService } from "primeng/api";
 // import * as AOS from 'aos';
-import { isPlatformBrowser } from '@angular/common';
-import { SessionService } from '../../../../shared/services/session.service';
-import { ERol } from '../../../../shared/constants/rol.enum';
-import { DatosEmpresaService } from '../../../../shared/services/datos-empresa.service';
-import { ThemeServiceService } from '../../../../shared/services/theme-service.service';
+import { isPlatformBrowser } from "@angular/common";
+import { SessionService } from "../../../../shared/services/session.service";
+import { ERol } from "../../../../shared/constants/rol.enum";
+import { DatosEmpresaService } from "../../../../shared/services/datos-empresa.service";
+import { ThemeServiceService } from "../../../../shared/services/theme-service.service";
 declare const $: any;
-import { mensageservice } from '../../../../shared/services/mensage.service';
-import { SignInService } from '../../../auth/commons/services/sign-in.service';
-import { StorageService } from '../../../../shared/services/storage.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { interval, Subscription } from 'rxjs';
-import Swal from 'sweetalert2';
-import { IndexedDbService } from '../../commons/services/indexed-db.service';
+import { mensageservice } from "../../../../shared/services/mensage.service";
+import { SignInService } from "../../../auth/commons/services/sign-in.service";
+import { StorageService } from "../../../../shared/services/storage.service";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { NgxUiLoaderService } from "ngx-ui-loader";
+import { interval, Subscription } from "rxjs";
+import Swal from "sweetalert2";
+import { IndexedDbService } from "../../commons/services/indexed-db.service";
 
 export interface DressItem {
   id: string;
@@ -40,11 +41,11 @@ export interface DressItem {
 }
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
+  selector: "app-header",
+  templateUrl: "./header.component.html",
   styleUrls: [
-    './header.component.scss',
-    './login.style.scss',
+    "./header.component.scss",
+    "./login.style.scss",
     // '../../../../shared/styles/dark-theme.scss',
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -55,22 +56,30 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() isMobile = false;
   items: MenuItem[] = [];
   isLoggedIn = false;
+  // Señal para manejar el contador
+  // dressItemCount = signal(0);
   userROL!: string;
-  isSticky = false;
+  isSticky = true;
   isLoading = false;
-  searchQuery = ''; // Bind search input
+  searchQuery = ""; // Bind search input
   datosEmpresa: any = {};
-  nombreDeLaPagina: string = '';
+  nombreDeLaPagina: string = "";
   dressItems: any[] = [];
+  // Señal para manejar reactividad
+  private dressItemsSignal = signal<any[]>([]);
 
+ 
+
+  // Señal computada para el contador
+  dressItemCount = computed(() => this.dressItemsSignal().length);
   empresaData: any;
 
   imageUrl!: string;
   defaultImageUrl: string =
-    'https://res.cloudinary.com/dvvhnrvav/image/upload/v1730395938/images-AR/wyicw2mh3xxocscx0diz.png';
+    "https://res.cloudinary.com/dvvhnrvav/image/upload/v1730395938/images-AR/wyicw2mh3xxocscx0diz.png";
   isDarkThemeOn = signal(false);
-  passwordStrengthClass: string = ''; // Clase CSS que se aplica dinámicamente
-  passwordStrengthMessage: string = ''; // Mensaje dinámico que se muestra debajo del campo
+  passwordStrengthClass: string = ""; // Clase CSS que se aplica dinámicamente
+  passwordStrengthMessage: string = ""; // Mensaje dinámico que se muestra debajo del campo
 
   darkMode = false;
   constructor(
@@ -94,20 +103,20 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
   ) {
     this.loginForm = this.fb.group({
       email: [
-        '',
+        "",
         Validators.required,
         Validators.pattern(
           // Expresión regular para formato de correo
           /^[a-zA-Z][\w.-]*@[a-zA-Z]+\.[a-zA-Z]{2,}$/
         ),
       ],
-      password: ['', Validators.required],
+      password: ["", Validators.required],
     });
   }
 
   // Método para acceder al control del email
   get email() {
-    return this.loginForm.get('email');
+    return this.loginForm.get("email");
   }
   // constructor(
   // private router:  Router,
@@ -138,21 +147,21 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
   // }
 
   toggleTheme() {
-    document.body.classList.toggle('dark-theme');
+    document.body.classList.toggle("dark-theme");
     this.isDarkThemeOn.update((isDarkThemeOn) => !isDarkThemeOn);
     this.darkMode = !this.darkMode;
-    if (typeof document !== 'undefined') {
+    if (typeof document !== "undefined") {
       document.documentElement.setAttribute(
-        'data-theme',
-        this.darkMode ? 'dark' : 'light'
+        "data-theme",
+        this.darkMode ? "dark" : "light"
       );
     }
     //
     const newTheme =
-      this.themeService.getTheme() === 'light' ? 'dark' : 'light';
+      this.themeService.getTheme() === "light" ? "dark" : "light";
 
     // Guardar el tema en localStorage
-    localStorage.setItem('theme', newTheme);
+    localStorage.setItem("theme", newTheme);
     this.themeService.setTheme(newTheme);
   }
 
@@ -160,43 +169,44 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
     try {
       const productos = await this.indexedDbService.obtenerProductosApartados();
       this.dressItems = Array.isArray(productos) ? productos : [productos];
-      console.log(this.dressItems);
+      // console.log(this.dressItems);
     } catch (error) {
-      console.error('Error al obtener productos apartados:', error);
+      console.error("Error al obtener productos apartados:", error);
     }
+
     this.closeModal();
     // Verificar si el entorno tiene acceso a localStorage (es decir, que no está en SSR)
-    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+    if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
       // Recuperar el tema guardado en localStorage (si existe)
-      const savedTheme = localStorage.getItem('theme');
+      const savedTheme = localStorage.getItem("theme");
 
       // Comprobar si el valor es válido
-      if (savedTheme === 'dark' || savedTheme === 'light') {
-        if (typeof document !== 'undefined') {
-          this.darkMode = savedTheme === 'dark';
-          document.body.classList.toggle('dark-theme', this.darkMode);
+      if (savedTheme === "dark" || savedTheme === "light") {
+        if (typeof document !== "undefined") {
+          this.darkMode = savedTheme === "dark";
+          document.body.classList.toggle("dark-theme", this.darkMode);
           document.documentElement.setAttribute(
-            'data-theme',
-            this.darkMode ? 'dark' : 'light'
+            "data-theme",
+            this.darkMode ? "dark" : "light"
           );
           this.themeService.setTheme(savedTheme);
         }
       } else {
-        if (typeof document !== 'undefined') {
+        if (typeof document !== "undefined") {
           // Si no hay tema guardado o es inválido, usar el valor por defecto (por ejemplo, 'light')
           this.darkMode = false;
-          document.body.classList.remove('dark-theme');
-          document.documentElement.setAttribute('data-theme', 'light');
-          this.themeService.setTheme('light');
+          document.body.classList.remove("dark-theme");
+          document.documentElement.setAttribute("data-theme", "light");
+          this.themeService.setTheme("light");
         }
       }
     } else {
-      if (typeof document !== 'undefined') {
+      if (typeof document !== "undefined") {
         // En un entorno donde localStorage no está disponible, establecer un tema predeterminado
         this.darkMode = false;
-        document.body.classList.remove('dark-theme');
-        document.documentElement.setAttribute('data-theme', 'light');
-        this.themeService.setTheme('light');
+        document.body.classList.remove("dark-theme");
+        document.documentElement.setAttribute("data-theme", "light");
+        this.themeService.setTheme("light");
       }
     }
     this.loadCompanyData(); // Cargar los datos de la empresa al iniciar
@@ -209,13 +219,16 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
     // }
   }
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['isMobile']) {
-      this.onMobileChange(changes['isMobile'].currentValue);
+    if (changes["isMobile"]) {
+      this.onMobileChange(changes["isMobile"].currentValue);
     }
+
+    this.dressItemsSignal.set(this.dressItems); // Actualiza la señal correctamente
+    
   }
   onMobileChange(isMobile: boolean) {
     // Aquí puedes poner la lógica que quieres ejecutar cuando cambia isMobile
-    console.log('isMobile changed:', isMobile);
+    console.log("isMobile changed:", isMobile);
     // Por ejemplo, podrías llamar a updateMenuItems() aquí si es necesario
     this.updateMenuItems();
   }
@@ -229,18 +242,18 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
         this.imageUrl = this.empresaData?.logo;
       },
       (error) => {
-        console.error('Error al cargar los datos de la empresa:', error);
+        console.error("Error al cargar los datos de la empresa:", error);
       }
     );
   }
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       $(this.elementRef.nativeElement)
-        .find('.ui.search')
+        .find(".ui.search")
         .search({
-          type: 'category',
+          type: "category",
           apiSettings: {
-            url: '/search/{query}', // Asegúrate de que esta URL sea correcta
+            url: "/search/{query}", // Asegúrate de que esta URL sea correcta
           },
           onSelect: (result: any) => {
             // Manejar la selección del resultado aquí, si es necesario
@@ -249,10 +262,10 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
     }
   }
 
-  @HostListener('window:scroll', [])
+  @HostListener("window:scroll", [])
   onWindowScroll() {
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    this.isSticky = scrollTop > 20;
+    this.isSticky = scrollTop > 10;
     this.isScrolled = scrollTop > 10;
   }
 
@@ -272,7 +285,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
     setTimeout(() => {
       this.isLoading = false;
       // Implementa tu lógica de búsqueda aquí
-      console.log('Buscando:', this.searchQuery);
+      console.log("Buscando:", this.searchQuery);
     }, 2000);
   }
 
@@ -286,7 +299,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
     this.popupVisible = !this.popupVisible;
   }
 
-  @HostListener('document:click', ['$event'])
+  @HostListener("document:click", ["$event"])
   onClickOutside(event: Event) {
     const clickedInside = this.elementRef.nativeElement.contains(event.target);
     if (!clickedInside) {
@@ -301,49 +314,49 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
     this.items = this.isLoggedIn
       ? [
           {
-            label: 'Mi perfil',
-            icon: 'pi pi-user',
+            label: "Mi perfil",
+            icon: "pi pi-user",
             command: (event: MenuItemCommandEvent) =>
-              this.redirectTo('Mi-perfil'),
+              this.redirectTo("Mi-perfil"),
           },
           {
-            label: 'Configuración',
-            icon: 'pi pi-cog',
-            command: (event: MenuItemCommandEvent) => this.redirectTo('Config'),
+            label: "Configuración",
+            icon: "pi pi-cog",
+            command: (event: MenuItemCommandEvent) => this.redirectTo("Config"),
           },
           {
-            label: 'Cerrar sesión',
-            icon: 'pi pi-sign-out',
+            label: "Cerrar sesión",
+            icon: "pi pi-sign-out",
             command: (event: MenuItemCommandEvent) => this.logout(),
           },
         ]
       : [
           {
-            label: 'Iniciar sesión',
-            icon: 'pi pi-sign-in',
+            label: "Iniciar sesión",
+            icon: "pi pi-sign-in",
             command: (event: MenuItemCommandEvent) =>
-              this.redirectTo('Sign-in'),
+              this.redirectTo("Sign-in"),
           },
           {
-            label: 'Registrarme',
-            icon: 'pi pi-user-plus',
+            label: "Registrarme",
+            icon: "pi pi-user-plus",
             command: (event: MenuItemCommandEvent) =>
-              this.redirectTo('Sign-up'),
+              this.redirectTo("Sign-up"),
           },
           {
-            label: 'Activar cuenta',
-            icon: 'pi pi-check-circle',
+            label: "Activar cuenta",
+            icon: "pi pi-check-circle",
             command: (event: MenuItemCommandEvent) =>
-              this.redirectTo('Activar-cuenta'),
+              this.redirectTo("Activar-cuenta"),
           },
         ];
   }
 
   logout() {
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
     this.isLoggedIn = false;
     this.updateMenuItems();
-    this.router.navigate(['/auth/login']);
+    this.router.navigate(["/auth/login"]);
   }
 
   isUserLoggedIn(): boolean {
@@ -359,12 +372,12 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
     this.sidebarVisible = false;
     this.visible = false;
     this.router.navigate(
-      route.includes('Sign-in') ||
-        route.includes('Sign-up') ||
-        route.includes('forgot-password') ||
-        route.includes('Activar-cuenta')
-        ? ['/auth', route]
-        : ['/public', route]
+      route.includes("Sign-in") ||
+        route.includes("Sign-up") ||
+        route.includes("forgot-password") ||
+        route.includes("Activar-cuenta")
+        ? ["/auth", route]
+        : ["/public", route]
     );
   }
 
@@ -380,13 +393,13 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
   timerSubscription!: Subscription;
 
   loginForm: FormGroup;
-  errorMessage: string = '';
+  errorMessage: string = "";
   // userROL!: string;
   loading: boolean = false;
   captchagenerado: boolean = false;
   //datos de la empresa
   logo!: string;
-  nombreEmpresa: string = 'Atelier';
+  nombreEmpresa: string = "Atelier";
 
   public robot!: boolean;
   public presionado!: boolean;
@@ -396,42 +409,42 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   getCaptchaToken(): string {
-    if (typeof grecaptcha !== 'undefined') {
+    if (typeof grecaptcha !== "undefined") {
       const token = grecaptcha.getResponse();
       if (!token) {
-        console.warn('Token no generado todavía.');
+        console.warn("Token no generado todavía.");
       }
       console.log(token);
       return token;
     } else {
-      console.error('reCAPTCHA no ha sido cargado.');
-      return '';
+      console.error("reCAPTCHA no ha sido cargado.");
+      return "";
     }
   }
   resetCaptcha(): void {
     grecaptcha.reset();
   }
   loadCaptchaScript() {
-    if (typeof document === 'undefined') {
+    if (typeof document === "undefined") {
       console.warn(
-        'No se puede cargar el script porque document no está definido.'
+        "No se puede cargar el script porque document no está definido."
       );
       return;
     }
 
-    const scriptId = 'recaptcha-script';
+    const scriptId = "recaptcha-script";
     if (!document.getElementById(scriptId)) {
-      const script = document.createElement('script');
+      const script = document.createElement("script");
       script.id = scriptId;
-      script.src = 'https://www.google.com/recaptcha/api.js';
+      script.src = "https://www.google.com/recaptcha/api.js";
       script.async = true;
       script.defer = true;
       script.onload = () => {
-        console.log('reCAPTCHA script loaded');
+        console.log("reCAPTCHA script loaded");
       };
       document.body.appendChild(script);
     } else {
-      console.log('El script de reCAPTCHA ya está cargado.');
+      console.log("El script de reCAPTCHA ya está cargado.");
     }
   }
 
@@ -444,26 +457,26 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
           this.nombreEmpresa = empresaData.tituloPagina;
         } else {
           Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'No se encontraron datos de la empresa.',
+            icon: "error",
+            title: "Error",
+            text: "No se encontraron datos de la empresa.",
           });
         }
       },
       (error) => {
         Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'Error al cargar los datos de la empresa.',
+          icon: "error",
+          title: "Error",
+          text: "Error al cargar los datos de la empresa.",
         });
-        console.error('Error al cargar datos de la empresa', error);
+        console.error("Error al cargar datos de la empresa", error);
       }
     );
   }
   // Verifica el estado de bloqueo en localStorage o sessionStorage
   checkLockState() {
     if (isPlatformBrowser(this.platformId)) {
-      const lockInfo = localStorage.getItem('lockInfo'); // O sessionStorage.getItem('lockInfo') si prefieres sessionStorage
+      const lockInfo = localStorage.getItem("lockInfo"); // O sessionStorage.getItem('lockInfo') si prefieres sessionStorage
       if (lockInfo) {
         const { attempts, lockTime, isLocked, remainingTime } =
           JSON.parse(lockInfo);
@@ -487,12 +500,12 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
       isLocked: this.isLocked,
       remainingTime: this.remainingTime,
     };
-    localStorage.setItem('lockInfo', JSON.stringify(lockInfo)); // O sessionStorage.setItem si prefieres sessionStorage
+    localStorage.setItem("lockInfo", JSON.stringify(lockInfo)); // O sessionStorage.setItem si prefieres sessionStorage
   }
 
   // Método para restablecer el estado del bloqueo
   clearLockState() {
-    localStorage.removeItem('lockInfo'); // O sessionStorage.removeItem si prefieres sessionStorage
+    localStorage.removeItem("lockInfo"); // O sessionStorage.removeItem si prefieres sessionStorage
   }
 
   // redirectTo(route: string): void {
@@ -510,7 +523,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
   validateCaptcha() {
     const token = grecaptcha.getResponse();
 
-    console.log('El token del capchat: ' + token);
+    console.log("El token del capchat: " + token);
     return token ? token : null;
   }
 
@@ -522,14 +535,14 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
     }, 3000);
 
     // OR
-    this.ngxService.startBackground('do-background-things');
+    this.ngxService.startBackground("do-background-things");
     // Do something here...
-    this.ngxService.stopBackground('do-background-things');
+    this.ngxService.stopBackground("do-background-things");
 
-    this.ngxService.startLoader('loader-01'); // start foreground spinner of the loader "loader-01" with 'default' taskId
+    this.ngxService.startLoader("loader-01"); // start foreground spinner of the loader "loader-01" with 'default' taskId
     // Stop the foreground loading after 5s
     setTimeout(() => {
-      this.ngxService.stopLoader('loader-01'); // stop foreground spinner of the loader "loader-01" with 'default' taskId
+      this.ngxService.stopLoader("loader-01"); // stop foreground spinner of the loader "loader-01" with 'default' taskId
     }, 3000);
   }
 
@@ -542,10 +555,10 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
     longitudMayor5: false,
     tiene5CaracteresDiferentes: false,
   };
-  passwordStrength: string = ''; // variable para almacenar la fuerza de la contraseña
+  passwordStrength: string = ""; // variable para almacenar la fuerza de la contraseña
 
   verificarPassword() {
-    const password = this.loginForm.get('password')?.value || '';
+    const password = this.loginForm.get("password")?.value || "";
 
     // Validaciones obligatorias
     this.validacionesPassword.tieneMinuscula = /[a-z]/.test(password); // Al menos una letra minúscula
@@ -557,7 +570,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
     this.validacionesPassword.longitudMayor5 = password.length > 5; // Más de 5 caracteres
 
     // Al menos 5 caracteres diferentes
-    const caracteresUnicos = new Set(password.split(''));
+    const caracteresUnicos = new Set(password.split(""));
     this.validacionesPassword.tiene5CaracteresDiferentes =
       caracteresUnicos.size >= 5;
 
@@ -577,17 +590,17 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
 
     // Asignar nivel de seguridad y mensaje
     if (validacionesCumplidas === allValidations.length) {
-      this.passwordStrength = 'strong'; // Contraseña fuerte
-      this.passwordStrengthMessage = 'Contraseña segura y compleja';
-      this.passwordStrengthClass = 'strong';
+      this.passwordStrength = "strong"; // Contraseña fuerte
+      this.passwordStrengthMessage = "Contraseña segura y compleja";
+      this.passwordStrengthClass = "strong";
     } else if (validacionesCumplidas >= 5) {
-      this.passwordStrength = 'medium'; // Contraseña media
-      this.passwordStrengthMessage = 'Complejidad media';
-      this.passwordStrengthClass = 'medium';
+      this.passwordStrength = "medium"; // Contraseña media
+      this.passwordStrengthMessage = "Complejidad media";
+      this.passwordStrengthClass = "medium";
     } else {
-      this.passwordStrength = 'weak'; // Contraseña débil
-      this.passwordStrengthMessage = 'Demasiado simple';
-      this.passwordStrengthClass = 'weak';
+      this.passwordStrength = "weak"; // Contraseña débil
+      this.passwordStrengthMessage = "Demasiado simple";
+      this.passwordStrengthClass = "weak";
     }
 
     // this.verificarCoincidencia(); // Para verificar si la confirmación coincide con la contraseña
@@ -598,30 +611,30 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
 
     if (this.isLocked) {
       Swal.fire({
-        title: 'Cuenta bloqueada',
+        title: "Cuenta bloqueada",
         text: `Has alcanzado el límite de intentos. Intenta de nuevo en ${this.remainingTime} segundos.`,
-        icon: 'warning',
-        confirmButtonText: 'Entendido',
+        icon: "warning",
+        confirmButtonText: "Entendido",
       });
       return;
     }
 
     if (this.loginForm.invalid) {
       Swal.fire({
-        title: 'Campos incompletos',
-        text: 'Por favor, completa todos los campos',
-        icon: 'warning',
-        confirmButtonText: 'Entendido',
+        title: "Campos incompletos",
+        text: "Por favor, completa todos los campos",
+        icon: "warning",
+        confirmButtonText: "Entendido",
       });
       return;
     }
 
     if (!navigator.onLine) {
       Swal.fire({
-        title: 'Sin conexión a Internet',
-        text: 'Por favor, verifica tu conexión y vuelve a intentarlo.',
-        icon: 'error',
-        confirmButtonText: 'Ok',
+        title: "Sin conexión a Internet",
+        text: "Por favor, verifica tu conexión y vuelve a intentarlo.",
+        icon: "error",
+        confirmButtonText: "Ok",
       });
       return;
     }
@@ -640,16 +653,16 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
             // window.location.reload();
             if (userData) {
               this.userROL = userData.rol;
-              let navigateTo = '';
+              let navigateTo = "";
 
               if (this.userROL === ERol.ADMIN) {
-                navigateTo = '/admin/home';
+                navigateTo = "/admin/home";
               } else if (this.userROL === ERol.CLIENTE) {
-                navigateTo = '/public/home';
+                navigateTo = "/public/home";
               }
 
               this.router.navigate([navigateTo]).then(() => {
-                if (navigateTo === '/public/home') {
+                if (navigateTo === "/public/home") {
                   window.location.reload();
                 }
 
@@ -661,14 +674,14 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
           }
         },
         (err) => {
-          console.error('Error en el inicio de sesión:', err);
+          console.error("Error en el inicio de sesión:", err);
           if (err) {
-            if (err.error.message === 'Captcha inválido') {
+            if (err.error.message === "Captcha inválido") {
               Swal.fire({
-                title: 'Captcha Inválido',
-                text: 'El CAPTCHA ingresado es incorrecto. Por favor,recargue la pagina e inténtalo de nuevo.',
-                icon: 'error',
-                confirmButtonText: 'Ok',
+                title: "Captcha Inválido",
+                text: "El CAPTCHA ingresado es incorrecto. Por favor,recargue la pagina e inténtalo de nuevo.",
+                icon: "error",
+                confirmButtonText: "Ok",
               });
               return;
             }
@@ -685,19 +698,19 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
               this.saveLockState();
 
               Swal.fire({
-                title: 'Cuenta Bloqueada',
+                title: "Cuenta Bloqueada",
                 text: err.error.message,
-                icon: 'warning',
-                confirmButtonText: 'Ok',
+                icon: "warning",
+                confirmButtonText: "Ok",
               });
               this.startCountdown();
             }
           } else {
             Swal.fire({
-              title: 'Error ',
-              text: 'Ha ocurrido un error al iniciar sesión.',
-              icon: 'error',
-              confirmButtonText: 'Ok',
+              title: "Error ",
+              text: "Ha ocurrido un error al iniciar sesión.",
+              icon: "error",
+              confirmButtonText: "Ok",
             });
           }
         }
@@ -710,10 +723,10 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
     this.remainingTime = this.lockTime;
 
     Swal.fire({
-      title: 'Límite de intentos alcanzado',
+      title: "Límite de intentos alcanzado",
       text: `Cuenta bloqueada por ${this.lockTime} segundos. Por favor, intenta nuevamente más tarde.`,
-      icon: 'warning',
-      confirmButtonText: 'Entendido',
+      icon: "warning",
+      confirmButtonText: "Entendido",
     });
 
     this.saveLockState(); // Guardar el estado del bloqueo
@@ -746,22 +759,22 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   get hasLowercase(): boolean {
-    return /[a-z]/.test(this.loginForm.get('password')?.value);
+    return /[a-z]/.test(this.loginForm.get("password")?.value);
   }
 
   get hasUppercase(): boolean {
-    return /[A-Z]/.test(this.loginForm.get('password')?.value);
+    return /[A-Z]/.test(this.loginForm.get("password")?.value);
   }
 
   get hasNumber(): boolean {
-    return /[0-9]/.test(this.loginForm.get('password')?.value);
+    return /[0-9]/.test(this.loginForm.get("password")?.value);
   }
 
   get hasSpecialChar(): boolean {
-    return /[@$!%*?&]/.test(this.loginForm.get('password')?.value);
+    return /[@$!%*?&]/.test(this.loginForm.get("password")?.value);
   }
 
   get hasMinLength(): boolean {
-    return this.loginForm.get('password')?.value?.length >= 8;
+    return this.loginForm.get("password")?.value?.length >= 8;
   }
 }

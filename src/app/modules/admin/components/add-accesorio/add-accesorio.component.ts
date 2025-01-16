@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-add-accesorio',
@@ -54,7 +55,7 @@ export class AddAccesorioComponent {
       });
 
       // Enviar el FormData al backend
-      this.http.post('http://localhost:4000/api/v1/accesorio/', formData).subscribe(
+      this.http.post(`${environment.api}/accesorio/`, formData).subscribe(
         (response) => {
           console.log('Accesorio creado exitosamente:', response);
           this.displayModal = false; // Cerrar el modal después de agregar el accesorio
