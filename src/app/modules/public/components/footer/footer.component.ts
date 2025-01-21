@@ -18,8 +18,8 @@ export class FooterComponent {
 
 
 
-  menuItems!: MenuItem[];
-  activeItem!: MenuItem;
+  // menuItems!: MenuItem[];
+  // activeItem!: MenuItem;
 
 
   constructor(
@@ -28,12 +28,12 @@ export class FooterComponent {
   ) {}
 
   ngOnInit(): void {
-    this.menuItems = [
-      { label: 'Inicio', icon: 'pi pi-home', command: () => this.navigateTo('home') },
-      { label: 'Perfil', icon: 'pi pi-user', command: () => this.navigateTo('profile') },
-      { label: 'Carrito', icon: 'pi pi-shopping-cart', command: () => this.navigateTo('cart') },
-    ];
-    this.activeItem = this.menuItems[0];
+    // this.menuItems = [
+    //   { label: 'Inicio', icon: 'pi pi-home', command: () => this.navigateTo('home') },
+    //   { label: 'Perfil', icon: 'pi pi-user', command: () => this.navigateTo('profile') },
+    //   { label: 'Carrito', icon: 'pi pi-shopping-cart', command: () => this.navigateTo('cart') },
+    // ];
+    // this.activeItem = this.menuItems[0];
     if (isPlatformBrowser(this.platformId)) { // Check if we're in the browser
       const ua = navigator.userAgent;
       console.log(ua);
@@ -75,14 +75,14 @@ export class FooterComponent {
 
  
 
-  onTabClick(event: any) {
-    this.activeItem = event.item;
-  }
+  // onTabClick(event: any) {
+  //   this.activeItem = event.item;
+  // }
 
-  navigateTo(route: string) {
-    console.log(`Navigating to ${route}`);
-    // Implementa aquí la lógica de navegación
-  }
+  // navigateTo(route: string) {
+  //   console.log(`Navigating to ${route}`);
+  //   // Implementa aquí la lógica de navegación
+  // }
 
 
 

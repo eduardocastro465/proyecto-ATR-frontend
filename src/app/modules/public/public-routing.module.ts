@@ -92,17 +92,27 @@ const routes: Routes = [
         path: 'CitasProbador',
         component: CitasProbadorView,
         data: {
-          title: 'Mi perfil',
+          title: 'Citas-probador',
           breadcrumb: [
             {
-              label: 'Mi-perfil',
-              path: '/public/Mi-perfil',
+              label: 'carrito',
+              path: '/public/CitasProbador',
             },
           ],
         },
       },
       { path: 'Config', component: ConfigView },
-      { path: 'Detail/:id', component: DetailsProductView },
+      { path: 'Detail/:id', component: DetailsProductView ,
+        data: {
+        title: 'Detalle del Producto',
+        breadcrumb: [
+          {
+            label: 'Detalle del Producto',
+            path: '/public/Detail/:id',
+          },
+        ],
+      },
+},
     ],
   },
 ];
