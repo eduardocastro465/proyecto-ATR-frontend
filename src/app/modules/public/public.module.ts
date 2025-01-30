@@ -9,14 +9,11 @@ import { HomeView } from './views/home/home.view';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { SidebarModule } from 'primeng/sidebar';
-// import {  } from './views/acerca-de/acerca-de.view';
 import { AcercaDeView } from './views/acerca-de/acerca-de.view';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
-// DialogModule
 import { PerfilView } from './views/perfil/perfil.view';
 import { MenuModule } from 'primeng/menu';
-// import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DetailsProductView } from './views/details-product/details-product.view';
 import { SkeletonModule } from 'primeng/skeleton';
@@ -26,9 +23,6 @@ import {  ControlAdministrativaService} from "../../shared/services/control-admi
 import { TabMenuModule } from 'primeng/tabmenu';
 import { GalleriaModule } from 'primeng/galleria';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
-
-// import { VerificarCodigoView } from './views/verificar-codigo/verificar-codigo.view';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { Toast, ToastrService } from 'ngx-toastr';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { TieredMenuModule } from 'primeng/tieredmenu';
@@ -37,7 +31,6 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { SignUpService } from '../auth/commons/services/sign-up.service';
 import { UsuarioService } from '../../shared/services/usuario.service';
 import { TagComponent } from './components/tag/tag.component';
-// import { NgChatbotAngularModule } from "ng-chatbot-angular";
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { PaginatorModule } from 'primeng/paginator';
@@ -53,13 +46,14 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PoliticasComponent } from './views/politicas/politicas.component';
 import { TerminosComponent } from './views/terminos/terminos.component';
 import { CitasProbadorView } from './views/citas-probador/citas-probador.view';
-// import { DrawerModule } from 'primeng/drawer';
 import { ResultsComponent } from './views/results/results.component';
 import { HeroImgComponent } from './components/hero-img/hero-img.component';
 import { IndexedDbService } from './commons/services/indexed-db.service';
 import { FigureComponent } from './components/figure/figure.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
-// import { DialogModule } from 'primeng/dialog';
+import { NotFoundComponent } from './views/not-found/not-found.component';
+import { Error500Component } from './views/error500/error500.component';
+import { SidevarComponent } from './components/sidevar/sidevar.component';
 
 const MATERIALS =[PasswordModule,
   InputMaskModule,
@@ -67,7 +61,7 @@ const MATERIALS =[PasswordModule,
 const COMPONENTS =[FooterComponent,HeaderComponent]
 const VIEWS=[HomeView,PublicComponent,PerfilView, AcercaDeView,DetailsProductView]
 @NgModule({
-  declarations: [VIEWS,COMPONENTS, CarritoView, TagComponent, PoliticasComponent, TerminosComponent, CitasProbadorView, ResultsComponent, HeroImgComponent, FigureComponent, BreadcrumbComponent],
+  declarations: [VIEWS,COMPONENTS, CarritoView, TagComponent, PoliticasComponent, TerminosComponent, CitasProbadorView, ResultsComponent, HeroImgComponent, FigureComponent, BreadcrumbComponent, NotFoundComponent, Error500Component, SidevarComponent],
   exports:[COMPONENTS],
   imports: [GalleriaModule,
     CommonModule,ReactiveFormsModule,FormsModule,

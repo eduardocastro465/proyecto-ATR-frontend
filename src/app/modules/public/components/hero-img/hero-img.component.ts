@@ -22,7 +22,7 @@ import { Component } from "@angular/core";
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 55vh;
+    height: 50vh;
     filter: drop-shadow(10px 10px 15px rgb(249, 192, 255)); /* Efecto de sombra */
 
     /* Imagen de fondo */
@@ -38,7 +38,7 @@ import { Component } from "@angular/core";
     // background-color: linear-gradient(0deg, #ffffff 0%, #ffeaea 100%);
     /* Otras propiedades */
     background-attachment: fixed; /* Efecto Parallax */
-    mask-image: linear-gradient(black 70%, transparent);
+    mask-image: linear-gradient(black 90%, transparent);
     padding: 0 2rem;
 }
 
@@ -69,11 +69,13 @@ import { Component } from "@angular/core";
   }
 
   .title {
-    font-size: 6.5rem;
-    font-weight: 999;
-    margin-bottom: 1rem;
-    line-height: 1.2;
-  }
+  font-size: 6.5rem;
+  font-weight: 999;
+  font-family: innerti;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  text-shadow: 0px 0px 9px rgba(255, 133, 214, 0.8), 0px 0px 15px rgba(255, 167, 226, 0.6);
+}
 
   .description {
     font-size: 1rem;

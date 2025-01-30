@@ -1,118 +1,137 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { HomeView } from './views/home/home.view';
-import path from 'path';
-import { PublicComponent } from './public.component';
-import { AcercaDeView } from './views/acerca-de/acerca-de.view';
-import { SignInView } from '../auth/view/sign-in/sign-in.view';
-import { SignUpView } from '../auth/view/sign-up/sign-up.view';
-import { ConfigView } from './views/config/config.view';
-import { DetailsProductView } from './views/details-product/details-product.view';
-import { PerfilView } from './views/perfil/perfil.view';
-import { TerminosComponent } from './views/terminos/terminos.component';
-import { PoliticasComponent } from './views/politicas/politicas.component';
-import { CitasProbadorView } from './views/citas-probador/citas-probador.view';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { HomeView } from "./views/home/home.view";
+import path from "path";
+import { PublicComponent } from "./public.component";
+import { AcercaDeView } from "./views/acerca-de/acerca-de.view";
+import { ConfigView } from "./views/config/config.view";
+import { DetailsProductView } from "./views/details-product/details-product.view";
+import { PerfilView } from "./views/perfil/perfil.view";
+import { TerminosComponent } from "./views/terminos/terminos.component";
+import { PoliticasComponent } from "./views/politicas/politicas.component";
+import { CitasProbadorView } from "./views/citas-probador/citas-probador.view";
+import { ResultsComponent } from "./views/results/results.component";
 
 const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full',
+    path: "",
+    redirectTo: "home",
+    pathMatch: "full",
   },
   {
-    path: '',
+    path: "",
     component: PublicComponent,
     children: [
       {
-        path: 'home',
+        path: "home",
         component: HomeView,
         data: {
-          title: 'Home',
+          title: "Home",
           breadcrumb: [
             {
-              label: 'Home',
-              path: '/public/home',
+              label: "Home",
+              path: "/public/home",
             },
           ],
         },
       },
       {
-        path: 'AcercaDe',
+        path: "AcercaDe",
         component: AcercaDeView,
         data: {
-          title: 'AcercaDe',
+          title: "AcercaDe",
           breadcrumb: [
             {
-              label: 'AcercaDe',
-              path: '/public/AcercaDe',
+              label: "AcercaDe",
+              path: "/public/AcercaDe",
             },
           ],
         },
       },
       {
-        path: 'terminos',
+        path: "terminos",
         component: TerminosComponent,
         data: {
-          title: 'terminos',
+          title: "terminos",
           breadcrumb: [
             {
-              label: 'terminos',
-              path: '/public/terminos',
+              label: "terminos",
+              path: "/public/terminos",
             },
           ],
         },
       },
       {
-        path: 'politicas',
+        path: "politicas",
         component: PoliticasComponent,
         data: {
-          title: 'politicas',
+          title: "politicas",
           breadcrumb: [
             {
-              label: 'politicas',
-              path: '/public/politicas',
+              label: "politicas",
+              path: "/public/politicas",
             },
           ],
         },
       },
       {
-        path: 'Mi-perfil',
+        path: "search",
+        component: ResultsComponent,
+        data: { title: "search" }
+      },
+      {
+        path: "search/:query",
+        component: ResultsComponent,
+        data: {
+          title: "search",
+          breadcrumb: [
+            {
+              label: "search",
+              path: "/public/busqueda",
+            },
+          ],
+        },
+      },
+      {
+        path: "Mi-perfil",
         component: PerfilView,
         data: {
-          title: 'Mi perfil',
+          title: "Mi perfil",
           breadcrumb: [
             {
-              label: 'Mi-perfil',
-              path: '/public/Mi-perfil',
+              label: "Mi-perfil",
+              path: "/public/Mi-perfil",
             },
           ],
         },
       },
       {
-        path: 'CitasProbador',
+        path: "CitasProbador",
         component: CitasProbadorView,
         data: {
-          title: 'Citas-probador',
+          title: "carrito",
           breadcrumb: [
             {
-              label: 'carrito',
-              path: '/public/CitasProbador',
+              label: "carrito",
+              path: "/public/CitasProbador",
             },
           ],
         },
       },
-      { path: 'Config', component: ConfigView },
-      { path: 'Detail/:id', component: DetailsProductView ,
+      { path: "Config", component: ConfigView },
+      {
+        path: "Detail/:id",
+        component: DetailsProductView,
         data: {
-        title: 'Detalle del Producto',
-        breadcrumb: [
-          {
-            label: 'Detalle del Producto',
-            path: '/public/Detail/:id',
-          },
-        ],
+          title: "Detalle del Producto",
+          breadcrumb: [
+            {
+              label: "Detalle del Producto",
+              path: "/public/Detail/:id",
+            },
+          ],
+        },
       },
-},
     ],
   },
 ];

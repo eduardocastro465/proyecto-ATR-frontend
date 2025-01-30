@@ -1,9 +1,9 @@
-<!-- breadcrumb.component.html -->
 <div class="ui breadcrumb">
-    <ng-container *ngFor="let breadcrumb of breadcrumbs; let i = index">
-      <a *ngIf="i < breadcrumbs.length - 1" class="section" [routerLink]="breadcrumb.path">{{ breadcrumb.label }}</a>
-      <div *ngIf="i < breadcrumbs.length - 1" class="divider"> > </div>
-      <div *ngIf="i === breadcrumbs.length - 1" class="active section">{{ breadcrumb.label }}</div>
-    </ng-container>
-  </div>
-  
+  <ng-container *ngFor="let breadcrumb of breadcrumbs; let i = index">
+    <a *ngIf="i < breadcrumbs.length - 1" class="section" [routerLink]="breadcrumb.path">{{ breadcrumb.label }}</a>
+    <div *ngIf="i < breadcrumbs.length - 1" class="divider">
+      <i class="pi pi-chevron-right"></i> <!-- Cambia el ícono aquí -->
+    </div>
+    <div *ngIf="i === breadcrumbs.length - 1" class="active section">{{ breadcrumb.label }}</div>
+  </ng-container>
+</div>

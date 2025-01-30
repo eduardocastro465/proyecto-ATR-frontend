@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ProductoService } from '../../../../shared/services/producto.service';
 import { Producto } from '../../../../shared/models/Producto.model';
 import { FormGroup } from '@angular/forms';
@@ -24,12 +24,22 @@ export class ListadoProductosComponent implements OnInit {
   filterText: string = '';
   productForm!: FormGroup;
   idProducto!: string;
+  
+  
+
 
   constructor(private productoS: ProductoService) {}
   abrirModal(){
-    // console.log( this.mostrarModalAddVestido)
+    console.log("abierto")
     this.mostrarModalAddVestido=true;
   }
+
+  cerrarModalHandler(valor: boolean) {
+    this.mostrarModalAddVestido = valor; // Actualizamos el valor para cerrar el modal
+  }
+  
+
+
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.

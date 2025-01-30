@@ -184,3 +184,21 @@ div.contiendescripcion{
     display: block; /* Mostrar las imágenes en miniatura en pantallas pequeñas */
   }
 }
+
+
+
+.loading-container {
+  display: flex;
+  gap: 20px;
+}
+
+.skeleton-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 150px; /* Ajusta según el diseño */
+}
+
+.skeleton-container {
+  width: 200px; /* Ajusta según el diseño */
+}

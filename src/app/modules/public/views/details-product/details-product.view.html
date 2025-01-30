@@ -56,7 +56,7 @@
       </button>
     </div>
 
-    <div class="product-info" *ngIf="Detalles">
+    <div class="product-info" *ngIf="Detalles;else loading">
       <h1 class="product-name">{{ Detalles.nombre }}</h1>
 
       <div class="availability">
@@ -75,25 +75,18 @@
           <p>Talla:</p>
           <span
             class="circle-option"
-            *ngFor="let talla of Detalles.tallasDisponibles"
-            >{{ talla }}</span
+            >{{ Detalles.tallaDisponible }}</span
           >
         </div>
 
-        <!-- Textura -->
-        <div class="product-detail">
-          <p>Textura:</p>
-          <span class="circle-option">Cuero</span>
-        </div>
-
+       
+<!-- 
         <!-- Color -->
         <div class="product-detail">
           <p>Color:</p>
-          <span class="color-option" style="background-color: #8b4513"></span>
-          <!-- Color marrón -->
-          <span class="color-option" style="background-color: #c0c0c0"></span>
+         
           <!-- Color plata -->
-        </div>
+        </div> -->
 
         <!-- Estado (Nuevo o para Renta) -->
         <div class="product-detail">
@@ -123,20 +116,27 @@
     </div>
   </div>
 
-  <!-- <div class="description-container"> -->
+  <ng-template #loading>
+    <div class="loading-container">
+      <!-- Columna con 3 tarjetas mini -->
+      <div class="skeleton-cards">
+        <p-skeleton width="100%" height="100px"></p-skeleton>
+        <p-skeleton width="100%" height="100px"></p-skeleton>
+        <p-skeleton width="100%" height="100px"></p-skeleton>
+      </div>
+      <!-- Contenedor al lado -->
+      <div class="skeleton-container">
+        <p-skeleton width="100%" height="300px"></p-skeleton>
+      </div>
+    </div>
+  </ng-template>
+  
   <h2 class="description-title">Descripción</h2>
   <p class="description-summary">
     {{ Detalles.descripcion }}
-    <!-- <span class="read-more" (click)="toggleDescription()"> -->
-    <!-- {{ mostrarDescripcionCompleta ? 'Leer menos' : 'Leer más' }} -->
-    <!-- </span> -->
+    
   </p>
-  <!-- <p class="description-full" *ngIf="mostrarDescripcionCompleta">
-    {{ Detalles.descripcion }}
-  </p> -->
-  <!-- </div> -->
-  <!-- </div> -->
-  <!-- <div class="carousel-container"> -->
+  
   <h2 class="carousel-title">Accesorios incluidos en el look</h2>
   <div class="carousel">
     <div class="carousel-item" *ngFor="let Detalles of productos">

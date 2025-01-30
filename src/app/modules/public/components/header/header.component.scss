@@ -257,18 +257,14 @@ p-sidebar {
   padding: 0 2px;
 }
 .nav-menu li {
-  // margin-left: 50px;
-  // margin-right: 50px;
   a {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    // font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     text-decoration: none;
-    font-size: 18px;
-    // letter-spacing: 1px;
-    // text-transform: uppercase;
+    font-size: 14px;
     padding: 10px 20px;
     border-radius: 50px;
     transition: background-color 0.3s ease;
-    color:rgb(84, 91, 96);
+    color:rgb(0, 0, 0);
     cursor: pointer;
     // font-weight: 900;
     &:hover {
@@ -298,7 +294,7 @@ p-sidebar {
   // }
 }
 .sticky {
-  position: static !important;
+  position: fixed !important;
   top: 0;
   width: 100%;
   z-index: 10;

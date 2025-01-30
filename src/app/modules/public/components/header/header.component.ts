@@ -67,9 +67,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
   dressItems: any[] = [];
   // Señal para manejar reactividad
   private dressItemsSignal = signal<any[]>([]);
-
- 
-
   // Señal computada para el contador
   dressItemCount = computed(() => this.dressItemsSignal().length);
   empresaData: any;
@@ -246,15 +243,20 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
       }
     );
   }
+
+  
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       $(this.elementRef.nativeElement)
         .find(".ui.search")
         .search({
           type: "category",
-          apiSettings: {
-            url: "/search/{query}", // Asegúrate de que esta URL sea correcta
-          },
+      //     apiSettings: {
+      //       // url: `environment.api`, // Asegúrate de que esta URL sea correcta
+      // // this.router.navigate(['/public/search', query])
+            
+      //       // url: "/search/{query}", // Asegúrate de que esta URL sea correcta
+      //     },
           onSelect: (result: any) => {
             // Manejar la selección del resultado aquí, si es necesario
           },
@@ -284,6 +286,8 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
     // Reemplaza con la llamada real a la API de búsqueda
     setTimeout(() => {
       this.isLoading = false;
+      this.router.navigate(['/public/search', this.searchQuery])   
+   
       // Implementa tu lógica de búsqueda aquí
       console.log("Buscando:", this.searchQuery);
     }, 2000);

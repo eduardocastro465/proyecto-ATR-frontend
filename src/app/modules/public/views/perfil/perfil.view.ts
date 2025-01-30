@@ -36,7 +36,6 @@ export class PerfilView implements OnInit {
   }
 
   getData(): void {
-    // this.ngxService.start();
     const userData = this.sessionService.getId();
     console.log('userData=>', userData);
     if (userData) {
@@ -49,6 +48,8 @@ export class PerfilView implements OnInit {
       }
     }
   }
+
+
   logout() {
     this.storageService.removeItem('token');
     this.router.navigate(['/auth/login']);

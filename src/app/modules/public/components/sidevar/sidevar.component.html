@@ -1,0 +1,48 @@
+<!-- section class="products" -->
+<aside *ngIf="!isMobile" class="sidebar">
+  <div class="filter-section">
+    <h3>Categorías</h3>
+    <ul class="category-list">
+      <li (click)="applyFilter('categoria', 'ofertas')" [class.active]="selectedFilters.categoria === 'ofertas'"><strong>OFERTAS 🔥</strong> (15)</li>
+      <li (click)="applyFilter('categoria', 'nuevas-llegadas')" [class.active]="selectedFilters.categoria === 'nuevas-llegadas'"><strong>NUEVAS LLEGADAS</strong> (150)</li>
+    </ul>
+  </div>
+
+  <!-- Color -->
+  <div class="filter-section">
+    <h3>Color</h3>
+    <div class="color-options">
+      <span class="color black" (click)="applyFilter('color', 'negro')" [class.active]="selectedFilters.color === 'negro'"></span>
+      <span class="color gray" (click)="applyFilter('color', 'gris')" [class.active]="selectedFilters.color === 'gris'"></span>
+      <span class="color pink" (click)="applyFilter('color', 'rosa')" [class.active]="selectedFilters.color === 'rosa'"></span>
+      <span class="color red" (click)="applyFilter('color', 'rojo')" [class.active]="selectedFilters.color === 'rojo'"></span>
+      <span class="color green" (click)="applyFilter('color', 'verde')" [class.active]="selectedFilters.color === 'verde'"></span>
+      <span class="color blue" (click)="applyFilter('color', 'azul')" [class.active]="selectedFilters.color === 'azul'"></span>
+      <span class="color yellow" (click)="applyFilter('color', 'amarillo')" [class.active]="selectedFilters.color === 'amarillo'"></span>
+      <span class="color purple" (click)="applyFilter('color', 'morado')" [class.active]="selectedFilters.color === 'morado'"></span>
+    </div>
+  </div>
+
+   <div class="filter-section">
+  <h3>Tamaño</h3>
+  <div class="size-options">
+    <label *ngFor="let talla of ['XS', 'S', 'M', 'L', 'XL']">
+      <input 
+        type="checkbox" 
+        [checked]="selectedFilters.tallas.includes(talla)" 
+        (change)="toggleSize(talla)">
+      {{ talla }}
+    </label>
+    <label>
+      <input 
+        type="checkbox" 
+        [checked]="selectedFilters.tallas.includes('todas')" 
+        (change)="toggleSize('todas')">
+      Todas las tallas
+    </label>
+  </div>
+</div>
+
+    
+ 
+</aside>

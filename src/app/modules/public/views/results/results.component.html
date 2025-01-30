@@ -1,1 +1,62 @@
-<p>results works!</p>
+<main class="box">
+  <app-sidevar></app-sidevar>
+  <div class="productos">
+    <!-- Template para Sin Resultados -->
+    <ng-template #sinResultados>
+      <h3>No se encontraron resultados para: {{ query }}</h3>
+      <p>Sugerencias:</p>
+        <ul>
+          <li>Verifica la ortografía</li>
+          <li>Usa términos más generales</li>
+          <li>Prueba con otra palabra clave</li>
+        </ul>
+        <div class="listado-productos">
+
+        <div *ngFor="let producto of allProducts" class="producto-card p-mb-4">
+          <div class="ribbon">Nuevo</div>
+          <div class="product-image">
+            <img
+              (click)="verDetalles(producto._id)"
+              [src]="producto.imagenPrincipal"
+              alt="{{ producto.nombre }}"
+            />
+          </div>
+          <div class="product-content">
+            <p>{{ producto.nombre }}</p>
+            <p>
+              MX$:<strong> {{ producto.precio | currency }}</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    <!--
+     <div data-aos="zoom-out-up" class="productos-container"> -->
+    <div  *ngIf="resultadosEncontrados; else sinResultados">
+      <h3>Busquedas relacionadas: {{ query }}</h3>
+      <p>{{ query }}:{{ results.length }}</p>
+      <!-- Contenedor de Resultados -->
+      <div
+        class="listado-productos"
+       
+      >
+        <div *ngFor="let producto of results" class="producto-card p-mb-4">
+          <div class="ribbon">Nuevo</div>
+          <div class="product-image">
+            <img
+              (click)="verDetalles(producto._id)"
+              [src]="producto.imagenPrincipal"
+              alt="{{ producto.nombre }}"
+            />
+          </div>
+          <div class="product-content">
+            <p>{{ producto.nombre }}</p>
+            <p>
+              MX$:<strong> {{ producto.precio | currency }}</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

@@ -89,7 +89,11 @@ const MATERIALS = [ DragDropModule,ButtonModule, DropdownModule, InputTextModule
 @NgModule({
   declarations: [
     VIEWS,
+
+    
     AdminComponent,
+
+
     ListadoClientesComponent,
     ControlClientesView,
     ControlProductosView,

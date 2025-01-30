@@ -21,7 +21,7 @@ import { IndexedDbService } from '../../commons/services/indexed-db.service';
   templateUrl: './home.view.html',
   styleUrls: [
     './home.view.css',
-    '../../../../shared/styles/categoriesNav.scss',
+    // '../../../../shared/styles/categoriesNav.scss',
     '../../../../shared/styles/styles.scss',
     '../../../../shared/styles/animations.scss',
   ],
@@ -141,14 +141,6 @@ export class HomeView implements OnInit {
       this.productos = response;
     });
 
-    // this.datosEmpresaService.traerDatosEmpresa().subscribe(
-    //   (respuesta) => {
-    //     this.datosEmpresa = respuesta[0];
-    //   },
-    //   (error) => {
-    //     console.log(error);
-    //   }
-    // );
   }
 
   isUserLoggedIn(): boolean {

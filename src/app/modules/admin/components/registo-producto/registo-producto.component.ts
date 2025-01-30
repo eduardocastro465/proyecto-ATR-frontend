@@ -1,7 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ProductoService } from '../../../../shared/services/producto.service';
-import { Producto } from '../../../../shared/models/Producto.model';
 
 @Component({
   selector: 'app-registo-producto',
@@ -9,12 +8,14 @@ import { Producto } from '../../../../shared/models/Producto.model';
   styleUrls: ['./registo-producto.component.scss'],
 })
 export class RegistoProductoComponent implements OnInit {
-  @Input() mostrarModalAddVestido: boolean = false;
+  @Output() mostrarFormulario = new EventEmitter<boolean>(); // Evento para cerrar el modal
 
-  // abrirModal() {
-  //   this.mostrarModalAddVestido = true;
+  cerrar() {
+    console.log("cerrado")
+    this.mostrarFormulario.emit(false); // Emitimos false para cerrar el modal
+  }
 
-  // }
+
   productoForm: FormGroup;
 
   imagenPrincipal: File | null = null; // Inicializa con null

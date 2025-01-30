@@ -215,7 +215,7 @@ header="Header"
       <!-- <span *ngIf="!isSticky" class="titulo"> {{ nombreDeLaPagina }}</span> -->
     </div>
     <ul *ngIf="!isMobile" class="nav-menu flex">
-      <li><a (click)="redirectTo('home')">Home</a></li>
+      <li><a (click)="redirectTo('home')">Inicio</a></li>
       <li><a (click)="redirectTo('AcercaDe')"> Acerca de nosotros </a></li>
       <li><a (click)="redirectTo('AcercaDe')"> Historial </a></li>
     </ul>
@@ -236,6 +236,7 @@ header="Header"
         </div>
       </li>
       <li>
+
         <!-- <i  (click)="redirectTo('CitasProbador')" class="pi pi-calendar">{{dressItems[].length}}</i> -->
 
         <div class="counter-container" (click)="redirectTo('CitasProbador')">
@@ -327,3 +328,7 @@ header="Header"
 </p-sidebar>
 
 <!-- <div class="resize-handle" (mousedown)="startResizing($event)"></div> -->
+
+
+
+<!-- <app-results [buscar]="searchQuery"></app-results> -->

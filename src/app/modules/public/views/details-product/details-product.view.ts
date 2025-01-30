@@ -9,13 +9,13 @@ interface Producto {
   nombre: string;
   imagenPrincipal: any; // Sigue siendo una cadena para representar la imagen en base64
   otrasImagenes: string[]; // Sigue siendo un array de cadenas para imágenes adicionales en base64
-  categoria: "Ropa" | "Accesorios" | "Calzado" | "Otro";
+  // categoria: "Ropa" | "Accesorios" | "Calzado" | "Otro";
   color: string;
   textura?: string;
-  tallasDisponibles: Array<{
-    talla: "XS" | "S" | "M" | "L" | "XL" | "XXL" | "Otro"; // Puede ser una cadena literal
-    medida: string; // La medida sigue siendo una cadena
-  }>;
+  // tallasDisponibles: Array<{
+  //   talla: "XS" | "S" | "M" | "L" | "XL" | "XXL" | "Otro"; // Puede ser una cadena literal
+  //   medida: string; // La medida sigue siendo una cadena
+  // }>;
   precio: number;
   estado: {
     disponible: boolean;
@@ -42,7 +42,7 @@ export class DetailsProductView implements OnInit {
   selectedSize: string = "";
   // sizes: any[] = [];
   productId!: any;
-  Detalles!: any;
+  Detalles: any = null; // Inicializado en null
   responsiveOptions: any[] = [
     {
       breakpoint: "1024px",
@@ -69,6 +69,7 @@ export class DetailsProductView implements OnInit {
     // this.id=require.para
   }
   ngOnInit() {
+    this.scrollToTop();
     this.productId = this.activatedRoute.snapshot.params["id"];
     this.productoS_
       .obtenerDetalleProductoById(this.productId)
@@ -76,12 +77,10 @@ export class DetailsProductView implements OnInit {
         this.Detalles = response;
       });
 
-    this.scrollToTop();
   }
-
-  scrollToTop() {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
+ scrollToTop() {
+    window.scrollTo(0, 0); // Esto lleva la página a la parte superior
+}
 
   // getProductDetails() {
   //   this.isLoading = true;

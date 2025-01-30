@@ -6,7 +6,29 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-breadcrumb',
   templateUrl: './breadcrumb.component.html',
-  styles: ``,
+  styles: `
+.ui.breadcrumb {
+  margin-left: 50px; // Mueve el breadcrumb 50px a la derecha
+
+  .section {
+    // color: gray; // Color gris para las secciones no activas
+    &.active {
+      color: pink; // Color rosa para la sección activa
+      // font-weight: bold; // Opcional: hace que el texto activo sea más destacado
+    }
+  }
+
+  .divider {
+    color: inherit; // Mantiene el color del texto del breadcrumb
+    font-size: 0.8em; // Ajusta el tamaño del ícono
+    
+    i {
+      font-size: 0.8em; // Tamaño del ícono
+    }
+  }
+}
+
+`,
 })
 export class BreadcrumbComponent implements OnInit, OnDestroy {
   breadcrumbs: any[] = [];

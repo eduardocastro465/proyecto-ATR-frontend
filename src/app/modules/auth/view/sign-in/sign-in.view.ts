@@ -374,13 +374,13 @@ export class SignInView implements OnInit,AfterViewInit  {
           if (userData) {
             this.userROL = userData.rol;
             let navigateTo = '';
-
+    
             if (this.userROL === ERol.ADMIN) {
               navigateTo = '/admin/home';
             } else if (this.userROL === ERol.CLIENTE) {
               navigateTo = '/public/home';
             }
-
+    
             this.router.navigate([navigateTo]).then(() => {
               if (navigateTo === '/public/home') {
                 window.location.reload();
@@ -391,38 +391,47 @@ export class SignInView implements OnInit,AfterViewInit  {
       },
       (err) => {
         this.isLoading = false;
-
         console.error('Error en el inicio de sesión:', err);
-        if (err) {
-          if (err.error.message === 'Captcha inválido') {
-            Swal.fire({
-              title: 'Captcha Inválido',
-              text: 'El CAPTCHA ingresado es incorrecto. Por favor,recargue la pagina e inténtalo de nuevo.',
-              icon: 'error',
-              confirmButtonText: 'Ok',
-            });
-            return;
-          }
-          if (err.error && err.error.message) {
-            this.errorMessage = err.error.message;
-          }
-          if (err.error?.tiempo) {
-            const tiempoDeBloqueo = err.error.tiempo;
-            const numeroDeIntentos = err.error.numeroDeIntentos;
-            this.attempts = numeroDeIntentos;
-            this.lockTime = tiempoDeBloqueo;
-            this.isLocked = true;
-            this.remainingTime = tiempoDeBloqueo;
-            this.saveLockState();
-
-            Swal.fire({
-              title: 'Cuenta Bloqueada',
-              text: err.error.message,
-              icon: 'warning',
-              confirmButtonText: 'Ok',
-            });
-            this.startCountdown();
-          }
+    
+        if (err.status === 0) { 
+          // Error de red, CORS fallido, o servidor caído
+          Swal.fire({
+            title: 'Error del servidor',
+            text: 'No se puede conectar con el servidor. Inténtalo más tarde.',
+            icon: 'error',
+            confirmButtonText: 'Ok',
+          }).then(() => {
+            this.router.navigate(['/500']); // Redirigir a la página de error 500
+          });
+          return;
+        }
+    
+        if (err.error?.message === 'Captcha inválido') {
+          Swal.fire({
+            title: 'Captcha Inválido',
+            text: 'El CAPTCHA ingresado es incorrecto. Por favor, recargue la página e inténtalo de nuevo.',
+            icon: 'error',
+            confirmButtonText: 'Ok',
+          });
+          return;
+        }
+    
+        if (err.error?.tiempo) {
+          const tiempoDeBloqueo = err.error.tiempo;
+          const numeroDeIntentos = err.error.numeroDeIntentos;
+          this.attempts = numeroDeIntentos;
+          this.lockTime = tiempoDeBloqueo;
+          this.isLocked = true;
+          this.remainingTime = tiempoDeBloqueo;
+          this.saveLockState();
+    
+          Swal.fire({
+            title: 'Cuenta Bloqueada',
+            text: err.error.message,
+            icon: 'warning',
+            confirmButtonText: 'Ok',
+          });
+          this.startCountdown();
         } else {
           Swal.fire({
             title: 'Error ',
@@ -433,6 +442,8 @@ export class SignInView implements OnInit,AfterViewInit  {
         }
       }
     );
+    
+    
   }
 
   // Método para bloquear la cuenta y activar el temporizador

@@ -12,3 +12,10 @@ Aún sin calificación (0 opiniones)﻿
 
 
 iconos de la empresa ,el de como rentar mi vestido
+
+
+
+
+if (error.status === 500) {
+          this.router.navigate(['/error-500']);
+        }
