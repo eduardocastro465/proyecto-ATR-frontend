@@ -1,18 +1,18 @@
-<div class="error-container">
-  <div class="overlay">
-    <h1 class="error-title">Oops!</h1>
-    <p class="error-subtitle">
-      Lo sentimos pero no podemos encontrar la página que estás buscando.<br />
-      Por favor, verifica la dirección o vuelve a nuestra página principal.
-    </p>
-    <button pButton type="button" class="back-button" (click)="goBack()">Atrás</button>
+<app-header-404></app-header-404>
 
-  </div>
+<div class="error-container">
   <div class="image-container">
     <img
-      src="https://res.cloudinary.com/dvvhnrvav/image/upload/v1738042074/rSlMuGLq_fdtnrl.jpg"
+      src="https://res.cloudinary.com/dvvhnrvav/image/upload/v1738220295/404_Page_yv6jdo.jpg"
       alt="Error Image"
       class="error-image"
     />
+  </div>
+  <div class="overlay">
+    <h1 class="error-title">¡Pagina no econtrada!</h1>
+    <p class="error-subtitle">
+      Lo sentimos pero no podemos encontrar la página que estás buscando.<br />
+    </p>
+    <button pButton type="button" class="back-button" (click)="goBack()">Atrás</button>
   </div>
 </div>

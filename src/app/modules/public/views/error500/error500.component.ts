@@ -1,39 +1,58 @@
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-error500',
   templateUrl: './error500.component.html',
-  styles: `.error-page {
+  styles: `.error-container {
+    display: flex;
+    flex-direction: column; // Asegura que la imagen esté arriba y el texto abajo
+    align-items: center;
     text-align: center;
-    margin-top: 50px;
-  
-    h1 {
-      font-size: 4rem;
-      color: #ff4d4f;
-    }
-  
-    p {
-      font-size: 1.5rem;
-      color: #555;
-    }
-  
-    .btn {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      text-decoration: none;
-  
-      &:hover {
-        background-color: #0056b3;
-      }
-    }
+    padding: 20px;
   }
+  
+  .image-container {
+    width: 30%; // Tamaño reducido de la imagen
+    // margin-bottom: 10px; // Espacio entre la imagen y el texto
+  }
+  
+  .error-image {
+    width: 100%;
+    height: auto;
+  }
+  
+  .overlay {
+    max-width: 400px;
+  }
+  
+  .error-title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .error-subtitle {
+    font-size: 16px;
+    color: #666;
+  }
+  
+  .back-button {
+    margin-top: 15px;
+    padding: 10px 20px;
+  }
+  
   `
 })
-export class Error500Component {
+export class Error500Component  implements OnInit {
 
+  constructor(private router: Router) {}
+
+  ngOnInit() {
+    // Inicialización si es necesario
+  }
+
+  goBack() {
+    this.router.navigate(['']); // Cambia la ruta según sea necesario
+  }
 }

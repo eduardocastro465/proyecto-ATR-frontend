@@ -14,6 +14,20 @@ interface SelectedFilters {
   selector: "app-sidevar",
   templateUrl: "./sidevar.component.html",
   styleUrls: ["../../../../shared/styles/categoriesNav.scss"],
+  styles:`.reset-button {
+    background-color: #f44336; /* Color rojo */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  
+  .reset-button:hover {
+    background-color: #d32f2f; /* Color rojo más oscuro al pasar el ratón */
+  }
+  `
 })
 export class SidevarComponent implements OnInit {
   isMobile: boolean = false;
@@ -126,4 +140,18 @@ export class SidevarComponent implements OnInit {
   onResize() {
     this.detectDevice();
   }
+
+
+  // Método para restablecer los filtros
+resetFilters() {
+  this.selectedFilters = {
+    categoria: null,
+    color: null,
+    tallas: ['todas'],
+  };
+  console.log('Filtros restablecidos:', this.selectedFilters);
+  this.emitFilters();
+  this.redirectWithFilters();  // Redirige con los filtros restablecidos
+}
+
 }

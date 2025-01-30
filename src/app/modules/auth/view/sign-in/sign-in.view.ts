@@ -378,11 +378,11 @@ export class SignInView implements OnInit,AfterViewInit  {
             if (this.userROL === ERol.ADMIN) {
               navigateTo = '/admin/home';
             } else if (this.userROL === ERol.CLIENTE) {
-              navigateTo = '/public/home';
+              navigateTo = '/public/inicio';
             }
     
             this.router.navigate([navigateTo]).then(() => {
-              if (navigateTo === '/public/home') {
+              if (navigateTo === '/public/inicio') {
                 window.location.reload();
               }
             });

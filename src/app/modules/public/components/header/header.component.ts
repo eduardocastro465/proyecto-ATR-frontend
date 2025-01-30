@@ -59,7 +59,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
   // Señal para manejar el contador
   // dressItemCount = signal(0);
   userROL!: string;
-  isSticky = true;
+  isSticky = false;
   isLoading = false;
   searchQuery = ""; // Bind search input
   datosEmpresa: any = {};
@@ -109,6 +109,10 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
       ],
       password: ["", Validators.required],
     });
+
+
+    this.isLoading = false;
+
   }
 
   // Método para acceder al control del email
@@ -662,11 +666,11 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
               if (this.userROL === ERol.ADMIN) {
                 navigateTo = "/admin/home";
               } else if (this.userROL === ERol.CLIENTE) {
-                navigateTo = "/public/home";
+                navigateTo = "/public/inicio";
               }
 
               this.router.navigate([navigateTo]).then(() => {
-                if (navigateTo === "/public/home") {
+                if (navigateTo === "/public/inicio") {
                   window.location.reload();
                 }
 

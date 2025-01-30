@@ -27,11 +27,11 @@ export const routes: Routes = [
   },
   {
     path: '500', // Ruta para error 500
-    component: Error500Component
+    redirectTo: 'public/500' 
   },
   {
     path: '**', // Ruta wildcard para capturar cualquier otra ruta no definida
-    component: NotFoundComponent // Redirige a la ruta 'public'
+    redirectTo:'public/404' // Redirige a la ruta 'public'
   },
 
 

@@ -1,45 +1,43 @@
 <main class="box">
   <app-sidevar></app-sidevar>
   <div class="productos">
-    <!-- Template para Sin Resultados -->
     <ng-template #sinResultados>
-      <h3>No se encontraron resultados para: {{ query }}</h3>
-      <p>Sugerencias:</p>
-        <ul>
-          <li>Verifica la ortografía</li>
-          <li>Usa términos más generales</li>
-          <li>Prueba con otra palabra clave</li>
-        </ul>
-        <div class="listado-productos">
+      <h3 *ngIf="!resultadosEncontrados">No se encontraron resultados para: {{ query }}</h3>
+      <p *ngIf="!resultadosEncontrados">Sugerencias:</p>
+      <ul *ngIf="!resultadosEncontrados">
+        <li>Verifica la ortografía</li>
+        <li>Usa términos más generales</li>
+        <li>Prueba con otra palabra clave</li>
+      </ul>
 
-        <div *ngFor="let producto of allProducts" class="producto-card p-mb-4">
-          <div class="ribbon">Nuevo</div>
-          <div class="product-image">
-            <img
-              (click)="verDetalles(producto._id)"
-              [src]="producto.imagenPrincipal"
-              alt="{{ producto.nombre }}"
-            />
-          </div>
-          <div class="product-content">
-            <p>{{ producto.nombre }}</p>
-            <p>
-              MX$:<strong> {{ producto.precio | currency }}</strong>
-            </p>
+
+
+      <div *ngIf="query && !resultadosEncontrados">
+        <h3>Todos los productos</h3>
+        <div class="listado-productos">
+          <div *ngFor="let producto of todosProductos" class="producto-card p-mb-4">
+            <div class="ribbon">Nuevo</div>
+            <div class="product-image">
+              <img
+                (click)="verDetalles(producto._id)"
+                [src]="producto.imagenPrincipal"
+                alt="{{ producto.nombre }}"
+              />
+            </div>
+            <div class="product-content">
+              <p>{{ producto.nombre }}</p>
+              <p>MX$:<strong> {{ producto.precio | currency }}</strong></p>
+            </div>
           </div>
         </div>
       </div>
     </ng-template>
-    <!--
-     <div data-aos="zoom-out-up" class="productos-container"> -->
-    <div  *ngIf="resultadosEncontrados; else sinResultados">
-      <h3>Busquedas relacionadas: {{ query }}</h3>
-      <p>{{ query }}:{{ results.length }}</p>
-      <!-- Contenedor de Resultados -->
-      <div
-        class="listado-productos"
-       
-      >
+
+    <div *ngIf="resultadosEncontrados; else sinResultados">
+      <h3 *ngIf="query">Búsquedas relacionadas: {{ query }}</h3>
+      <p *ngIf="query">{{ query }}: {{ results.length }}</p>
+
+      <div class="listado-productos">
         <div *ngFor="let producto of results" class="producto-card p-mb-4">
           <div class="ribbon">Nuevo</div>
           <div class="product-image">
@@ -51,9 +49,28 @@
           </div>
           <div class="product-content">
             <p>{{ producto.nombre }}</p>
-            <p>
-              MX$:<strong> {{ producto.precio | currency }}</strong>
-            </p>
+            <p>MX$:<strong> {{ producto.precio | currency }}</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mostrar todos los productos solo si no hay query -->
+    <div *ngIf="!query && !resultadosEncontrados">
+      <h3>Todos los productos</h3>
+      <div class="listado-productos">
+        <div *ngFor="let producto of todosProductos" class="producto-card p-mb-4">
+          <div class="ribbon">Nuevo</div>
+          <div class="product-image">
+            <img
+              (click)="verDetalles(producto._id)"
+              [src]="producto.imagenPrincipal"
+              alt="{{ producto.nombre }}"
+            />
+          </div>
+          <div class="product-content">
+            <p>{{ producto.nombre }}</p>
+            <p>MX$:<strong> {{ producto.precio | currency }}</strong></p>
           </div>
         </div>
       </div>

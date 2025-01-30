@@ -1,6 +1,19 @@
-<div class="error-page">
-    <h1>Error 500</h1>
-    <p>Algo salió mal en el servidor. Por favor, intenta más tarde.</p>
-    <button routerLink="/public/home" class="btn btn-primary">Regresar al inicio</button>
+<app-header-404></app-header-404>
+
+<div class="error-container">
+  <div class="image-container">
+    <img
+      src="https://res.cloudinary.com/dvvhnrvav/image/upload/v1738220295/Empty_State_Icons_placeholders_plmcqb.jpg"
+      alt="Error Image"
+      class="error-image"
+    />
   </div>
-  
+  <div class="overlay">
+    <h1 class="error-title">¡Error!</h1>
+    <p class="error-subtitle">
+      Lo sentimos pero no podemos encontrar la página que estás buscando.<br />
+      Por favor, verifica la dirección o vuelve a nuestra página principal.
+    </p>
+    <button pButton type="button" class="back-button" (click)="goBack()">Atrás</button>
+  </div>
+</div>

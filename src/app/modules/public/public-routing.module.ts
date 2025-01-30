@@ -11,11 +11,14 @@ import { TerminosComponent } from "./views/terminos/terminos.component";
 import { PoliticasComponent } from "./views/politicas/politicas.component";
 import { CitasProbadorView } from "./views/citas-probador/citas-probador.view";
 import { ResultsComponent } from "./views/results/results.component";
+import { NotFoundComponent } from "./views/not-found/not-found.component";
+import { Error500Component } from "./views/error500/error500.component";
+import { TagComponent } from "./components/tag/tag.component";
 
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "home",
+    redirectTo: "inicio",
     pathMatch: "full",
   },
   {
@@ -23,16 +26,11 @@ const routes: Routes = [
     component: PublicComponent,
     children: [
       {
-        path: "home",
+        path: "inicio",
         component: HomeView,
         data: {
-          title: "Home",
-          breadcrumb: [
-            {
-              label: "Home",
-              path: "/public/home",
-            },
-          ],
+          title: "inicio",
+          breadcrumb: "inicio",
         },
       },
       {
@@ -40,12 +38,7 @@ const routes: Routes = [
         component: AcercaDeView,
         data: {
           title: "AcercaDe",
-          breadcrumb: [
-            {
-              label: "AcercaDe",
-              path: "/public/AcercaDe",
-            },
-          ],
+          breadcrumb: "Acerca de la empresa",
         },
       },
       {
@@ -53,12 +46,7 @@ const routes: Routes = [
         component: TerminosComponent,
         data: {
           title: "terminos",
-          breadcrumb: [
-            {
-              label: "terminos",
-              path: "/public/terminos",
-            },
-          ],
+          breadcrumb: "terminos",
         },
       },
       {
@@ -66,30 +54,20 @@ const routes: Routes = [
         component: PoliticasComponent,
         data: {
           title: "politicas",
-          breadcrumb: [
-            {
-              label: "politicas",
-              path: "/public/politicas",
-            },
-          ],
+          breadcrumb: "politicas",
         },
       },
       {
         path: "search",
         component: ResultsComponent,
-        data: { title: "search" }
+        data: { title: "search", breadcrumb: "busqueda" },
       },
       {
         path: "search/:query",
         component: ResultsComponent,
         data: {
           title: "search",
-          breadcrumb: [
-            {
-              label: "search",
-              path: "/public/busqueda",
-            },
-          ],
+          breadcrumb: "productos",
         },
       },
       {
@@ -97,12 +75,7 @@ const routes: Routes = [
         component: PerfilView,
         data: {
           title: "Mi perfil",
-          breadcrumb: [
-            {
-              label: "Mi-perfil",
-              path: "/public/Mi-perfil",
-            },
-          ],
+          breadcrumb: "Mi perfil",
         },
       },
       {
@@ -110,12 +83,7 @@ const routes: Routes = [
         component: CitasProbadorView,
         data: {
           title: "carrito",
-          breadcrumb: [
-            {
-              label: "carrito",
-              path: "/public/CitasProbador",
-            },
-          ],
+          breadcrumb: "carrito",
         },
       },
       { path: "Config", component: ConfigView },
@@ -124,17 +92,45 @@ const routes: Routes = [
         component: DetailsProductView,
         data: {
           title: "Detalle del Producto",
-          breadcrumb: [
-            {
-              label: "Detalle del Producto",
-              path: "/public/Detail/:id",
-            },
-          ],
+          breadcrumb: "Detalle del Producto",
+        },
+      },
+      {
+        path: "404",
+        component: NotFoundComponent,
+        data: {
+          title: "pagina no encontrada",
+          breadcrumb: "pagina no encontrada",
+        },
+      },
+      {
+        path: "500",
+        component: Error500Component,
+        data: {
+          title: "error del servidor",
+          breadcrumb: "500",
+        },
+      },
+      {
+        path: "carga",
+        component: Error500Component,
+        data: {
+          title: "carga",
+          breadcrumb: "carga",
+        },
+      },
+      {
+        path: "Servicios",
+        component: TagComponent,
+        data: {
+          title: "servicios y ayuda",
+          breadcrumb: "Servicios",
         },
       },
     ],
   },
 ];
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

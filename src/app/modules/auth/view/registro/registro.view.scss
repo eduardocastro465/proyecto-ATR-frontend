@@ -1,11 +1,14 @@
 .container {
-  width: 100%;
-  max-width: 900px;
+  // width: 300px;
+  // max-width: 900px;
   background-color: var(--style-navbar-second);
   border: 2px solid var(--bg-color-card);
   border-radius: 10px;
   display: flex;
-  margin: 20px auto;
+  margin:0;
+  
+  border: solid 1px #6a6f73;
+
   padding: 20px;
 }
 
@@ -52,7 +55,7 @@ label::after {
 }
 
 .illustration img {
-  width: 100%;
+  width: 500px;
   height: 100%;
   object-fit: cover;
   border-radius: 10px;
@@ -60,6 +63,8 @@ label::after {
 
 .form-container {
   flex: 1;
+  width: 500px;
+
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -84,18 +89,19 @@ h2 {
 }
 
 form {
+
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-
+.input-email,
 input[type="text"],
 input[type="email"],
 input[type="number"],
 input[type="password"] {
   width: 100%;
   padding: 12px;
-  border: 1px solid #ddd;
+  border: 1px solid #dadfe3;
   border-radius: 8px;
   margin-bottom: 15px;
 }

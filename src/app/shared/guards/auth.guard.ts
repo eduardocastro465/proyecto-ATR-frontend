@@ -17,7 +17,7 @@ export const adminGuard = () => {
   if (userROL === ERol.ADMIN) {
     return true; // Usuario tiene rol de admin
   } else {
-    router.navigate(['/public/home']);
+    router.navigate(['/public/inicio']);
 
     return false; // Usuario tiene rol de admin
   }

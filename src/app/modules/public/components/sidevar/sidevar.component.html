@@ -1,10 +1,9 @@
-<!-- section class="products" -->
 <aside *ngIf="!isMobile" class="sidebar">
   <div class="filter-section">
     <h3>Categorías</h3>
     <ul class="category-list">
-      <li (click)="applyFilter('categoria', 'ofertas')" [class.active]="selectedFilters.categoria === 'ofertas'"><strong>OFERTAS 🔥</strong> (15)</li>
-      <li (click)="applyFilter('categoria', 'nuevas-llegadas')" [class.active]="selectedFilters.categoria === 'nuevas-llegadas'"><strong>NUEVAS LLEGADAS</strong> (150)</li>
+      <li (click)="applyFilter('categoria', 'ofertas')" [class.active]="selectedFilters.categoria === 'ofertas'"><strong>Ofertas 🔥</strong> (15)</li>
+      <li (click)="applyFilter('categoria', 'nuevas-llegadas')" [class.active]="selectedFilters.categoria === 'nuevas-llegadas'"><strong>Nuevas</strong> (150)</li>
     </ul>
   </div>
 
@@ -23,26 +22,28 @@
     </div>
   </div>
 
-   <div class="filter-section">
-  <h3>Tamaño</h3>
-  <div class="size-options">
-    <label *ngFor="let talla of ['XS', 'S', 'M', 'L', 'XL']">
-      <input 
-        type="checkbox" 
-        [checked]="selectedFilters.tallas.includes(talla)" 
-        (change)="toggleSize(talla)">
-      {{ talla }}
-    </label>
-    <label>
-      <input 
-        type="checkbox" 
-        [checked]="selectedFilters.tallas.includes('todas')" 
-        (change)="toggleSize('todas')">
-      Todas las tallas
-    </label>
+  <div class="filter-section">
+    <h3>Tamaño</h3>
+    <div class="size-options">
+      <label *ngFor="let talla of ['XS', 'S', 'M', 'L', 'XL']">
+        <input 
+          type="checkbox" 
+          [checked]="selectedFilters.tallas.includes(talla)" 
+          (change)="toggleSize(talla)">
+        {{ talla }}
+      </label>
+      <label>
+        <input 
+          type="checkbox" 
+          [checked]="selectedFilters.tallas.includes('todas')" 
+          (change)="toggleSize('todas')">
+        Todas las tallas
+      </label>
+    </div>
   </div>
-</div>
 
-    
- 
+  <!-- Botón para restablecer filtros -->
+  <div class="filter-section">
+    <button (click)="resetFilters()" class="reset-button">Restablecer Filtros</button>
+  </div>
 </aside>

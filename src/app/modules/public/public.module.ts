@@ -54,6 +54,8 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
 import { NotFoundComponent } from './views/not-found/not-found.component';
 import { Error500Component } from './views/error500/error500.component';
 import { SidevarComponent } from './components/sidevar/sidevar.component';
+import { CargaComponent } from './components/carga/carga.component';
+// import { Header404Component } from './components/header-404/header-404.component';
 
 const MATERIALS =[PasswordModule,
   InputMaskModule,
@@ -61,7 +63,7 @@ const MATERIALS =[PasswordModule,
 const COMPONENTS =[FooterComponent,HeaderComponent]
 const VIEWS=[HomeView,PublicComponent,PerfilView, AcercaDeView,DetailsProductView]
 @NgModule({
-  declarations: [VIEWS,COMPONENTS, CarritoView, TagComponent, PoliticasComponent, TerminosComponent, CitasProbadorView, ResultsComponent, HeroImgComponent, FigureComponent, BreadcrumbComponent, NotFoundComponent, Error500Component, SidevarComponent],
+  declarations: [VIEWS,COMPONENTS, CarritoView, TagComponent, PoliticasComponent, TerminosComponent, CitasProbadorView, ResultsComponent, HeroImgComponent, FigureComponent, BreadcrumbComponent, NotFoundComponent, Error500Component, SidevarComponent, CargaComponent],
   exports:[COMPONENTS],
   imports: [GalleriaModule,
     CommonModule,ReactiveFormsModule,FormsModule,

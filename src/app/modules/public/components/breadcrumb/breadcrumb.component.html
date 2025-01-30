@@ -1,9 +1,30 @@
 <div class="ui breadcrumb">
-  <ng-container *ngFor="let breadcrumb of breadcrumbs; let i = index">
-    <a *ngIf="i < breadcrumbs.length - 1" class="section" [routerLink]="breadcrumb.path">{{ breadcrumb.label }}</a>
-    <div *ngIf="i < breadcrumbs.length - 1" class="divider">
-      <i class="pi pi-chevron-right"></i> <!-- Cambia el ícono aquí -->
+  <ng-container *ngFor="let breadcrumb of menuItems; let i = index">
+    <!-- Ícono de casa en el primer breadcrumb -->
+    <a *ngIf="i == 0" class="section" [routerLink]="['/public/inicio']">
+      <i class="pi pi-home"></i>
+    </a>
+
+    <!-- Separador después del ícono de la casa -->
+    <div *ngIf="i == 0" class="divider">
+      <i class="pi pi-chevron-right"></i>
     </div>
-    <div *ngIf="i === breadcrumbs.length - 1" class="active section">{{ breadcrumb.label }}</div>
+
+    <!-- Enlaces intermedios, pero no mostrar para "Inicio" -->
+    <ng-container *ngIf="breadcrumb !== 'Inicio'">
+      <a *ngIf="i > 0 && i < menuItems.length - 1" class="section" [routerLink]="breadcrumb">
+        {{ breadcrumb }}
+      </a>
+
+      <!-- Divisor entre elementos, pero no después del último breadcrumb -->
+      <div *ngIf="i < menuItems.length - 1" class="divider">
+        <i class="pi pi-chevron-right"></i>
+      </div>
+
+      <!-- Último elemento como activo -->
+      <span *ngIf="i === menuItems.length - 1" class="active section">
+        {{ breadcrumb }}
+      </span>
+    </ng-container>
   </ng-container>
 </div>

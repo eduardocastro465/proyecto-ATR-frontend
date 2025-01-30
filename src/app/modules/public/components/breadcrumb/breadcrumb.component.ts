@@ -1,68 +1,76 @@
-// breadcrumb.component.ts
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, filter } from 'rxjs';
+
+interface MenuItem {
+  label: string;
+  url: string;
+}
 
 @Component({
   selector: 'app-breadcrumb',
   templateUrl: './breadcrumb.component.html',
-  styles: `
-.ui.breadcrumb {
-  margin-left: 50px; // Mueve el breadcrumb 50px a la derecha
+  styles: [
+    `
+      .ui.breadcrumb {
+        margin-left: 50px;
 
-  .section {
-    // color: gray; // Color gris para las secciones no activas
-    &.active {
-      color: pink; // Color rosa para la sección activa
-      // font-weight: bold; // Opcional: hace que el texto activo sea más destacado
-    }
-  }
+        .section {
+          &.active {
+            color: pink;
+          }
+        }
 
-  .divider {
-    color: inherit; // Mantiene el color del texto del breadcrumb
-    font-size: 0.8em; // Ajusta el tamaño del ícono
-    
-    i {
-      font-size: 0.8em; // Tamaño del ícono
-    }
-  }
-}
+        .divider {
+          color: inherit;
+          font-size: 0.8em;
 
-`,
+          i {
+            font-size: 0.8em;
+          }
+        }
+      }
+    `,
+  ],
 })
 export class BreadcrumbComponent implements OnInit, OnDestroy {
-  breadcrumbs: any[] = [];
+  menuItems: string[] = [];  // Mantendremos solo los nombres de los breadcrumbs
   subscription!: Subscription;
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.subscription = this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.breadcrumbs = this.getBreadcrumbs();
-      }
-    });
+    this.subscription = this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.menuItems = this.createBreadcrumbs(this.activatedRoute.root);
+      });
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  getBreadcrumbs(): any[] {
-    const breadcrumbs: any[] = [];
-    const urlParts = this.router.url.split('/');
-    urlParts.forEach((part) => {
-      if (part !== '') {
-        const label = this.getLabelForRoute(part);
-        breadcrumbs.push({ label, path: `/${part}` });
-      }
-    });
-    return breadcrumbs;
-  }
+  private createBreadcrumbs(route: ActivatedRoute, breadcrumbs: string[] = []): string[] {
+    const children: ActivatedRoute[] = route.children;
 
-  getLabelForRoute(routePart: string): string {
-    // Implementa lógica para obtener el label correcto basado en la ruta
-    // Puedes usar un mapa para relacionar rutas con labels
-    return routePart;
+    if (children.length === 0) {
+      return breadcrumbs;
+    }
+
+    for (const child of children) {
+      const routeURL: string = child.snapshot.url.map((segment) => segment.path).join('/');
+
+      // Verificamos si hay un "breadcrumb" en los datos de la ruta
+      const breadcrumb = child.snapshot.data['breadcrumb'] || child.snapshot.data['title'];
+
+      if (breadcrumb) {
+        breadcrumbs.push(breadcrumb);  // Añadimos el nombre del breadcrumb
+      }
+
+      return this.createBreadcrumbs(child, breadcrumbs);
+    }
+
+    return breadcrumbs;
   }
 }
