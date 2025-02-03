@@ -30,7 +30,8 @@
     [mostrarModalAddVestido]="mostrarModalAddVestido"
     *ngIf="mostrarModalAddVestido"
     (mostrarFormulario)="cerrarModalHandler($event)"
-  >
+    >
+    <!-- (mostrarFormularioChange)="onFormularioCerrado($event)" -->
   </app-registo-producto>
 
   <p-table

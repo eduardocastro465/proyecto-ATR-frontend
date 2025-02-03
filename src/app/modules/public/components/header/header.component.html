@@ -1,138 +1,4 @@
 
-<p-dialog
-  (onHide)="closeModal()"
-  [modal]="true"
-  [(visible)]="visible"
-  [style]="{ width: '30rem' }"
->
-  <div class="login-container">
-    <div class="login-card">
-      <img src="{{ logo }}" alt="Logo de la empresa" class="logo-atelier" />
-
-      <h2>Iniciar sesión</h2>
-      <p class="register-text">
-        ¿No tienes cuenta? <a (click)="redirectTo('Sign-up')">Regístrate</a>
-      </p>
-      <form
-        class="form-box"
-        [formGroup]="loginForm"
-        (ngSubmit)="login()"
-        method="post"
-      >
-        <div class="input-group">
-          <label for="email">Email</label>
-          <p-inputGroup>
-            <!--
-        <p-inputGroupAddon>
-          <i class="pi pi-envelope"></i>
-        </p-inputGroupAddon> -->
-            <input
-              pInputText
-              type="text"
-              placeholder="Introduce tu correo electrónico"
-              formControlName="email"
-              id="email"
-              class="input-login"
-              required
-              [pattern]="'^[a-zA-Z0-9][\\w.-]*@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$'"
-              [disabled]="isLocked"
-            />
-            <!-- Mensaje de error -->
-          </p-inputGroup>
-          <div *ngIf="email?.invalid && email?.touched" class="error">
-            <small *ngIf="email?.errors?.['required']"
-              >El correo es obligatorio.</small
-            >
-            <small *ngIf="email?.errors?.['pattern']"
-              >Introduce un correo válido.</small
-            >
-          </div>
-        </div>
-        <div class="input-group">
-          <label for="password">Contraseña</label>
-          <p-inputGroup class="input-group">
-            <p-password
-              formControlName="password"
-              [toggleMask]="true"
-              [feedback]="false"
-              (input)="verificarPassword()"
-              inputStyleClass="input-login"
-              promptLabel="Ingresa tu contraseña"
-              [disabled]="!loginForm.get('email')"
-            >
-              <!-- <ng-template pTemplate="header">
-                <h6>Escoge una contraseña</h6>
-              </ng-template>
-              <ng-template pTemplate="footer">
-                <p-divider></p-divider>
-                <p>Sugerencias</p>
-                <ul>
-                  <li [ngClass]="{ hidden: hasLowercase }">
-                    Al menos una letra minúscula
-                  </li>
-                  <li [ngClass]="{ hidden: hasUppercase }">
-                    Al menos una letra mayúscula
-                  </li>
-                  <li [ngClass]="{ hidden: hasNumber }">Al menos un número</li>
-                  <li [ngClass]="{ hidden: hasSpecialChar }">
-                    Al menos un carácter especial
-                  </li>
-                  <li [ngClass]="{ hidden: hasMinLength }">
-                    Mínimo 8 caracteres
-                  </li>
-                </ul>
-              </ng-template> -->
-            </p-password>
-          </p-inputGroup>
-          <span [ngClass]="passwordStrengthClass">{{
-            passwordStrengthMessage
-          }}</span>
-        </div>
-        <p class="forgot-password">
-          <a (click)="redirectTo('forgot-password')">
-            ¿Olvidaste tu contraseña?
-          </a>
-        </p>
-        <div
-          id="captcha-container"
-          class="g-recaptcha"
-          data-sitekey="6Ld8joAqAAAAABuc_VUhgDt7bzSOYAr7whD6WeNI"
-          data-theme="light"
-        ></div>
-        <div *ngIf="!captchaToken" class="error">
-          <small
-            >Resuelva el captcha para continuar con el proceso de inicio de
-            sesión.</small
-          >
-        </div>
-
-        <!-- <div *ngIf="validateCaptcha()" class="error">
-
-  <small>Resuelva el captcha para continuar con el proceso de inicio de sesión.</small>
-</div> -->
-        <!-- <div class="mt-3" id="cloudflare-captcha-signin"></div> -->
-        <span
-          *ngIf="errorMessage && errorMessage.includes('Contraseña')"
-          class="error"
-        >
-          {{ errorMessage }}
-        </span>
-        <button type="submit" class="btn login-btn">Iniciar sesión</button>
-        <!-- <div class="social-login">
-        <button class="btn google-btn">Ingresar con Google</button>
-        <button class="btn facebook-btn">Ingresar con Facebook</button>
-      </div> -->
-      </form>
-      <div class="footer-links">
-        <!-- <a redirecto("terminos")>Términos y Condiciones</a> |//- -->
-        <a (click)="redirectTo('terminos')">Términos y Condiciones</a> |//+
-        <a (click)="redirectTo('politicas')">Política de Privacidad</a> |
-        <!-- <a href="#">Preguntas Frecuentes</a> -->
-      </div>
-    </div>
-  </div>
-</p-dialog>
-
 <!-- <body> -->
 <header class="app-header" [ngClass]="{ scrolled: isScrolled }">
   <!-- <nav> -->
@@ -173,19 +39,18 @@
     <div class="logo">
       <a [routerLink]="'/public/inicio'">
         <img
-          *ngIf="isSticky"
           src="https://res.cloudinary.com/dvvhnrvav/image/upload/v1730395938/images-AR/wyicw2mh3xxocscx0diz.png"
           alt="logo sticky"
-          class="logo1"
+          class="logo1 logo-sticky"
+          [ngClass]="{ 'visible': isSticky }"
         />
         <img
-          *ngIf="!isSticky"
           src="https://res.cloudinary.com/dvvhnrvav/image/upload/v1730059633/images-AR/g1soiuvsc8qtdlsojskb.png"
           alt="logo normal"
-          class="logo1"
+          class="logo1 logo-normal"
+          [ngClass]="{ 'visible': !isSticky }"
         />
       </a>
-      
     </div>
     
     <ul *ngIf="!isMobile" class="nav-menu flex">
@@ -240,10 +105,13 @@
         </div>
       </li>
       <li class="IsMobile" *ngIf="!isMobile">
-        <!-- <a tabindex="0" class="nav-icon" (click)="openModal()"> -->
-        <a tabindex="0" class="nav-icon" (click)="togglePopup()">
+        <a tabindex="0" class="nav-icon" (click)="openModal()">
           <i class="fa-regular fa-user"></i>
-          <ul class="muestra-opciones-user" *ngIf="popupVisible">
+        </a>
+        <!-- Modal de inicio de sesión -->
+          <!-- <a tabindex="0" class="nav-icon" (click)="togglePopup()"> -->
+          <!-- <i class="fa-regular fa-user"></i> -->
+          <!-- <ul class="muestra-opciones-user" *ngIf="popupVisible">
             <li
               *ngFor="let item of items"
               (click)="
@@ -252,8 +120,8 @@
             >
               <i [class]="item.icon"></i> {{ item.label }}
             </li>
-          </ul>
-        </a>
+          </ul> -->
+        <!-- </a> -->
       </li>
 
       <li *ngIf="isMobile">
@@ -341,3 +209,7 @@
 <!-- <div class="resize-handle" (mousedown)="startResizing($event)"></div> -->
 
 <!-- <app-results [buscar]="searchQuery"></app-results> -->
+
+
+<!-- Modal de inicio de sesión -->
+<app-login-modal *ngIf="isModalVisible" [isModalVisible]="isModalVisible"></app-login-modal>

@@ -1,8 +1,62 @@
 <div class="contiendescripcion">
-  <div class="product-detail-container">
+  <ng-template  *ngIf="isLoading">
+    <div class="loading-container">
+      <!-- Contenedor de imágenes -->
+      <div class="skeleton-image-section">
+        <!-- Columna con 3 tarjetas mini -->
+        <div class="skeleton-cards">
+          <p-skeleton width="70%" height="70px"></p-skeleton>
+          <p-skeleton width="70%" height="70px"></p-skeleton>
+          <p-skeleton width="70%" height="70px"></p-skeleton>
+        </div>
+  
+        <!-- Contenedor grande para imagen principal -->
+        <div class="skeleton-container">
+          <p-skeleton width="100%" height="400px"></p-skeleton>
+        </div>
+      </div>
+  
+      <!-- Contenedor de información del producto -->
+      <div class="loading-container-info">
+        <!-- Skeleton para el nombre del producto -->
+        <p-skeleton width="100%" height="40px"></p-skeleton>
+  
+        <!-- Skeleton para la disponibilidad -->
+        <div class="skeleton-availability">
+          <p-skeleton width="20px" height="20px" shape="circle"></p-skeleton>
+          <p-skeleton width="40%" height="20px"></p-skeleton>
+        </div>
+  
+        <!-- Skeleton para el precio -->
+        <p-skeleton width="30%" height="30px"></p-skeleton>
+  
+        <!-- Skeleton para las opciones del producto -->
+        <div class="skeleton-options">
+          <p-skeleton width="50px" height="20px"></p-skeleton>
+          <p-skeleton width="60px" height="30px" shape="circle"></p-skeleton>
+  
+          <p-skeleton width="50px" height="20px"></p-skeleton>
+          <p-skeleton width="60px" height="30px" shape="circle"></p-skeleton>
+  
+          <p-skeleton width="50px" height="20px"></p-skeleton>
+          <p-skeleton width="60px" height="30px" shape="circle"></p-skeleton>
+        </div>
+  
+        <!-- Skeleton para el botón -->
+        <p-skeleton width="80%" height="50px" borderRadius="10px"></p-skeleton>
+  
+        <!-- Skeleton para compartir enlace -->
+        <div class="skeleton-share">
+          <p-skeleton width="80px" height="20px"></p-skeleton>
+          <p-skeleton width="40px" height="40px" shape="circle"></p-skeleton>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <div class="product-detail-container" *ngIf="Detalles && !isLoading">
     <div class="product-img">
       <div class="thumbnail-images">
-        <ng-container *ngIf="Detalles">
+        <ng-container>
           <img
             *ngFor="let image of Detalles.otrasImagenes"
             [src]="image"
@@ -24,6 +78,7 @@
       </div>
     </div>
 
+    <!-- para movil -->
     <div class="image-carousel" *ngIf="!isLoading && Detalles">
       <p-galleria
         [value]="images"
@@ -55,16 +110,17 @@
         <i class="pi pi-chevron-right"></i>
       </button>
     </div>
-
-    <div class="product-info" *ngIf="Detalles;else loading">
+    <!-- informacion del producto -->
+    <div class="product-info">
       <h1 class="product-name">{{ Detalles.nombre }}</h1>
 
       <div class="availability">
-        <i class="fas fa-store"></i> <!-- Ícono de tienda -->
+        <i class="fas fa-store"></i>
+        <!-- Ícono de tienda -->
         <span>Disponible en tienda</span>
       </div>
-    <!-- </div> -->
-     <p class="price">${{ Detalles.precio }}</p>
+      <!-- </div> -->
+      <p class="price">${{ Detalles.precio }}</p>
       <!-- <h2 class="description-title">Descripción</h2> -->
       <!-- <p class="description">{{ Detalles.descripcion | slice:0:100 }}...</p> -->
 
@@ -73,20 +129,17 @@
         <!-- Talla -->
         <div class="product-detail">
           <p>Talla:</p>
-          <span
-            class="circle-option"
-            >{{ Detalles.tallaDisponible }}</span
-          >
+          <span class="circle-option">{{ Detalles.tallaDisponible }}</span>
         </div>
 
-       
-<!-- 
+        <!-- 
         <!-- Color -->
         <div class="product-detail">
           <p>Color:</p>
-         
+
           <!-- Color plata -->
-        </div> -->
+        </div>
+        -->
 
         <!-- Estado (Nuevo o para Renta) -->
         <div class="product-detail">
@@ -103,7 +156,9 @@
         </div>
 
         <!-- Botón para agregar al carrito -->
-        <button  (click)="apartarRentar(Detalles)" class="add-to-cart">Me lo quiero probar</button>
+        <button (click)="apartarRentar(Detalles)" class="add-to-cart">
+          Me lo quiero probar
+        </button>
 
         <!-- Ícono de compartir enlace -->
         <div class="share-link">
@@ -116,27 +171,11 @@
     </div>
   </div>
 
-  <ng-template #loading>
-    <div class="loading-container">
-      <!-- Columna con 3 tarjetas mini -->
-      <div class="skeleton-cards">
-        <p-skeleton width="100%" height="100px"></p-skeleton>
-        <p-skeleton width="100%" height="100px"></p-skeleton>
-        <p-skeleton width="100%" height="100px"></p-skeleton>
-      </div>
-      <!-- Contenedor al lado -->
-      <div class="skeleton-container">
-        <p-skeleton width="100%" height="300px"></p-skeleton>
-      </div>
-    </div>
-  </ng-template>
+ 
   
   <h2 class="description-title">Descripción</h2>
-  <p class="description-summary">
-    {{ Detalles.descripcion }}
-    
-  </p>
-  
+  <p class="description-summary">{{ Detalles.descripcion }}</p>
+
   <h2 class="carousel-title">Accesorios incluidos en el look</h2>
   <div class="carousel">
     <div class="carousel-item" *ngFor="let Detalles of productos">

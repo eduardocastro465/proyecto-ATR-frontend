@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { SwPush } from "@angular/service-worker";
 
 @Component({
@@ -15,7 +15,16 @@ export class PublicComponent implements OnInit {
   sidebarVisible: boolean = false;
   isMobile: boolean = false;
 
-  constructor(private router: Router,private swPush: SwPush) {}
+  constructor(private router: Router,private swPush: SwPush) {
+
+    // Escucha los cambios de ruta
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        // Verifica si la ruta actual es 'home'
+        this.isHomePage = event.url === '/public/inicio';
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.subscription()
@@ -57,7 +66,9 @@ export class PublicComponent implements OnInit {
       console.log('No se está ejecutando en un navegador');
     }
   }
+  isHomePage: boolean = false;
 
+  
   redirectTo(route: string): void {
     // this.sidebarVisible2 = !this.sidebarVisible2
     console.log(route);

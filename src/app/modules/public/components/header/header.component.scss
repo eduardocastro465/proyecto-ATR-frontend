@@ -52,7 +52,7 @@ nav {
 /* // marque */
 .marquee-container {
   width: 100%;
-  height: 20px;
+  height: 15px;
   // background: #FFAA80;
   // background: #EE66A6;
   // background: #aba59f;
@@ -65,7 +65,7 @@ nav {
 }
 
 .marquee {
-  font-size: 14px;
+  font-size: 10px;
   color: #ffffff; /* Color llamativo */
   font-weight: bold;
   opacity: 0;
@@ -108,7 +108,7 @@ nav {
 .navbar-one {
   // display: none;
   color: var(--text-style-color);
-  height: 25px;
+  height: 20px;
   .right > div {
     cursor: pointer;
     // border: dashed red;
@@ -165,7 +165,7 @@ span {
   // background-color: var(--style-navbar-second);
   background-color: white;
 
-  height: 70px;
+  height: 50px;
   position: sticky;
   top: 0;
   z-index: 10;
@@ -220,35 +220,50 @@ p-sidebar {
 
 
 
-
-
+/* ✅ Mantiene el estilo del header sticky */
 .sticky {
   top: 0;
   z-index: 10;
   width: 100%;
   position: fixed !important;
   background-color: white;
-
-  // background-color: #ffffff9b;
   backdrop-filter: blur(3px);
   border: solid 1px #faf7f7;
-  transition: background-color 0.5s ease;
-  
-  .zoom {
-    transform: scale(2);
-  }
+  transition: background-color 0.5s ease, box-shadow 0.5s ease;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); // Sombra sutil al hacer scroll
 }
-.logo >a> .logo1 {
-   cursor: pointer;
+
+/* ✅ Ajusta la animación del logo */
+.logo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  
+  a {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+
+  img {
+    position: initial;
+    top: 0;
+    left: 0;
     width: auto;
     height: 40px;
     border-radius: 20%;
-    -webkit-border-radius: 20%;
-    -moz-border-radius: 20%;
-    -ms-border-radius: 20%;
-    -o-border-radius: 20%;
-    margin: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    opacity: 0;
+    transform: scale(0.8);
   }
+
+  .visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 
 :host ::ng-deep .content-all {
   padding-top: 40px;
@@ -301,27 +316,27 @@ p-sidebar {
   display: inline-block;
 }
 
-.muestra-opciones-user {
-  position: fixed;
-  top: 100px; /* Valor predeterminado sin scroll */
-  left: auto;
-  right: 10px;
-  font-weight: bold;
-  background-color: var(--blur-bg);
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  padding: 20px;
-  z-index: 1000;
-  list-style: none;
-  margin: 0;
-  width: max-content;
-}
+// .muestra-opciones-user {
+//   position: fixed;
+//   top: 100px; /* Valor predeterminado sin scroll */
+//   left: auto;
+//   right: 10px;
+//   font-weight: bold;
+//   background-color: var(--blur-bg);
+//   border: 1px solid #ccc;
+//   border-radius: 5px;
+//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+//   padding: 20px;
+//   z-index: 1000;
+//   list-style: none;
+//   margin: 0;
+//   width: max-content;
+// }
 
-/* Cambia el top a 60px cuando haya scroll */
-.app-header.scrolled .muestra-opciones-user {
-  top: 60px;
-}
+// /* Cambia el top a 60px cuando haya scroll */
+// .app-header.scrolled .muestra-opciones-user {
+//   top: 60px;
+// }
 
 .muestra-opciones-user li {
   padding: 5px;
@@ -339,16 +354,16 @@ p-sidebar {
   }
 }
 
-.muestra-opciones-user li:hover {
-  color: var(--opciones);
-  font-weight: bold;
-  background-color: var(--color-by);
-  border-radius: 4px;
-  i {
-    color: none;
-    transform: none;
-  }
-}
+// .muestra-opciones-user li:hover {
+//   color: var(--opciones);
+//   font-weight: bold;
+//   background-color: var(--color-by);
+//   border-radius: 4px;
+//   i {
+//     color: none;
+//     transform: none;
+//   }
+// }
 
 @media (max-width: 600px) {
 
@@ -454,5 +469,5 @@ p-sidebar {
 
 
 .search-btn {
-  background-color: #ede6de !important;
+  background-color: #555 !important;
 }

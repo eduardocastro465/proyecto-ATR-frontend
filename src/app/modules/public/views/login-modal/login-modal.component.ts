@@ -1,8 +1,8 @@
-import { ChangeDetectorRef, Component, ElementRef, Inject, Output, PLATFORM_ID, Renderer2, EventEmitter, Input, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Inject, Output, PLATFORM_ID, Renderer2, EventEmitter, Input, OnInit, SimpleChanges, OnChanges, AfterViewInit, ViewChild } from '@angular/core';
 import { IndexedDbService } from '../../../public/commons/services/indexed-db.service';
 import { mensageservice } from '../../../../shared/services/mensage.service';
 import { StorageService } from '../../../../shared/services/storage.service';
-import { SignInService } from '../../commons/services/sign-in.service';
+import { SignInService } from '../../../auth/commons/services/sign-in.service';
 import { SessionService } from '../../../../shared/services/session.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
@@ -21,7 +21,7 @@ import { ERol } from '../../../../shared/constants/rol.enum';
   templateUrl: './login-modal.component.html',
   styleUrl: './login-modal.component.scss'
 })
-export class LoginModalComponent implements OnInit,AfterViewInit {
+export class LoginModalComponent implements OnInit,OnChanges,AfterViewInit {
 
 
   isLoading = false;
@@ -72,15 +72,27 @@ export class LoginModalComponent implements OnInit,AfterViewInit {
 
   }
 ngOnInit(): void {
+  this.getCaptchaToken()
   console.log('llegó');
-  this.robot = true;
-    this.presionado = false;
+  this.loadCaptchaScript()
 }
 
+  @ViewChild('passwordField') passwordField!: ElementRef;
 
+ngAfterViewInit() {
+  this.cargarWidgetRecaptcha();
+  this.passwordField.nativeElement.setAttribute('autocomplete', 'current-password');
+}
 
-
-
+cargarWidgetRecaptcha() {
+  if (typeof grecaptcha !== 'undefined') {
+    grecaptcha.render('captcha-container', {
+      sitekey: '6Ld8joAqAAAAABuc_VUhgDt7bzSOYAr7whD6WeNI',
+    });
+  } else {
+    console.error('El cliente de reCAPTCHA no está disponible.');
+  }
+}
 
   get email() {
     return this.loginForm.get("email");
@@ -129,15 +141,15 @@ ngOnInit(): void {
   // }
 
 
-  @Input() isOpen: boolean = false;
+  @Input() isModalVisible: boolean = false;
   @Output() closed: EventEmitter<string> = new EventEmitter<string>(); // Aquí se define correctamente
 
-  @ViewChild('passwordField') passwordField!: ElementRef;
-
-  ngAfterViewInit() {
-    this.cargarWidgetRecaptcha();
-    this.passwordField.nativeElement.setAttribute('autocomplete', 'current-password');
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['isModalVisible']) {
+      console.log('Estado del modal cambiado:', changes['isModalVisible'].currentValue);
+    }
   }
+
 
   close(): void {
     this.closed.emit('Modal cerrado correctamente'); // Se emite el evento correctamente
@@ -244,15 +256,6 @@ ngOnInit(): void {
   clearLockState() {
     localStorage.removeItem("lockInfo"); // O sessionStorage.removeItem si prefieres sessionStorage
   }
-  cargarWidgetRecaptcha() {
-    if (typeof grecaptcha !== 'undefined') {
-      grecaptcha.render('captcha-container', {
-        sitekey: '6Ld8joAqAAAAABuc_VUhgDt7bzSOYAr7whD6WeNI',
-      });
-    } else {
-      console.error('El cliente de reCAPTCHA no está disponible.');
-    }
-  }
 
   // redirectTo(route: string): void {
   //   if (route === 'login') {
@@ -273,24 +276,24 @@ ngOnInit(): void {
     return token ? token : null;
   }
 
-  inicia() {
-    this.ngxService.start(); // start foreground spinner of the master loader with 'default' taskId
-    // Stop the foreground loading after 5s
-    setTimeout(() => {
-      this.ngxService.stop(); // stop foreground spinner of the master loader with 'default' taskId
-    }, 3000);
+  // inicia() {
+  //   this.ngxService.start(); // start foreground spinner of the master loader with 'default' taskId
+  //   // Stop the foreground loading after 5s
+  //   setTimeout(() => {
+  //     this.ngxService.stop(); // stop foreground spinner of the master loader with 'default' taskId
+  //   }, 3000);
 
-    // OR
-    this.ngxService.startBackground("do-background-things");
-    // Do something here...
-    this.ngxService.stopBackground("do-background-things");
+  //   // OR
+  //   this.ngxService.startBackground("do-background-things");
+  //   // Do something here...
+  //   this.ngxService.stopBackground("do-background-things");
 
-    this.ngxService.startLoader("loader-01"); // start foreground spinner of the loader "loader-01" with 'default' taskId
-    // Stop the foreground loading after 5s
-    setTimeout(() => {
-      this.ngxService.stopLoader("loader-01"); // stop foreground spinner of the loader "loader-01" with 'default' taskId
-    }, 3000);
-  }
+  //   this.ngxService.startLoader("loader-01"); // start foreground spinner of the loader "loader-01" with 'default' taskId
+  //   // Stop the foreground loading after 5s
+  //   setTimeout(() => {
+  //     this.ngxService.stopLoader("loader-01"); // stop foreground spinner of the loader "loader-01" with 'default' taskId
+  //   }, 3000);
+  // }
 
   validacionesPassword = {
     tieneMinuscula: false,
@@ -354,7 +357,7 @@ ngOnInit(): void {
 
   login(): void {
     this.captchaToken = this.validateCaptcha();
-
+this.isLoading=true;
     if (this.isLocked) {
       Swal.fire({
         title: "Cuenta bloqueada",
@@ -397,6 +400,8 @@ ngOnInit(): void {
             this.storageService.setToken(response.token);
             const userData = this.sessionService.getUserData();
             // window.location.reload();
+this.isLoading=false;
+            
             if (userData) {
               this.userROL = userData.rol;
               let navigateTo = "";
@@ -412,7 +417,7 @@ ngOnInit(): void {
                   window.location.reload();
                 }
 
-                this.inicia();
+                // this.inicia();
 
                 window.location.reload();
               });
@@ -421,6 +426,8 @@ ngOnInit(): void {
         },
         (err) => {
           console.error("Error en el inicio de sesión:", err);
+this.isLoading=false;
+          
           if (err) {
             if (err.error.message === "Captcha inválido") {
               Swal.fire({

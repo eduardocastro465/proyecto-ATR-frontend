@@ -20,14 +20,18 @@ export class AppComponent implements OnInit {
   constructor(private ngxService: NgxUiLoaderService) {}
 
   ngOnInit() {
-    // Verificar si es la primera vez en la sesión
-    if (!sessionStorage.getItem("firstSession")) {
-      this.ngxService.start(); // Inicia el loader
-
-      setTimeout(() => {
-        this.ngxService.stop(); // Detiene el loader después de 1 segundo
-        sessionStorage.setItem("firstSession", "true"); // Guarda en sessionStorage
-      }, 1000);
+    // Verificar si sessionStorage está disponible
+    if (typeof sessionStorage !== "undefined") {
+      if (!sessionStorage.getItem("firstSession")) {
+        this.ngxService.start(); // Inicia el loader
+        setTimeout(() => {
+          this.ngxService.stop(); // Detiene el loader después de 1 segundo
+          sessionStorage.setItem("firstSession", "true"); // Guarda en sessionStorage
+        }, 1000);
+      }
+    } else {
+      console.warn("sessionStorage no está disponible en este entorno.");
     }
   }
+  
 }

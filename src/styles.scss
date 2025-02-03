@@ -4,6 +4,12 @@
 @import "primeng/resources/primeng.css";
 
 
+// In app.component.css
+:host ::ng-deep .Password-Styling-Class{
+  
+  border-radius: 50px;
+  padding: 10px 5px;
+}
 body {
   user-select: none; /* Evita la selección de texto */
   margin: 0;
@@ -168,6 +174,10 @@ body {
 
 }
 
+:host ::ng-deep .p-dialog-mask {
+  backdrop-filter: blur(8px); // Ajusta la intensidad del blur
+  background: rgba(0, 0, 0, 0.5); // Agrega un oscurecimiento opcional
+}
 
 
 // p-inputgroupaddon {

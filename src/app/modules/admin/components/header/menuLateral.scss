@@ -29,7 +29,8 @@ body.collapsed-padding main {
   color: #495464;
 
   // box-shadow: 0 0 3px #0000001a;
-  border-right: solid 1.5px #d2d7d9;
+  border-right: 1px solid #e0ebebf7;
+ 
   position: fixed;
   top: 40px;
   left: 0;
@@ -102,7 +103,7 @@ body.collapsed-padding main {
     }
 
     overflow: scroll;
-    scrollbar-color: #28b6b1 transparent;
+    scrollbar-color: #e8d6ff transparent;
   }
 
   ul {
@@ -177,7 +178,7 @@ body.collapsed-padding main {
         // }
 
         i {
-          color: #495464;
+          color: #282b2d;
           margin-right: 10px;
         }
 
@@ -207,8 +208,7 @@ body.collapsed-padding main {
       .submenu {
         list-style: none;
         padding: 0 0 0 20px;
-        // background: rgb(220, 243, 245);
-
+        
         li {
           // background-color: #a4bfff;
           margin-bottom: 0;
@@ -229,7 +229,8 @@ body.collapsed-padding main {
   }
 
   .m-tree__itemContent__selected {
-    color: #22262b !important;
+        background: rgb(240, 252, 255);
+    color: #6b7efa !important;
     font-weight: 700;
 
     // color: #28b6b1 !important;
@@ -238,7 +239,7 @@ body.collapsed-padding main {
   .toggle-btn {
     margin-top: auto;
     padding: 10px 20px;
-    // background-color: #3d6c88;
+    // background-color: #ff9b8b;
     // color: #fff;
     border: none;
     border-radius: 4px;
@@ -247,7 +248,7 @@ body.collapsed-padding main {
 
     // >i {
     //   transform: rotate(50deg);
-    color: #1a1d24;
+    color: #dab7ff;
     // }
 
     &:hover {

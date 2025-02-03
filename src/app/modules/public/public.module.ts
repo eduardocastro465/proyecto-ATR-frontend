@@ -56,16 +56,17 @@ import { Error500Component } from './views/error500/error500.component';
 import { SidevarComponent } from './components/sidevar/sidevar.component';
 import { CargaComponent } from './components/carga/carga.component';
 // import { Header404Component } from './components/header-404/header-404.component';
-
+import {  CarouselModule } from 'primeng/carousel';
+import { LoginModalComponent } from './views/login-modal/login-modal.component';
 const MATERIALS =[PasswordModule,
   InputMaskModule,
   InputTextModule,FormsModule,InputGroupModule,AvatarModule,AvatarGroupModule,PaginatorModule,OverlayPanelModule,TieredMenuModule,SkeletonModule,CardModule,TabMenuModule,ButtonModule,DialogModule,SidebarModule,CheckboxModule,MenuModule]
 const COMPONENTS =[FooterComponent,HeaderComponent]
-const VIEWS=[HomeView,PublicComponent,PerfilView, AcercaDeView,DetailsProductView]
+const VIEWS=[HomeView,PublicComponent,PerfilView, AcercaDeView,DetailsProductView,LoginModalComponent]
 @NgModule({
   declarations: [VIEWS,COMPONENTS, CarritoView, TagComponent, PoliticasComponent, TerminosComponent, CitasProbadorView, ResultsComponent, HeroImgComponent, FigureComponent, BreadcrumbComponent, NotFoundComponent, Error500Component, SidevarComponent, CargaComponent],
   exports:[COMPONENTS],
-  imports: [GalleriaModule,
+  imports: [GalleriaModule,CarouselModule,
     CommonModule,ReactiveFormsModule,FormsModule,
     PublicRoutingModule,HttpClientModule, ...MATERIALS,
   ], schemas: [CUSTOM_ELEMENTS_SCHEMA],

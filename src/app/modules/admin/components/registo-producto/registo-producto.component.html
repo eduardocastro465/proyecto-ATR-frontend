@@ -4,6 +4,7 @@
   [modal]="true"
   [draggable]="false"
   [resizable]="false"
+  [(visible)]="mostrarModalAddVestido"
 >
   <ng-template pTemplate="header">
     <h2>Agregar Vestido</h2>
@@ -17,7 +18,7 @@
     <!-- <h2>Agregar vestido</h2> -->
     <div class="image-section">
       <!-- Imagen principal -->
-      <div class="img-principal">
+         <div class="img-principal">
          <label for="imagenPrincipalInput" class="upload-button">
           {{
             productoForm.get("imagenPrincipal")?.value ? "Cambiar" : "Cargar"
@@ -110,30 +111,47 @@
         placeholder="Nombre del vestido"
         formControlName="nombre"
       />
-      <input type="text" placeholder="Talla" formControlName="talla" />
-      <input type="text" placeholder="Medida" formControlName="medida" />
-      <!-- </div> -->
+      <select formControlName="talla">
+        <option value="" disabled selected>Selecciona una talla</option>
+        <option value="XS">XS</option>
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+        <option value="XL">XL</option>
+        <option value="XXL">XXL</option>
+        <option value="Otro">Otro</option>
+      </select>
+      
+      
+      <input type="number" placeholder="Altura (cm)" formControlName="altura" />
+      <input type="number" placeholder="Cintura (cm)" formControlName="cintura" />
+      
 
       <!-- <div class="select-section"> -->
       <!-- <div> -->
       <!-- <label>Seleccionar color</label> -->
+      <!-- Agrega más colores si es necesario -->
       <select formControlName="color">
         <option value="" disabled>Selecciona un color</option>
-        <option>azul</option>
-        <option>rojo</option>
-        <option>verde</option>
-        <!-- Agrega más colores si es necesario -->
+        <option value="azul">Azul</option>
+        <option value="rojo">Rojo</option>
+        <option value="verde">Verde</option>
+        <option value="negro">Negro</option>
+        <option value="blanco">Blanco</option>
+        <option value="amarillo">Amarillo</option>
+        <option value="morado">Morado</option>
       </select>
+      
       <!-- </div> -->
-      <!-- <div>
-        <label>Categoría</label>
-        <select formControlName="categoria">
-          <option>Ropa</option>
-          <option>Accesorios</option>
-          <option>Calzado</option>
-          <option>Otro</option>
-        </select>
+      <select formControlName="categoria">
+        <option value="venta">Venta</option>
+        <option value="renta">Renta</option>
+      </select>
+      
+        <!-- <div>
       </div> -->
+        <!-- <label>Categoría</label> -->
+       
     </div>
 
     <!-- Campos adicionales -->
@@ -159,11 +177,12 @@
         <option>Renta</option>
       </select>
       <!-- <label>Estado del producto:</label> -->
-      <select formControlName="estado">
-        <option value="" disabled>Selecciona el Estado del producto</option>
-        <option [value]="true">Nuevo</option>
-        <option [value]="false">Usado</option>
+      <select formControlName="nuevo">
+        <option value="" disabled>Es nuevo?</option>
+        <option [value]="true">Sí</option>
+        <option [value]="false">No</option>
       </select>
+      
     </div>
     <!-- Opciones adicionales -->
     <div>

@@ -13,98 +13,69 @@
 //     height: 90vh;
 //     margin-top: 5px;
 // }
-
 .container {
-  text-align: center;
-  width: 100%;
-  // max-width: 600px;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  background-color: #f8f8f8;
-}
-
-.logo-placeholder img {
-  width: 100px;
-  height: 100px;
-  border-radius: 91%;
-}
-
-.title {
-  font-size: 24px;
-  color: #333;
-  margin: 20px 0;
-}
-
-.description {
-  font-size: 16px;
-  color: #666;
-  margin-bottom: 20px;
-}
-
-.terminos-content {
-  width: 670px;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 2px dashed blue;
-  background: linear-gradient(135deg, #f0f8ff, #dcdfe6);
-  overflow-y: auto;
-  overflow-x: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 1200px;
   margin: 0 auto;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 2rem;
+  background-color: #f5f5f5;
 
-  .terminos-content:hover {
-    transform: scale(1.02); /* Efecto de agrandamiento al pasar el ratón */
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada en hover */
+  .info-container {
+    padding: 2rem;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    .info-section {
+      .title {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .subtitle {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .description {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+      }
+
+      .terms {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+
+      .buttons {
+        display: flex;
+        justify-content: flex-start;
+        gap: 1rem;
+
+        .btn {
+          background-color: #007bff;
+          color: #fff;
+          border: none;
+          padding: 0.5rem 1rem;
+          border-radius: 0.25rem;
+          cursor: pointer;
+          font-size: 1rem;
+        }
+      }
+    }
   }
 
-  .terminos {
-    padding: 10px;
-    font-size: 14px; /* Fuente ligeramente más grande para mejor lectura */
-    line-height: 1.6; /* Espaciado de línea mejorado para mayor legibilidad */
-    color: #333; /* Texto más oscuro para mejor contraste */
-    margin-bottom: 20px; /* Espacio entre cada sección de política */
-    border: 2px dashed #007bff; /* Línea azul en el lado izquierdo para acentuar */
-    .terminos h4 {
-      margin-top: 0; /* Elimina espacio antes del título */
-      font-size: 16px; /* Título ligeramente más grande */
-      color: #007bff; /* Color azul para el título */
-    }
-    .terminos p {
-      margin-bottom: 10px; /* Espacio entre párrafos */
+  .map-container {
+    margin-top: 2rem;
+    height: 400px;
+    width: 100%;
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
     }
   }
 }
-.terminos-opcion {
-    overflow-x: hidden;
-  height: 30%;
-  display: flex;
-  justify-content: center;
-  // align-items: center;
-  border: 2px dashed red;
-}
 
-.buttons {
-  display: flex;
-  justify-content: space-around;
-}
-
-.btn {
-  background-color: #e91e63;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.btn:hover {
-  background-color: #d81b60;
-}
 
 /* Media queries for responsive design */
 @media (max-width: 768px) {

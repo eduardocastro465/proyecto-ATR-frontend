@@ -1,16 +1,9 @@
-
-
-
-
-
-
 <app-hero-img></app-hero-img>
 <main class="box">
-  
-    <app-sidevar></app-sidevar>
+  <app-sidevar></app-sidevar>
 
   <section class="productos">
- <header class="products-header">
+    <header class="products-header">
       <h2>Productos</h2>
       <!-- <div class="sort-options">
         <label for="sort">Sort by</label>
@@ -23,29 +16,29 @@
         </select>
       </div> -->
     </header>
-    <div class="listado-productos">
+    <!-- <div class="listado-productos"> -->
       <!--
     <div data-aos="zoom-out-up" class="productos-container"> -->
       <!-- <div class="productos-container"> -->
-        <div *ngFor="let producto of productos" class="producto-card p-mb-4">
-          <div class="ribbon">Nuevo</div>
-
-          <div class="product-image">
-            <img
-              (click)="verDetalles(producto._id)"
-              [src]="producto.imagenPrincipal"
-              alt="{{ producto.nombre }}"
-            />
-          </div>
-          <div class="product-content">
-            <p>{{ producto.nombre }}</p>
-            <p>MX$:<strong> {{ producto.precio | currency }}</strong></p>
-
-            <!-- <p>MX$:<strong style="color: #fd6f9e;"> {{ producto.precio | currency }}</strong></p> -->
-            <!-- <button class="btn-apartar-rentar" (click)="apartarRentar(producto)">Apartar/Rentar</button> -->
-
-          </div>
-        </div>
+        <p-carousel [value]="productos" [numVisible]="5" [numScroll]="1"  [responsiveOptions]="responsiveOptions">
+          <ng-template pTemplate="item" let-producto>
+            <div class="producto-card">
+              <div class="ribbon">Nuevo</div>
+              <div class="product-image">
+                <img
+                  (click)="verDetalles(producto._id)"
+                  [src]="producto.imagenPrincipal"
+                  alt="{{ producto.nombre }}"
+                />
+              </div>
+              <div class="product-content">
+                <p>{{ producto.nombre }}</p>
+                <p>MX$:<strong> {{ producto.precio | currency }}</strong></p>
+              </div>
+            </div>
+          </ng-template>
+        </p-carousel>
+        
 
       <!-- </div> -->
       <!-- <p-paginator
@@ -59,7 +52,7 @@
         currentPageReportTemplate="Producto {first} a {last} de {totalRecords}"
       >
       </p-paginator> -->
-    </div>
+    <!-- </div> -->
     <!-- (onPageChange)="cambiarPagina($event)" -->
   </section>
 </main>

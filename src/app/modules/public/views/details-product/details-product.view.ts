@@ -69,11 +69,13 @@ export class DetailsProductView implements OnInit {
     // this.id=require.para
   }
   ngOnInit() {
+    this.isLoading=true;
     this.scrollToTop();
     this.productId = this.activatedRoute.snapshot.params["id"];
     this.productoS_
-      .obtenerDetalleProductoById(this.productId)
-      .subscribe((response) => {
+    .obtenerDetalleProductoById(this.productId)
+    .subscribe((response) => {
+        this.isLoading=false;
         this.Detalles = response;
       });
 

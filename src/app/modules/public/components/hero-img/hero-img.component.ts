@@ -1,10 +1,22 @@
+import { animate, style, transition, trigger } from "@angular/animations";
 import { Component } from "@angular/core";
 
 @Component({
   selector: "app-hero-img",
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('300ms ease-in', style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        animate('300ms ease-out', style({ opacity: 0 })),
+      ]),
+    ]),
+  ],
   template: `
     <div class="hero">
-      <div class="hero-content">
+      <div class="hero-content" @fadeIn>
         <h1 class="title">Venta y Renta</h1>
         <p class="subtitle">Especial de Verano 2024</p>
         <p class="description">

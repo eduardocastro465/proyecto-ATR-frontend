@@ -1,5 +1,4 @@
-div.contiendescripcion{
-
+div.contiendescripcion {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -41,7 +40,6 @@ div.contiendescripcion{
       margin-top: 10px;
     }
   }
-
 }
 
 .product-detail-container {
@@ -58,14 +56,13 @@ div.contiendescripcion{
     width: 50%;
     padding: 10px;
     // border: none;
-
   }
 
   .product-options,
   .actions {
     margin-top: 15px;
     // border: solid 0.5px #ccc;
-//
+    //
   }
 
   .add-to-cart {
@@ -137,7 +134,7 @@ div.contiendescripcion{
     margin: 0px;
     // border: dashed 1px #ccc;
 
-  border:none;
+    border: none;
     padding: 0px;
     width: 100%;
     // max-width: 1200px;
@@ -152,12 +149,10 @@ div.contiendescripcion{
       display: block;
     }
 
-
     .product-info {
       width: 100%;
       // border: dashed 1px red;
     }
-
   }
 
   .product-img {
@@ -185,20 +180,63 @@ div.contiendescripcion{
   }
 }
 
-
-
+// skeleton ---------------------------------
 .loading-container {
   display: flex;
+  flex-direction: row;
   gap: 20px;
-}
+  width: 100%;
+  // border: dashed rgb(0, 170, 255);
 
-.skeleton-cards {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 150px; /* Ajusta según el diseño */
-}
+  // Contenedor de imágenes
+  .skeleton-image-section {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    // border: dashed red;
+  width: 100%;
 
-.skeleton-container {
-  width: 200px; /* Ajusta según el diseño */
+    // Columnas de mini tarjetas
+    .skeleton-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 150px;
+    }
+
+    // Imagen principal
+    .skeleton-container {
+      width: 100%;
+    }
+  }
+
+  // Contenedor de información
+  .loading-container-info {
+    // border: dashed rgb(255, 242, 0);
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  width: 100%;
+
+    // max-width: 300px;
+
+    .skeleton-availability {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .skeleton-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .skeleton-share {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+  }
 }

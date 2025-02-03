@@ -1,6 +1,6 @@
 .box {
   display: flex;
-  margin: 20px;
+  margin: 20px 50px;
 }
 
 .titulo {
@@ -413,4 +413,6 @@ p {
     font-size: 0.9rem; /* Reducir el tamaño de fuente en pantallas más pequeñas */
   }
 }
+
+
 

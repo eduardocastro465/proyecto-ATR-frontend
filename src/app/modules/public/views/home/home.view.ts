@@ -36,6 +36,23 @@ export class HomeView implements OnInit {
   // datosEmpresa: any = {};
 
   productos: any;
+  responsiveOptions = [
+    {
+      breakpoint: '1024px',
+      numVisible: 3,
+      numScroll: 1
+    },
+    {
+      breakpoint: '768px',
+      numVisible: 2,
+      numScroll: 1
+    },
+    {
+      breakpoint: '500px',
+      numVisible: 0.5, // Mostrar la mitad del último producto
+      numScroll: 1
+    }
+  ];
 
   constructor(
     private indexedDbService: IndexedDbService,

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ProductoService } from '../../../../shared/services/producto.service';
 import { Producto } from '../../../../shared/models/Producto.model';
 import { FormGroup } from '@angular/forms';
@@ -13,7 +13,7 @@ declare const $: any;
     '../../../../shared/styles/form.scss',
   ],
 })
-export class ListadoProductosComponent implements OnInit {
+export class ListadoProductosComponent implements OnInit,OnChanges {
   allProducts: Producto[] = [];
   visible: boolean = false;
   mostrarModalAddVestido: boolean = false;
@@ -37,7 +37,16 @@ export class ListadoProductosComponent implements OnInit {
   cerrarModalHandler(valor: boolean) {
     this.mostrarModalAddVestido = valor; // Actualizamos el valor para cerrar el modal
   }
+  ngOnChanges(changes: SimpleChanges): void {
+      if (changes["mostrarFormulario"]) {
+        const newVluesmostrarFormulario = changes["mostrarFormulario"].currentValue;
+    this.mostrarModalAddVestido = newVluesmostrarFormulario; // Actualizamos el valor para cerrar el modal
+       
+        console.log("mostrarFormulario  en listado producto cambió a:", newVluesmostrarFormulario);
+      }
   
+      // Aquí puedes agregar lógica adicional si es necesario
+    }
 
 
   ngOnInit(): void {
