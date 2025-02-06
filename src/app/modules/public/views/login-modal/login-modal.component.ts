@@ -143,6 +143,7 @@ cargarWidgetRecaptcha() {
 
   @Input() isModalVisible: boolean = false;
   @Output() closed: EventEmitter<string> = new EventEmitter<string>(); // Aquí se define correctamente
+  @Output() mostrarFormulario = new EventEmitter<boolean>(); // Evento para cerrar el modal
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['isModalVisible']) {
@@ -152,6 +153,8 @@ cargarWidgetRecaptcha() {
 
 
   close(): void {
+    this.mostrarFormulario.emit(false); // Emitimos false para cerrar el modal
+
     this.closed.emit('Modal cerrado correctamente'); // Se emite el evento correctamente
   }
 

@@ -17,8 +17,8 @@ export class RegistoProductoComponent implements OnInit,OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes["mostrarFormulario"]) {
-      const newVluesmostrarFormulario = changes["mostrarFormulario"].currentValue;
+    if (changes["mostrarModalAddVestido"]) {
+      const newVluesmostrarFormulario = changes["mostrarModalAddVestido"].currentValue;
       this.mostrarModalAddVestido = newVluesmostrarFormulario; // Actualizamos el valor para cerrar el modal
     
       console.log("mostrarFormulario cambió a:", newVluesmostrarFormulario);
@@ -190,6 +190,7 @@ export class RegistoProductoComponent implements OnInit,OnChanges {
     // Enviar el FormData al servicio del backend
     this.productoService.crearProducto(formData).subscribe(
       (response) => {
+        this.cerrar();
         console.log('Producto creado exitosamente:', response);
       },
       (err) => {

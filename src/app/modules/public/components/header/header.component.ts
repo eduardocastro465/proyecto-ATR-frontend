@@ -17,7 +17,6 @@ import {
 } from "@angular/core";
 import { Router } from "@angular/router";
 import { MenuItem, MenuItemCommandEvent, MessageService } from "primeng/api";
-// import * as AOS from 'aos';
 import { isPlatformBrowser } from "@angular/common";
 import { SessionService } from "../../../../shared/services/session.service";
 import { ERol } from "../../../../shared/constants/rol.enum";
@@ -38,7 +37,6 @@ export interface DressItem {
   templateUrl: "./header.component.html",
   styleUrls: [
     "./header.component.scss"
-    // '../../../../shared/styles/dark-theme.scss',
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -85,24 +83,30 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
 
   }
 
-  // Método para acceder al control del email
-  // get email() {
-  //   return this.loginForm.get("email");
-  // }
-  // constructor(
-  // private router:  Router,
-  // private datosEmpresaService: DatosEmpresaService,
 
-  // @Inject(PLATFORM_ID) private platformId: Object
-  // ) {}
   isModalVisible: boolean = false;
 
   openModal() {
     this.isModalVisible = true;
   }
 
-  cerrarModal(): void {
-    this.isModalVisible = false; // Oculta el modal
+  cerrarModal(valor: boolean): void {
+    this.isModalVisible = valor; // Oculta el modal
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes["mostrarFormulario"]) {
+      const newVluesmostrarFormulario = changes["mostrarFormulario"].currentValue;
+  this.isModalVisible = newVluesmostrarFormulario; // Actualizamos el valor para cerrar el modal
+     
+      console.log("mostrarFormulario  en listado producto cambió a:", newVluesmostrarFormulario);
+    }
+    if (changes["isMobile"]) {
+      this.onMobileChange(changes["isMobile"].currentValue);
+    }
+
+    this.dressItemsSignal.set(this.dressItems); // Actualiza la señal correctamente
+    
+    // Aquí puedes agregar lógica adicional si es necesario
   }
   // closeModal() {
   //   this.visible = false; // Cierra el modal
@@ -142,58 +146,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
     } catch (error) {
       console.error("Error al obtener productos apartados:", error);
     }
-
-    // this.closeModal();
-    // Verificar si el entorno tiene acceso a localStorage (es decir, que no está en SSR)
-    // if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
-    //   // Recuperar el tema guardado en localStorage (si existe)
-    //   const savedTheme = localStorage.getItem("theme");
-
-    //   // Comprobar si el valor es válido
-    //   if (savedTheme === "dark" || savedTheme === "light") {
-    //     if (typeof document !== "undefined") {
-    //       this.darkMode = savedTheme === "dark";
-    //       document.body.classList.toggle("dark-theme", this.darkMode);
-    //       document.documentElement.setAttribute(
-    //         "data-theme",
-    //         this.darkMode ? "dark" : "light"
-    //       );
-    //       this.themeService.setTheme(savedTheme);
-    //     }
-    //   } else {
-    //     if (typeof document !== "undefined") {
-    //       // Si no hay tema guardado o es inválido, usar el valor por defecto (por ejemplo, 'light')
-    //       this.darkMode = false;
-    //       document.body.classList.remove("dark-theme");
-    //       document.documentElement.setAttribute("data-theme", "light");
-    //       this.themeService.setTheme("light");
-    //     }
-    //   }
-    // } else {
-    //   if (typeof document !== "undefined") {
-    //     // En un entorno donde localStorage no está disponible, establecer un tema predeterminado
-    //     this.darkMode = false;
-    //     document.body.classList.remove("dark-theme");
-    //     document.documentElement.setAttribute("data-theme", "light");
-    //     this.themeService.setTheme("light");
-    //   }
-    // }
-    // this.loadCompanyData(); // Cargar los datos de la empresa al iniciar
-
-    // if (isPlatformBrowser(this.platformId)) {
-    //   this.checkScreenSize();
-    //   // AOS.init();
-    //   this.renderer.listen('window', 'resize', () => this.checkScreenSize());
-    //   this.updateMenuItems();
-    // }
-  }
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes["isMobile"]) {
-      this.onMobileChange(changes["isMobile"].currentValue);
-    }
-
-    this.dressItemsSignal.set(this.dressItems); // Actualiza la señal correctamente
-    
   }
   onMobileChange(isMobile: boolean) {
     // Aquí puedes poner la lógica que quieres ejecutar cuando cambia isMobile
@@ -223,12 +175,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
         .find(".ui.search")
         .search({
           type: "category",
-      //     apiSettings: {
-      //       // url: `environment.api`, // Asegúrate de que esta URL sea correcta
-      // // this.router.navigate(['/public/search', query])
-            
-      //       // url: "/search/{query}", // Asegúrate de que esta URL sea correcta
-      //     },
+     
           onSelect: (result: any) => {
             // Manejar la selección del resultado aquí, si es necesario
           },

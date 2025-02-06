@@ -8,7 +8,7 @@ import { Error500Component } from './modules/public/views/error500/error500.comp
 export const routes: Routes = [
     {
       path: '',
-      redirectTo: 'admin',
+      redirectTo: 'public',
       pathMatch: 'full',
     },
     {

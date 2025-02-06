@@ -55,6 +55,7 @@ export class ListadoProductosComponent implements OnInit,OnChanges {
     this.getProductos();
   }
 
+ 
   getProductos() {
     this.productoS.obtenerProductos().subscribe(
       (response) => {

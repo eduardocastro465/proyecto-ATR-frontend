@@ -1,11 +1,12 @@
-<!-- [(visible)]="true" -->
 <p-dialog
   [style]="{ width: '80vw' }"
   [modal]="true"
   [draggable]="false"
   [resizable]="false"
   [(visible)]="mostrarModalAddVestido"
+  (onHide)="cerrar()"
 >
+
   <ng-template pTemplate="header">
     <h2>Agregar Vestido</h2>
   </ng-template>
