@@ -93,13 +93,30 @@ export class HomeView implements OnInit {
   onResize() {
     this.detectDevice();
   }
+  @HostListener('window:beforeunload', ['$event'])
+  onBeforeUnload(event: Event) {
+    console.log('⏳ La página se está recargando...');
+    // Puedes guardar datos en localStorage o mostrar un mensaje
+  }
 
+
+  isLoading = true;
+
+  @HostListener('window:load')
+  onLoad() {
+    setTimeout(() => {
+      this.isLoading = false; // Ocultar skeleton cuando la página se cargue
+    }, 2000); // Simular una carga de 2 segundos
+  }
   ngOnInit() {
     //
     this.getDatos();
     // ngOnInit() {
     // this.productosPaginados = this.productos.slice(0, this.rows);
     // }
+    if (performance?.navigation?.type === 1) {
+      console.log('🔄 La página se ha recargado');
+    }
 
     this.visible = true;
     // if (typeof window !== 'undefined') {
@@ -156,6 +173,7 @@ export class HomeView implements OnInit {
   getDatos() {
     this.PRODUCTOSERVICE_.obtenerProductos().subscribe((response) => {
       this.productos = response;
+      // this.isLoading=false;
     });
 
   }

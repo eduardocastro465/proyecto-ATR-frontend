@@ -4,6 +4,8 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterOutlet } from "@angular/router";
 import { NgxUiLoaderModule, NgxUiLoaderService } from "ngx-ui-loader";
 import { CommonModule } from "@angular/common";
+import { HTTP_INTERCEPTORS } from "@angular/common/http";
+import { ApiInterceptor } from "./shared/services/api-interceptor.service";
 
 @Component({
   selector: "app-root",
@@ -12,6 +14,12 @@ import { CommonModule } from "@angular/common";
     RouterOutlet,
     NgxUiLoaderModule,
     CommonModule,
+  ],providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiInterceptor,
+      multi: true
+    }
   ],
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.scss"]

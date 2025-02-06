@@ -2,11 +2,17 @@
 <!-- <body> -->
 <header class="app-header" [ngClass]="{ scrolled: isScrolled }">
   <!-- <nav> -->
-  <nav class="marquee-container" style="text-align: center">
+  <nav class="marquee-container" id="connection-exit" style="text-align: center">
     <div class="marquee" id="item1">🔥 ¡Cómpralo ya! 🔥</div>
     <div class="marquee" id="item2">✨¡Elige a tu gusto !✨</div>
     <div class="marquee" id="item3">🔥 ¡Aprovecha ahora! 🔥</div>
   </nav>
+
+
+  <nav class="marquee-container" id="connection-status">
+    <div class="marquee">🚨 No hay conexión a Internet 🚨</div>
+  </nav>
+  
   <!-- </nav> -->
   <nav class="nav-one">
     <nav class="navbar-one flex">

@@ -17,31 +17,62 @@
       </div> -->
     </header>
     <!-- <div class="listado-productos"> -->
-      <!--
+    <!--
     <div data-aos="zoom-out-up" class="productos-container"> -->
-      <!-- <div class="productos-container"> -->
-        <p-carousel [value]="productos" [numVisible]="5" [numScroll]="1"  [responsiveOptions]="responsiveOptions">
-          <ng-template pTemplate="item" let-producto>
-            <div class="producto-card">
-              <div class="ribbon">Nuevo</div>
-              <div class="product-image">
-                <img
-                  (click)="verDetalles(producto._id)"
-                  [src]="producto.imagenPrincipal"
-                  alt="{{ producto.nombre }}"
-                />
-              </div>
-              <div class="product-content">
-                <p>{{ producto.nombre }}</p>
-                <p>MX$:<strong> {{ producto.precio | currency }}</strong></p>
-              </div>
-            </div>
-          </ng-template>
-        </p-carousel>
-        
+    <!-- <div class="productos-container"> -->
+    <!-- Skeleton Loader en Carrusel -->
+    <!-- <p-carousel
+*ngIf="isLoading"
+[value]="skeletonItems"
+[numVisible]="5"
+[numScroll]="1"
+[autoplayInterval]="2000"
+[circular]="true"
+>
+<ng-template pTemplate="item">
+  <div class="producto-card skeleton-card">
+    <div class="ribbon skeleton-ribbon"></div>
+    <div class="product-image">
+      <p-skeleton width="100%" height="120px" class="skeleton-image"></p-skeleton>
+    </div>
+    <div class="product-content">
+      <p-skeleton width="80%" class="skeleton-text"></p-skeleton>
+      <p-skeleton width="50%" class="skeleton-text short"></p-skeleton>
+    </div>
+  </div>
+</ng-template>
+</p-carousel> -->
 
-      <!-- </div> -->
-      <!-- <p-paginator
+    <!-- Carrusel de Productos -->
+    <!-- *ngIf="!isLoading" -->
+    <p-carousel
+      [value]="productos"
+      [numVisible]="5"
+      [numScroll]="1"
+      [responsiveOptions]="responsiveOptions"
+      [autoplayInterval]="2000"
+      [circular]="true"
+    >
+      <ng-template pTemplate="item" let-producto>
+        <div class="producto-card">
+          <div class="ribbon">Nuevo</div>
+          <div class="product-image">
+            <img
+              (click)="verDetalles(producto._id)"
+              [src]="producto.imagenPrincipal"
+              alt="{{ producto.nombre }}"
+            />
+          </div>
+          <div class="product-content">
+            <p>{{ producto.nombre }}</p>
+            <p>MX$:<strong> {{ producto.precio | currency }}</strong></p>
+          </div>
+        </div>
+      </ng-template>
+    </p-carousel>
+
+    <!-- </div> -->
+    <!-- <p-paginator
         [showFirstLastIcon]="false"
         [rows]="rows"
         [totalRecords]="productos.length"

@@ -140,11 +140,27 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
 
   async ngOnInit() {
     try {
+      this.checkInternetConnection();
       const productos = await this.indexedDbService.obtenerProductosApartados();
       this.dressItems = Array.isArray(productos) ? productos : [productos];
       // console.log(this.dressItems);
     } catch (error) {
       console.error("Error al obtener productos apartados:", error);
+    }
+  }
+
+
+  @HostListener('window:online')
+  @HostListener('window:offline')
+  checkInternetConnection() {
+    const connectionStatus = document.getElementById('connection-status');
+    const connectioneExit = document.getElementById('connection-exit');
+    if (navigator.onLine) {
+      connectionStatus!.style.display = 'none'; // Ocultar si hay conexión
+      connectioneExit!.style.display = 'block'; // Mostrar si no hay conexión
+    } else {
+      connectionStatus!.style.display = 'block'; // Mostrar si no hay conexión
+      connectioneExit!.style.display = 'none'; // Ocultar si hay conexión
     }
   }
   onMobileChange(isMobile: boolean) {

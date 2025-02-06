@@ -116,8 +116,8 @@
       </div>
     </div>
   </div>
-  <!-- <ng-template> -->
   <div class="loading-container" *ngIf="!Detalles && isLoading">
+   
     <!-- Contenedor de imágenes -->
     <div class="skeleton-image-section">
       <!-- Columna con 3 tarjetas mini -->
@@ -169,8 +169,7 @@
       </div>
     </div>
   </div>
-  <!-- </ng-template> -->
-
+ <div *ngIf="Detalles && !isLoading">
   <h2 class="description-title">Descripción</h2>
   <p class="description-summary">{{ Detalles.descripcion }}</p>
 
@@ -190,6 +189,8 @@
       <p class="price">${{ related.precio }}</p>
       <!-- <button class="btn-view">Ver Detalles</button> -->
     </div>
+  </div>
+  
   </div>
   <!-- </div> -->
 </div>
