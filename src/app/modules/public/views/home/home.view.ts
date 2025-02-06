@@ -175,7 +175,6 @@ export class HomeView implements OnInit {
       this.productos = response;
       // this.isLoading=false;
     });
-
   }
 
   isUserLoggedIn(): boolean {

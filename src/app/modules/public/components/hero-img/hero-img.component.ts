@@ -1,4 +1,4 @@
-import { Component, HostListener } from "@angular/core";
+import { Component } from "@angular/core";
 import { animate, style, transition, trigger } from "@angular/animations";
 
 @Component({
@@ -17,7 +17,7 @@ import { animate, style, transition, trigger } from "@angular/animations";
   template: `
     <div class="hero">
       <div class="hero-content" @fadeIn>
-        <h1 class="title" [class.shrink]="isScrolled">Venta y Renta</h1>
+        <h1 class="title">Venta y Renta</h1>
         <p class="subtitle">Especial de Verano 2024</p>
         <p class="description">
           LO MÁS TOP DE VESTIDOS EN RENTA PARA FIESTAS, UN ESPACIO DONDE
@@ -26,6 +26,7 @@ import { animate, style, transition, trigger } from "@angular/animations";
         <a href="#" class="cta">Compra Ahora</a>
       </div>
     </div>
+   
   `,
   styles: `
   .hero {
@@ -33,7 +34,6 @@ import { animate, style, transition, trigger } from "@angular/animations";
     align-items: center;
     justify-content: center;
     height: 50vh;
-    filter: drop-shadow(10px 10px 15px rgb(249, 192, 255));
     background-image: url("https://res.cloudinary.com/dvvhnrvav/image/upload/v1736990456/images-AR/gh5ryrsad5fnaxgjgall.jpg");
     background-size: cover;
     background-repeat: no-repeat;
@@ -56,16 +56,22 @@ import { animate, style, transition, trigger } from "@angular/animations";
     font-weight: 999;
     font-family: innerti;
     margin-bottom: 1rem;
-    transition: all 0.3s ease-in-out;
     text-shadow: 0px 0px 9px rgba(255, 133, 214, 0.8),
                  0px 0px 15px rgba(255, 167, 226, 0.6);
+    position: relative;
+    transition: transform 0.8s ease-out, opacity 0.8s ease-out;
   }
 
-  /* Cuando el usuario haga scroll, el título se reducirá */
-  .title.shrink {
-    font-size: 3rem;
-    transform: translateY(-10px);
-    text-shadow: 0px 0px 5px rgba(255, 133, 214, 0.5);
+  /* Efecto de alejamiento con el scroll */
+  @media (prefers-reduced-motion: no-preference) {
+    .title {
+      will-change: transform, opacity;
+    }
+
+    .title.shrink {
+      transform: translateY(-150px) scale(0.6);
+      opacity: 0;
+    }
   }
 
   .subtitle {
@@ -94,14 +100,27 @@ import { animate, style, transition, trigger } from "@angular/animations";
   .cta:hover {
     background-color: #e6b800;
   }
+
+  .content {
+    text-align: center;
+    padding: 2rem;
+  }
+
+  /* Aplicar la animación con scroll usando Scroll-Driven Animations */
+  @supports (animation-timeline: scroll()) {
+    .title {
+      animation: fadeMove linear both;
+      animation-timeline: scroll();
+      animation-range: 0px 250px;
+    }
+
+    @keyframes fadeMove {
+      to {
+        transform: translateY(-150px) scale(0.6);
+        opacity: 0;
+      }
+    }
+  }
   `,
 })
-export class HeroImgComponent {
-  isScrolled = false;
-
-  @HostListener("window:scroll", [])
-  onScroll() {
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    this.isScrolled = scrollTop > 50; // Se activa al hacer scroll más de 50px
-  }
-}
+export class HeroImgComponent {}
