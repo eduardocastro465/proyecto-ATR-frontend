@@ -1,57 +1,17 @@
 <app-hero-img></app-hero-img>
 <main class="box">
   <app-sidevar></app-sidevar>
-
   <section class="productos">
     <header class="products-header">
       <h2>Productos</h2>
-      <!-- <div class="sort-options">
-        <label for="sort">Sort by</label>
-        <select id="sort">
-          <option value="featured">Featured</option>
-        </select>
-        <label for="show">Show</label>
-        <select id="show">
-          <option value="12">12</option>
-        </select>
-      </div> -->
     </header>
-    <!-- <div class="listado-productos"> -->
-    <!--
-    <div data-aos="zoom-out-up" class="productos-container"> -->
-    <!-- <div class="productos-container"> -->
-    <!-- Skeleton Loader en Carrusel -->
-    <!-- <p-carousel
-*ngIf="isLoading"
-[value]="skeletonItems"
-[numVisible]="5"
-[numScroll]="1"
-[autoplayInterval]="2000"
-[circular]="true"
->
-<ng-template pTemplate="item">
-  <div class="producto-card skeleton-card">
-    <div class="ribbon skeleton-ribbon"></div>
-    <div class="product-image">
-      <p-skeleton width="100%" height="120px" class="skeleton-image"></p-skeleton>
-    </div>
-    <div class="product-content">
-      <p-skeleton width="80%" class="skeleton-text"></p-skeleton>
-      <p-skeleton width="50%" class="skeleton-text short"></p-skeleton>
-    </div>
-  </div>
-</ng-template>
-</p-carousel> -->
-
-    <!-- Carrusel de Productos -->
-    <!-- *ngIf="!isLoading" -->
     <p-carousel
       [value]="productos"
       [numVisible]="5"
       [numScroll]="1"
       [responsiveOptions]="responsiveOptions"
       [autoplayInterval]="2000"
-      [circular]="true"
+      [circular]="false"
     >
       <ng-template pTemplate="item" let-producto>
         <div class="producto-card">
@@ -70,22 +30,6 @@
         </div>
       </ng-template>
     </p-carousel>
-
-    <!-- </div> -->
-    <!-- <p-paginator
-        [showFirstLastIcon]="false"
-        [rows]="rows"
-        [totalRecords]="productos.length"
-        [rowsPerPageOptions]="[5, 10, 20]"
-
-        styleClass="mt-3 custom-paginator"
-        [style]="{ 'background-color': 'var(--blur-bg)', 'border-radius': '8px' ,'border':'2px var(--bg-color-card)', 'padding': '8px' }"
-        currentPageReportTemplate="Producto {first} a {last} de {totalRecords}"
-      >
-      </p-paginator> -->
-    <!-- </div> -->
-    <!-- (onPageChange)="cambiarPagina($event)" -->
   </section>
 </main>
-
 <app-tag></app-tag>
