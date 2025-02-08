@@ -1,13 +1,8 @@
 .box {
   display: flex;
-  margin: 20px 50px;
+  margin: 35px 120px;
 }
 
-.titulo {
-  /* display: none; */
-  text-align: start;
-  color: --color-text;
-}
 .productos {
   display: flex;
   flex-direction: column;
@@ -15,10 +10,10 @@
   /* flex-grow: 1; */
   flex-grow: 1;
   padding: 10px;
-  background: white;
-  margin-left: 10px;
-  border: var(--color-brd) solid 1px;
-
+  /* background: white; */
+  margin:-70px 0px 10px;
+  /* border: var(--color-brd) solid 1px; */
+z-index:1;
   .products-header {
     display: flex;
     justify-content: space-between;
@@ -28,63 +23,15 @@
     h2 {
       margin: 0;
     }
-
-    .sort-options {
-      label {
-        margin-right: 10px;
-      }
-
-      select {
-        margin-right: 10px;
-      }
-    }
-  }
-  .listado-productos {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-
-    gap: 3rem;
   }
 }
 
-.hero-img {
-  display: none;
-}
-
-.imagen-logo {
-  max-width: 20%;
-}
-.text-anuncio {
-  margin-right: 10px;
-  p.nombre {
-    font-size: 60px;
-    /* font-family: "Passion One", display; */
-    color: var(--text-color);
-  }
-  p.info {
-    font-size: 50px;
-    cursor: pointer;
-    /* font-family: "Sacramento", handwriting; */
-    &:hover {
-      color: dodgerblue;
-    }
-  }
-}
-
-.text-info {
-  font-size: 28px;
-  color: var(--color-text);
-}
 p {
   color: var(--color-text);
 
   /* color: #4b535b; chido */
 }
 
-.hide-hero-img {
-  background-image: none;
-}
 /* !hacer responsive */
 .text {
   margin-left: 50px;
@@ -103,11 +50,11 @@ p {
   max-width: 200px;
   /* margin-bottom: 20px; */
   padding: 5px;
-  
+
   cursor: pointer;
   /* background: var(--blur-bg); */
   transition: transform 0.3s, box-shadow 0.3s;
-  /* background: white;} */
+  background: white;
   &:hover {
     /* transform: scale(1.02); Zoom al 105% */
     /* background-color: var(--color-bg); */
@@ -118,10 +65,6 @@ p {
 .p-card {
   border: dashed;
   width: 220px; /* Ajusta el tamaño de la tarjeta según sea necesario */
-}
-
-.header-content {
-  text-align: center;
 }
 
 .product-content {
@@ -158,7 +101,7 @@ p {
     border-radius: 8px;
     border: 1px solid var(--color-brd);
     background: var(--blur-bg);
-
+    background-color: #fff;
     padding: 0.5rem 1rem;
     /* border: dashed; */
     /* box-shadow: 2px 7px 41px 0px rgba(21, 21, 21, 0.2); */
@@ -195,11 +138,6 @@ p {
       width: 50px;
     }
     max-width: 310px;
-    /* height: 180px; */
-    /* background-color: transparent; */
-    /* border: dashed; */
-    /* width: 400px; */
-    /* height: 150px; */
     padding: 20px;
     flex-wrap: wrap;
   }
@@ -278,60 +216,6 @@ p {
     margin-top: 10px;
   }
 
-  .hero-img {
-    animation: blur-in 1s ease-in-out;
-    animation-name: show-hero;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-image: url("https://res.cloudinary.com/dvvhnrvav/image/upload/v1730134285/images-AR/ztq3dpdi1uptc9xxwnjo.jpg");
-    background-size: 100%; /* Aumenta el tamaño para recortar */
-    background-repeat: no-repeat;
-    background-position: center center;
-    position: sticky;
-    width: 100%;
-    height: 175px;
-    border-radius: 20px;
-    .text {
-      height: 175px;
-      background-color: #ebe3db79;
-      backdrop-filter: blur(3px);
-      padding: 2%;
-      margin-left: 0;
-      margin-right: 0;
-      max-width: 1700px;
-      /* .marquee-container {
-        text-align: center;
-      } */
-      h1,
-      p {
-        color: #3e3834;
-      }
-      border-radius: 5%;
-      .imagen-logo {
-        /* margin-bottom: auto; */
-        /* display: inline-block; */
-        /* position: relative; */
-        /* left: 50%; */
-        /* transform: translateX(-50%); */
-        /* position: relative; */
-        /* align-items: center; */
-        /* justify-content: center; */
-        max-width: 55%;
-      }
-    }
-    .imagen-logo {
-    }
-    .text-info {
-      font-size: 18px;
-      text-align: center;
-    }
-    p {
-      font-size: 10px;
-      text-align: center;
-    }
-  }
-
   .cards {
     /* border: dashed rgb(89, 0, 255); */
     display: none;
@@ -364,7 +248,7 @@ p {
   color: #fff;
 }
 .ribbon {
-  --f: .5em; /* control the folded part */
+  --f: 0.5em; /* control the folded part */
 
   position: absolute;
   top: 0;
@@ -372,17 +256,21 @@ p {
   line-height: 1.8;
   padding-inline: 1lh;
   padding-bottom: var(--f);
-  border-image: conic-gradient(#0008 0 0) 51%/var(--f);
+  border-image: conic-gradient(#0008 0 0) 51% / var(--f);
   clip-path: polygon(
-    100% calc(100% - var(--f)),100% 100%,calc(100% - var(--f)) calc(100% - var(--f)),var(--f) calc(100% - var(--f)), 0 100%,0 calc(100% - var(--f)),999px calc(100% - var(--f) - 999px),calc(100% - 999px) calc(100% - var(--f) - 999px));
-  transform: translate(calc((1 - cos(45deg))*100%), -100%) rotate(45deg);
-  transform-origin:3% 105%;
+    100% calc(100% - var(--f)),
+    100% 100%,
+    calc(100% - var(--f)) calc(100% - var(--f)),
+    var(--f) calc(100% - var(--f)),
+    0 100%,
+    0 calc(100% - var(--f)),
+    999px calc(100% - var(--f) - 999px),
+    calc(100% - 999px) calc(100% - var(--f) - 999px)
+  );
+  transform: translate(calc((1 - cos(45deg)) * 100%), -100%) rotate(45deg);
+  transform-origin: 3% 105%;
   background-color: #ff5580; /* the main color  */
 }
-
-
-
-
 
 /*  boton para card renta */
 .btn-apartar-rentar {
@@ -413,10 +301,6 @@ p {
     font-size: 0.9rem; /* Reducir el tamaño de fuente en pantallas más pequeñas */
   }
 }
-
-
-
-
 
 /*  */
 /* .skeleton-carousel {

@@ -145,7 +145,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
       this.dressItems = Array.isArray(productos) ? productos : [productos];
       // console.log(this.dressItems);
     } catch (error) {
-      console.error("Error al obtener productos apartados:", error);
+      console.error("Error al obtener productos apartados");
     }
   }
 

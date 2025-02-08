@@ -63,23 +63,23 @@ export class HomeView implements OnInit {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
-  checkScreenSize() {
-    if (isPlatformBrowser(this.platformId)) {
-      this.isMobile = window.innerWidth <= 768; // Determina si es móvil o escritorio
-      this.applyHeroImageVisibility();
-      console.log(this.isMobile ? 'Modo móvil' : 'Modo escritorio');
-    }
-  }
-  applyHeroImageVisibility() {
-    const heroImageElement = document.querySelector('.hero-img');
-    if (heroImageElement) {
-      if (this.isMobile) {
-        heroImageElement.classList.add('hide-hero-img'); // Oculta en móviles
-      } else {
-        heroImageElement.classList.remove('hide-hero-img'); // Muestra en pantallas grandes
-      }
-    }
-  }
+  // checkScreenSize() {
+  //   if (isPlatformBrowser(this.platformId)) {
+  //     this.isMobile = window.innerWidth <= 768; // Determina si es móvil o escritorio
+  //     this.applyHeroImageVisibility();
+  //     console.log(this.isMobile ? 'Modo móvil' : 'Modo escritorio');
+  //   }
+  // }
+  // applyHeroImageVisibility() {
+  //   const heroImageElement = document.querySelector('.hero-img');
+  //   if (heroImageElement) {
+  //     if (this.isMobile) {
+  //       heroImageElement.classList.add('hide-hero-img'); // Oculta en móviles
+  //     } else {
+  //       heroImageElement.classList.remove('hide-hero-img'); // Muestra en pantallas grandes
+  //     }
+  //   }
+  // }
   private detectDevice() {
     if (typeof window !== 'undefined') {
       const ua = navigator.userAgent;

@@ -1,21 +1,20 @@
 <app-hero-img></app-hero-img>
 <main class="box">
-  <app-sidevar></app-sidevar>
   <section class="productos">
-    <header class="products-header">
+    <!-- <header class="products-header">
       <h2>Productos</h2>
-    </header>
+    </header> -->
     <p-carousel
+      [circular]="false"
       [value]="productos"
       [numVisible]="5"
       [numScroll]="1"
       [responsiveOptions]="responsiveOptions"
       [autoplayInterval]="2000"
-      [circular]="false"
     >
       <ng-template pTemplate="item" let-producto>
         <div class="producto-card">
-          <div class="ribbon">Nuevo</div>
+          <div *ngIf="producto.isNuevo" class="ribbon">Nuevo</div>
           <div class="product-image">
             <img
               (click)="verDetalles(producto._id)"
@@ -32,4 +31,11 @@
     </p-carousel>
   </section>
 </main>
-<app-tag></app-tag>
+
+<app-videos></app-videos>
+<main class="box">
+  <app-tag></app-tag>
+</main>
+
+
+

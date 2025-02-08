@@ -58,13 +58,14 @@ import { CargaComponent } from './components/carga/carga.component';
 // import { Header404Component } from './components/header-404/header-404.component';
 import {  CarouselModule } from 'primeng/carousel';
 import { LoginModalComponent } from './views/login-modal/login-modal.component';
+import { VideosComponent } from './components/videos/videos.component';
 const MATERIALS =[PasswordModule,
   InputMaskModule,
   InputTextModule,FormsModule,InputGroupModule,AvatarModule,AvatarGroupModule,PaginatorModule,OverlayPanelModule,TieredMenuModule,SkeletonModule,CardModule,TabMenuModule,ButtonModule,DialogModule,SidebarModule,CheckboxModule,MenuModule]
 const COMPONENTS =[FooterComponent,HeaderComponent]
 const VIEWS=[HomeView,PublicComponent,PerfilView, AcercaDeView,DetailsProductView,LoginModalComponent]
 @NgModule({
-  declarations: [VIEWS,COMPONENTS, CarritoView, TagComponent, PoliticasComponent, TerminosComponent, CitasProbadorView, ResultsComponent, HeroImgComponent, FigureComponent, BreadcrumbComponent, NotFoundComponent, Error500Component, SidevarComponent, CargaComponent],
+  declarations: [VIEWS,COMPONENTS, CarritoView, TagComponent, PoliticasComponent, TerminosComponent, CitasProbadorView, ResultsComponent, HeroImgComponent, FigureComponent, BreadcrumbComponent, NotFoundComponent, Error500Component, SidevarComponent, CargaComponent, VideosComponent],
   exports:[COMPONENTS],
   imports: [GalleriaModule,CarouselModule,
     CommonModule,ReactiveFormsModule,FormsModule,
