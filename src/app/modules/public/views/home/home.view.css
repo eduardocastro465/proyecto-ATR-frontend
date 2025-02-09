@@ -37,9 +37,7 @@ p {
   margin-left: 50px;
   margin-right: 300px;
 }
-/*
-.productos-container {
-} */
+
 
 .producto-card {
   backdrop-filter: blur(1px);
@@ -68,7 +66,7 @@ p {
 }
 
 .product-content {
-  color: #333b43;
+  color: #fc0101;
   text-align: start;
   /* padding: 10px; */
   /* border: dashed rgb(207, 204, 117); */

@@ -19,3 +19,12 @@ iconos de la empresa ,el de como rentar mi vestido
 if (error.status === 500) {
           this.router.navigate(['/error-500']);
         }
+
+
+
+
+        web psuh 
+        npm install web push -g
+        generacion de llaves 
+        web-push generate-vapid-keys --json
+        {"publicKey":"BA8CjWNIlvuEogKv1eRaHP0Ro6uo3wfq4TWfTJk1-OIqjuHcxKeVrX25ItmnmwhfskcvW9kqX39kO1jpzhnAc5Y","privateKey":"5uPHxFUbR-MFJzLq803YE-7JiEAegfN1GWXDzuU4NkQ"}
