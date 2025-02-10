@@ -77,10 +77,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
-    
-
-    // this.isLoading = false;
-
   }
 
 
@@ -108,35 +104,8 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
     
     // Aquí puedes agregar lógica adicional si es necesario
   }
-  // closeModal() {
-  //   this.visible = false; // Cierra el modal
-  //   this.loginForm.reset(); // Limpia los campos del formulario
-  //   this.robot = false;
-  //   this.presionado = false;
-  //   this.captchaToken = null; // Limpia el token del captcha
-  // }
-  // toggleDarkTheme(): void {
-  //   document.body.classList.toggle('dark-theme');
-  // }
+ 
 
-  // toggleTheme() {
-  //   document.body.classList.toggle("dark-theme");
-  //   this.isDarkThemeOn.update((isDarkThemeOn) => !isDarkThemeOn);
-  //   this.darkMode = !this.darkMode;
-  //   if (typeof document !== "undefined") {
-  //     document.documentElement.setAttribute(
-  //       "data-theme",
-  //       this.darkMode ? "dark" : "light"
-  //     );
-  //   }
-  //   //
-  //   const newTheme =
-  //     this.themeService.getTheme() === "light" ? "dark" : "light";
-
-  //   // Guardar el tema en localStorage
-  //   localStorage.setItem("theme", newTheme);
-  //   this.themeService.setTheme(newTheme);
-  // }
 
   async ngOnInit() {
     try {
@@ -147,6 +116,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
     } catch (error) {
       console.error("Error al obtener productos apartados");
     }
+   
   }
 
 
@@ -187,7 +157,12 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
   
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
-      $(this.elementRef.nativeElement)
+      const nativeElement = this.elementRef.nativeElement;
+    
+      // Inicializar Semantic UI Dropdown
+      $(nativeElement).find('.ui.dropdown').dropdown();
+
+      $(nativeElement)
         .find(".ui.search")
         .search({
           type: "category",

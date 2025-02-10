@@ -34,7 +34,7 @@ export class HomeView implements OnInit {
   productosPaginados: any = [];
   rows = 7; // Número de elementos por página
   // datosEmpresa: any = {};
-
+  skeletonItems: any[] = Array(6).fill({}); // Array de 6 elementos para el skeleton
   productos: any;
   responsiveOptions = [
     {
@@ -106,7 +106,7 @@ export class HomeView implements OnInit {
   onLoad() {
     setTimeout(() => {
       this.isLoading = false; // Ocultar skeleton cuando la página se cargue
-    }, 2000); // Simular una carga de 2 segundos
+    }, 1000); // Simular una carga de 2 segundos
   }
   ngOnInit() {
     //
@@ -115,10 +115,11 @@ export class HomeView implements OnInit {
     // this.productosPaginados = this.productos.slice(0, this.rows);
     // }
     if (performance?.navigation?.type === 1) {
+      this.visible = true;
+      
       console.log('🔄 La página se ha recargado');
     }
 
-    this.visible = true;
     // if (typeof window !== 'undefined') {
     //   this.position = 'bottom-left';
     // }

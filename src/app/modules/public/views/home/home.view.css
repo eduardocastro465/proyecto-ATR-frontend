@@ -48,7 +48,8 @@ p {
   max-width: 200px;
   /* margin-bottom: 20px; */
   padding: 5px;
-
+  /* width: 300px; Ajusta el ancho al tamaño real de los productos */
+  /* height: 300px; Mantiene la estructura consistente */
   cursor: pointer;
   /* background: var(--blur-bg); */
   transition: transform 0.3s, box-shadow 0.3s;
@@ -74,7 +75,8 @@ p {
 
 .product-image img {
   width: 100%;
-  height: 300px;
+  /* height: 300px; */
+  height: 300px; /* Mantiene el mismo tamaño para skeleton y productos */
   /* border: dashed red; */
   margin-bottom: 16px;
   border-bottom: var(--color-brd) solid 1px;
@@ -326,3 +328,21 @@ p {
   margin-top: 5px;
 }
  */
+
+
+ .skeleton-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center; /* Centrar elementos */
+ 
+  .producto-card {
+    width: 300px;
+    height: 250px;
+    border-radius: 8px;
+    background: white;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+}

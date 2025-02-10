@@ -1,18 +1,20 @@
-
 <!-- <body> -->
 <header class="app-header" [ngClass]="{ scrolled: isScrolled }">
   <!-- <nav> -->
-  <nav class="marquee-container" id="connection-exit" style="text-align: center">
+  <nav
+    class="marquee-container"
+    id="connection-exit"
+    style="text-align: center"
+  >
     <div class="marquee" id="item1">✨ ¡My happyyy place! ✨</div>
     <div class="marquee" id="item2">🔥 ¡Aprovecha ahora! 🔥</div>
     <div class="marquee" id="item3">✨¡Elige a tu gusto !✨</div>
   </nav>
 
-
   <nav class="marquee-container" id="connection-status">
-    <div class="marquee1"> No hay conexión a Internet </div>
+    <div class="marquee1">No hay conexión a Internet</div>
   </nav>
-  
+
   <!-- </nav> -->
   <nav class="nav-one">
     <nav class="navbar-one flex">
@@ -41,17 +43,17 @@
           src="https://res.cloudinary.com/dvvhnrvav/image/upload/v1730395938/images-AR/wyicw2mh3xxocscx0diz.png"
           alt="logo sticky"
           class="logo1 logo-sticky"
-          [ngClass]="{ 'visible': isSticky }"
+          [ngClass]="{ visible: isSticky }"
         />
         <img
           src="https://res.cloudinary.com/dvvhnrvav/image/upload/v1730059633/images-AR/g1soiuvsc8qtdlsojskb.png"
           alt="logo normal"
           class="logo1 logo-normal"
-          [ngClass]="{ 'visible': !isSticky }"
+          [ngClass]="{ visible: !isSticky }"
         />
       </a>
     </div>
-    
+
     <ul *ngIf="!isMobile" class="nav-menu flex">
       <li><a (click)="redirectTo('search')">Productos</a></li>
       <li><a (click)="redirectTo('AcercaDe')">Acerca de nosotros</a></li>
@@ -59,10 +61,9 @@
       <li><a (click)="redirectTo('terminos')">Términos y condiciones</a></li>
       <li><a (click)="redirectTo('politicas')">Políticas de privacidad</a></li>
     </ul>
-    
+
     <ul class="nav-accion">
       <li>
-       
         <!-- Versión Web -->
         <div class="ui action input" *ngIf="!isMobile">
           <input
@@ -101,23 +102,40 @@
         </div>
       </li>
       <li class="IsMobile" *ngIf="!isMobile">
-        <a tabindex="0" class="nav-icon" (click)="openModal()">
-          <i class="fa-regular fa-user"></i>
-        </a>
-        <!-- Modal de inicio de sesión -->
-          <!-- <a tabindex="0" class="nav-icon" (click)="togglePopup()"> -->
-          <!-- <i class="fa-regular fa-user"></i> -->
-          <!-- <ul class="muestra-opciones-user" *ngIf="popupVisible">
-            <li
-              *ngFor="let item of items"
-              (click)="
-                item.command ? item.command({ originalEvent: $event }) : null
-              "
-            >
-              <i [class]="item.icon"></i> {{ item.label }}
-            </li>
-          </ul> -->
-        <!-- </a> -->
+        <ng-container *ngIf="!isLoggedIn; else userMenu">
+          <!-- <a tabindex="0" (click)="openModal()"> -->
+          <i class="pi pi-user" (click)="openModal()"></i>
+          <!-- </a> -->
+        </ng-container>
+
+        <ng-template #userMenu>
+          <div class="ui pointing dropdown">
+            <div class="ui grid">
+              <div class="row">
+                <div class="column">
+                  <i class="pi pi-user"></i>
+                </div>
+                   Mi cuenta
+                <div class="column">
+                  <i class="dropdown icon"></i>
+                </div>
+              </div>
+            </div>
+            <div class="menu">
+              <div class="item" (click)="redirectTo('Mi-perfil')">
+                <i class="pi pi-user"></i> Mi perfil
+              </div>
+              <div class="item" (click)="redirectTo('Config')">
+                <i class="pi pi-cog"></i> Configuración
+              </div>
+              <div class="item" (click)="logout()">
+                <i class="pi pi-sign-out"></i> Cerrar sesión
+              </div>
+            </div>
+          </div>
+        </ng-template>
+        
+        
       </li>
 
       <li *ngIf="isMobile">
@@ -206,6 +224,9 @@
 
 <!-- <app-results [buscar]="searchQuery"></app-results> -->
 
-
 <!-- Modal de inicio de sesión -->
-<app-login-modal *ngIf="isModalVisible" [isModalVisible]="isModalVisible"(mostrarFormulario)="cerrarModal($event)"></app-login-modal>
+<app-login-modal
+  *ngIf="isModalVisible"
+  [isModalVisible]="isModalVisible"
+  (mostrarFormulario)="cerrarModal($event)"
+></app-login-modal>
