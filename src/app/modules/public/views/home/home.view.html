@@ -1,50 +1,7 @@
 <app-hero-img></app-hero-img>
 <main class="box">
   <section class="productos">
-    <!-- <header class="products-header">
-      <h2>Productos</h2>
-    </header> --> <!-- Template que muestra el carrusel de productos una vez finalizada la carga -->
-    <div *ngIf="!isLoading">
-      <p-carousel
-        [circular]="false"
-        [value]="productos"
-        [numVisible]="numVisibleProducts"
-        [numScroll]="1"
-        [responsiveOptions]="responsiveOptions"
-        [autoplayInterval]="2000"
-      >
-        <ng-template pTemplate="item" let-producto>
-          <div class="producto-card">
-            <div *ngIf="producto.isNuevo" class="ribbon">Nuevo</div>
-            <div class="product-image">
-              <img
-                (click)="verDetalles(producto._id)"
-                [src]="producto.imagenPrincipal"
-                alt="{{ producto.nombre }}"
-              />
-            </div>
-            <div class="product-content">
-              <p>{{ producto.nombre }}</p>
-              <p>MX$:<strong>{{ producto.precio | currency }}</strong></p>
-            </div>
-          </div>
-        </ng-template>
-      </p-carousel>
-    </div>
-    
-    <!-- Si se está cargando, muestra las cards de skeleton -->
-    <div *ngIf="isLoading" class="skeleton-container">
-      <div *ngFor="let item of skeletonItems" class="producto-card">
-        <!-- Skeleton para la imagen -->
-        <p-skeleton shape="rectangle" width="100%" height="150px"></p-skeleton>
-        <!-- Skeleton para el contenido (nombre y precio) -->
-        <div class="product-content" style="margin-top: 0.5em">
-          <p-skeleton width="60%" height="20px"></p-skeleton>
-          <p-skeleton width="40%" height="20px"></p-skeleton>
-        </div>
-      </div>
-    </div>
-
+    <app-productos></app-productos>
    
   </section>
 </main>

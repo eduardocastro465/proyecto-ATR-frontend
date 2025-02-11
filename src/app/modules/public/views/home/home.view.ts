@@ -5,6 +5,7 @@ import {
   PLATFORM_ID,
   HostListener,
 } from "@angular/core";
+
 import { isPlatformBrowser } from "@angular/common";
 import { Router } from "@angular/router";
 import { SessionService } from "../../../../shared/services/session.service";
@@ -76,25 +77,13 @@ export class HomeView implements OnInit {
   }
 
   // Antes de recargar o cerrar la página, vaciamos productos y mostramos el skeleton
-  @HostListener("window:beforeunload", ["$event"])
-  onBeforeUnload(event: Event) {
-    console.log("⏳ La página se está recargando...");
-    this.isLoading = true;
-    this.productos = []; // Vaciar los productos en la carga
-  }
+
 
   // HostListener para window:load (se dispara al cargar la página)
-  @HostListener("window:load", ["$event"])
-  onWindowLoad(event: Event) {
-    console.log("✅ La página se ha cargado completamente.");
-    // Cargar los productos después de que la página se haya cargado
-    this.cargarProductos();
-  }
+  
 
   ngOnInit() {
     // Al iniciar la carga, vaciamos el array de productos
-    this.productos = [];
-    this.isLoading = true;
 
     this.detectDevice();
     this.checkBrowserEnvironment();
@@ -102,43 +91,15 @@ export class HomeView implements OnInit {
      
   
   // Cargar los productos solo si la página no se está recargando
-  this.cargarProductos();
   
       this.detectDevice();
       this.checkBrowserEnvironment();
     }
   
    
-  cargarProductos() {
-    // Verificar si la página se está recargando o cerrando
-    if (!this.isPageReloading()) {
-      this.PRODUCTOSERVICE_.obtenerProductos().subscribe(
-        (response) => {
-          console.log("📦 Productos recibidos:", response);
-          this.productos = response;
-          // Ajustar numVisibleProducts según la cantidad de productos recibidos
-          this.numVisibleProducts =
-            this.productos.length >= 5 ? 5 : this.productos.length;
-          // Ocultar el skeleton cuando se hayan cargado los datos
-          this.isLoading = false;
-        },
-        (error) => {
-          console.error("❌ Error al cargar los productos:", error);
-          this.isLoading = false; // Ocultar el skeleton en caso de error
-        }
-      );
-    } else {
-      console.log("⏳ La página se está recargando, no se cargarán los productos.");
-      this.isLoading = true;
-      this.productos = []; // Vaciar los productos en la carga
-    }
-  }
   
-isPageReloading(): boolean {
-  // Verificar si la página se está recargando
-  return performance.navigation.type === performance.navigation.TYPE_RELOAD;
-}
-
+  
+  
   checkBrowserEnvironment() {
     if (typeof window !== "undefined") {
       const ua = navigator.userAgent;
@@ -177,19 +138,7 @@ isPageReloading(): boolean {
     return false;
   }
 
-  verDetalles(id: number) {
-    this.router.navigate(["/public/Detail/" + id]);
-  }
-
-  redirectTo(route: string): void {
-    console.log(route);
-    if (route === "Sign-in") {
-      this.router.navigate(["/auth/Sign-in"]);
-    } else {
-      console.log("click", route);
-      this.router.navigate(["/public", route]);
-    }
-  }
+  
 
   cambiarPagina(event: any) {
     const start = event.first;
@@ -197,19 +146,5 @@ isPageReloading(): boolean {
     this.productosPaginados = this.productos.slice(start, end);
   }
 
-  apartarRentar(producto: any) {
-    console.log("Producto seleccionado:", producto);
-    const body2 = {
-      id: producto._id,
-      nombre: producto.nombre,
-      precio: producto.precio,
-      imagenPrincipal: producto.imagenPrincipal,
-    };
 
-    try {
-      this.indexedDbService.guardarProducto(body2);
-    } catch (error) {
-      console.error("Error al guardar el producto:", error);
-    }
-  }
 }
