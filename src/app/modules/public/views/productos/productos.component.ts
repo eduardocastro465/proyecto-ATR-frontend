@@ -121,14 +121,13 @@ export class ProductosComponent implements OnInit {
         );
       }
       
+      isPageReloading(): boolean {
+        const navEntries = performance.getEntriesByType("navigation") as PerformanceNavigationTiming[];
+        return navEntries.length > 0 && navEntries[0].type === "reload";
+      }
+      
+      
     
-    isPageReloading(): boolean {
-      return performance.navigation.type === performance.navigation.TYPE_RELOAD
-    }
-    
-    
-   
-  
     
   
     verDetalles(id: number) {

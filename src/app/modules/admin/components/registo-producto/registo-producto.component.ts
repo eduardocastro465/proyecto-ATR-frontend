@@ -94,6 +94,41 @@ export class RegistoProductoComponent implements OnInit, OnChanges {
     }
   }
 
+
+  tallas = [
+    { label: 'XS', value: 'XS' },
+    { label: 'S', value: 'S' },
+    { label: 'M', value: 'M' },
+    { label: 'L', value: 'L' },
+    { label: 'XL', value: 'XL' },
+    { label: 'XXL', value: 'XXL' },
+    { label: 'Otro', value: 'Otro' }
+  ];
+
+  colores = [
+    { label: 'Azul', value: 'azul' },
+    { label: 'Rojo', value: 'rojo' },
+    { label: 'Verde', value: 'verde' },
+    { label: 'Negro', value: 'negro' },
+    { label: 'Blanco', value: 'blanco' },
+    { label: 'Amarillo', value: 'amarillo' },
+    { label: 'Morado', value: 'morado' }
+  ];
+
+  categorias = [
+    { label: 'Venta', value: 'venta' },
+    { label: 'Renta', value: 'renta' }
+  ];
+
+  tiposVenta = [
+    { label: 'Venta', value: 'venta' },
+    { label: 'Renta', value: 'renta' }
+  ];
+  estadoProducto = [
+    { label: 'Sí', value: true },
+    { label: 'No', value: false }
+  ];
+
   eliminarImagenPrincipal() {
     // Reiniciar el valor de la imagen principal en el formulario a vacío
     this.productoForm.patchValue({

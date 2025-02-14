@@ -15,9 +15,7 @@
     enctype="multipart/form-data"
     [formGroup]="productoForm"
   >
-    <!-- <h2>Agregar vestido</h2> -->
     <div class="image-section">
-      <!-- Imagen principal -->
       <div class="img-principal">
         <label for="imagenPrincipalInput" class="upload-button">
           {{
@@ -25,7 +23,6 @@
           }}
           imagen
         </label>
-
         <div
           *ngIf="productoForm.get('imagenPrincipal')?.value"
           class="main-image"
@@ -34,26 +31,13 @@
             [src]="productoForm.get('imagenPrincipal')?.value"
             alt="Imagen principal"
           />
-
           <div class="icons-bn">
             <i
               (click)="eliminarImagenPrincipal()"
               class="pi pi-times delete-icon"
             ></i>
           </div>
-
-          <!-- Ícono para eliminar la imagen -->
-          <!-- <button
-            type="button"
-            (click)="eliminarImagenPrincipal()"
-            class="delete-button"
-          >
-            <i class="pi pi-times"></i> -->
-          <!-- Ícono de PrimeIcons para eliminar -->
-          <!-- </button> -->
         </div>
-
-        <!-- FormControl para la imagen principal -->
         <input
           id="imagenPrincipalInput"
           type="file"
@@ -63,7 +47,6 @@
         />
       </div>
 
-      <!-- Sección para las imágenes adicionales -->
       <div class="otrasImagenes" formArrayName="otrasImagenes">
         <div
           *ngFor="let imagen of otrasImagenes.controls; let i = index"
@@ -76,7 +59,6 @@
               alt="Imagen adicional {{ i + 1 }}"
             />
           </div>
-
           <input
             accept="image/*"
             [id]="'otrasImagenesInput' + i"
@@ -90,103 +72,76 @@
                 [ngClass]="imagen.value ? 'pi pi-sync' : 'pi pi-file-import'"
               ></i>
             </label>
-
             <i (click)="eliminarImagen(i)" class="pi pi-times delete-icon"></i>
           </div>
         </div>
       </div>
 
-      <!-- Botón para agregar más imágenes -->
       <button type="button" (click)="agregarImagen()">
         Agregar más imágenes
       </button>
     </div>
 
-    <!-- Otros campos del formulario -->
-    <div class="group-input">
-      <input
-        type="text"
-        placeholder="Nombre del vestido"
-        formControlName="nombre"
-      />
-      <select formControlName="talla">
-        <option value="" disabled selected>Selecciona una talla</option>
-        <option value="XS">XS</option>
-        <option value="S">S</option>
-        <option value="M">M</option>
-        <option value="L">L</option>
-        <option value="XL">XL</option>
-        <option value="XXL">XXL</option>
-        <option value="Otro">Otro</option>
-      </select>
-
-      <input type="number" placeholder="Altura (cm)" formControlName="altura" />
-      <input
-        type="number"
-        placeholder="Cintura (cm)"
-        formControlName="cintura"
-      />
-
-      <!-- <div class="select-section"> -->
-      <!-- <div> -->
-      <!-- <label>Seleccionar color</label> -->
-      <!-- Agrega más colores si es necesario -->
-      <select formControlName="color">
-        <option value="" disabled>Selecciona un color</option>
-        <option value="azul">Azul</option>
-        <option value="rojo">Rojo</option>
-        <option value="verde">Verde</option>
-        <option value="negro">Negro</option>
-        <option value="blanco">Blanco</option>
-        <option value="amarillo">Amarillo</option>
-        <option value="morado">Morado</option>
-      </select>
-
-      <!-- </div> -->
-      <select formControlName="categoria">
-        <option value="venta">Venta</option>
-        <option value="renta">Renta</option>
-      </select>
-
-      <!-- <div>
-      </div> -->
-      <!-- <label>Categoría</label> -->
+    <div class="form-grid">
+      <div class="group-input">
+        <label>Nombre del vestido</label>
+        <p-inputText formControlName="nombre" placeholder="Nombre del vestido"></p-inputText>
+      </div>
+    
+      <div class="group-input">
+        <label>Talla</label>
+        <p-dropdown formControlName="talla" [options]="tallas" placeholder="Selecciona una talla"></p-dropdown>
+      </div>
+    
+      <div class="group-input">
+        <label>Altura (cm)</label>
+        <p-inputNumber formControlName="altura" placeholder="Altura (cm)"></p-inputNumber>
+      </div>
+    
+      <div class="group-input">
+        <label>Cintura (cm)</label>
+        <p-inputNumber formControlName="cintura" placeholder="Cintura (cm)"></p-inputNumber>
+      </div>
+    
+      <div class="group-input">
+        <label>Color</label>
+        <p-dropdown formControlName="color" [options]="colores" placeholder="Selecciona un color"></p-dropdown>
+      </div>
+    
+      <!-- <div class="group-input">
+        <label>Categoría</label>
+        <p-dropdown formControlName="categoria" [options]="categorias" placeholder="Selecciona una categoría"></p-dropdown>
+      </div>
+     -->
+      <div class="group-input">
+        <label>Textura (opcional)</label>
+        <p-inputText formControlName="textura" placeholder="Textura (opcional)"></p-inputText>
+      </div>
+    
+      <div class="group-input">
+        <label>Ingrese el precio</label>
+        <p-inputNumber formControlName="precio" placeholder="Ingrese el precio"></p-inputNumber>
+      </div>
+    
+      <div class="group-input">
+        <label>Tipo de Venta</label>
+        <p-dropdown formControlName="tipoVenta" [options]="tiposVenta" placeholder="Selecciona Tipo de Venta"></p-dropdown>
+      </div>
+    
+      <div class="group-input">
+        <label>Estado del producto</label>
+        <p-dropdown formControlName="nuevo" [options]="estadoProducto" placeholder="Es nuevo?"></p-dropdown>
+      </div>
     </div>
-
-    <!-- Campos adicionales -->
-    <div class="group-input">
-      <input
-        type="text"
-        placeholder="Textura (opcional)"
-        formControlName="textura"
-      />
-      <input
-        type="number"
-        placeholder="Ingrese el precio"
-        formControlName="precio"
-      />
-      <!-- <label>Disponible:</label> -->
-      <!-- <input type="checkbox" formControlName="disponible" /> -->
-      <!-- <label>Tipo de Venta:</label> -->
-      <select formControlName="tipoVenta">
-        <option value="" disabled>Selecciona Tipo de Venta</option>
-
-        <option>Venta</option>
-        <option>Renta</option>
-      </select>
-      <!-- <label>Estado del producto:</label> -->
-      <select formControlName="nuevo">
-        <option value="" disabled>Es nuevo?</option>
-        <option [value]="true">Sí</option>
-        <option [value]="false">No</option>
-      </select>
-    </div>
-    <!-- Opciones adicionales -->
+    
     <div>
-      <textarea
+      <label>Descripción</label>
+      <p-inputTextarea
         placeholder="Agrega la descripción"
         formControlName="descripcion"
-      ></textarea>
+        rows="5"
+        cols="30"
+      ></p-inputTextarea>
     </div>
 
     <button class="submit-btn" (click)="onAgregarProducto()">

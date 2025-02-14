@@ -11,21 +11,11 @@
     margin-bottom: 20px;
   }
 
-  .form-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* Dos columnas */
-    gap: 20px; /* Espacio entre los elementos */
-  }
-  
   .group-input {
-    display: flex;
-    flex-direction: column; /* Coloca el label encima del input */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
   }
-  
-  label {
-    margin-bottom: 5px; /* Espacio entre el label y el input */
-  }
-  
 div.otrasImagenes {
   
     display: flex;
@@ -33,7 +23,26 @@ div.otrasImagenes {
 }
   // // Inputs y Select
   // input[type="text"],
+  // input[type="number"],
+  // select {
+  //   padding: 10px;
+  //   margin: 5px 0 20px;
+  //   border: 1px solid #ccc;
+  //   border-radius: 2px;
+  //   font-size: 10px;
+  // }
 
+  textarea {
+    width: 100%;
+    resize: none;
+    height: 80px;
+  }
+
+  select {
+    appearance: none;
+    background-color: #f9f9f9;
+    padding-right: 20px;
+  }
 }
 
 // Sección de imágenes

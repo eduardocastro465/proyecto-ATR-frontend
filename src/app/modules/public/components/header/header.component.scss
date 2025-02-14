@@ -156,6 +156,23 @@ nav {
     }
   }
 }
+.logo-text {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #333;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  &:not(.visible) {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
 
 header.app-header {
   background-color: white;

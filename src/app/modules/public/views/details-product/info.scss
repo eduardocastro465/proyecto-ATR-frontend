@@ -104,6 +104,11 @@ p{
 
     background-color: #ff7f00; // Fondo anaranjado específico para renta
   }
+  &:active {
+    color: white; /* Cambia el color del texto al hacer clic */
+    background-color: #ff7f50; /* Cambia el fondo al hacer clic */
+    border: 1px solid #ff7f50; /* Mantiene el borde */
+  }
 }
 .thumbnail {
   filter: grayscale(100%); /* Filtro gris por defecto */
@@ -116,11 +121,7 @@ p{
   border: 2px solid orange; /* Borde naranja para la imagen seleccionada */
 }
 
-.add-to-cart:hover {
-  color: white;
 
-  background-color: #ff6347;
-}
 
 /* Estilos para pantallas móviles */
 @media only screen and (max-width: 768px) {
