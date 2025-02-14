@@ -64,7 +64,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
   defaultImageUrl: string =
     "https://res.cloudinary.com/dvvhnrvav/image/upload/v1730395938/images-AR/wyicw2mh3xxocscx0diz.png";
   isDarkThemeOn = signal(false);
-  
+
   darkMode = false;
   constructor(
     private indexedDbService: IndexedDbService,
@@ -73,7 +73,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
     private datosEmpresaService: DatosEmpresaService,
     private elementRef: ElementRef,
     public themeService: ThemeServiceService,
-    
+
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
@@ -93,7 +93,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
     if (changes["mostrarFormulario"]) {
       const newVluesmostrarFormulario = changes["mostrarFormulario"].currentValue;
   this.isModalVisible = newVluesmostrarFormulario; // Actualizamos el valor para cerrar el modal
-     
+
       console.log("mostrarFormulario  en listado producto cambió a:", newVluesmostrarFormulario);
     }
     if (changes["isMobile"]) {
@@ -101,10 +101,10 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     this.dressItemsSignal.set(this.dressItems); // Actualiza la señal correctamente
-    
+
     // Aquí puedes agregar lógica adicional si es necesario
   }
- 
+
 
 
   async ngOnInit() {
@@ -116,7 +116,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
     } catch (error) {
       console.error("Error al obtener productos apartados");
     }
-   
+
   }
 
 
@@ -125,13 +125,13 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
   checkInternetConnection() {
     const connectionStatus = document.getElementById('connection-status');
     const connectioneExit = document.getElementById('connection-exit');
-    if (navigator.onLine) {
-      connectionStatus!.style.display = 'none'; // Ocultar si hay conexión
-      connectioneExit!.style.display = 'block'; // Mostrar si no hay conexión
-    } else {
-      connectionStatus!.style.display = 'block'; // Mostrar si no hay conexión
-      connectioneExit!.style.display = 'none'; // Ocultar si hay conexión
-    }
+    // if (navigator.onLine) {
+    //   connectionStatus!.style.display = 'none'; // Ocultar si hay conexión
+    //   connectioneExit!.style.display = 'block'; // Mostrar si no hay conexión
+    // } else {
+    //   connectionStatus!.style.display = 'block'; // Mostrar si no hay conexión
+    //   connectioneExit!.style.display = 'none'; // Ocultar si hay conexión
+    // }
   }
   onMobileChange(isMobile: boolean) {
     // Aquí puedes poner la lógica que quieres ejecutar cuando cambia isMobile
@@ -154,11 +154,11 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
   //   );
   // }
 
-  
+
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       const nativeElement = this.elementRef.nativeElement;
-    
+
       // Inicializar Semantic UI Dropdown
       $(nativeElement).find('.ui.dropdown').dropdown();
 
@@ -166,7 +166,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
         .find(".ui.search")
         .search({
           type: "category",
-     
+
           onSelect: (result: any) => {
             // Manejar la selección del resultado aquí, si es necesario
           },
@@ -188,8 +188,8 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
     // Reemplaza con la llamada real a la API de búsqueda
     setTimeout(() => {
       this.isLoading = false;
-      this.router.navigate(['/public/search', this.searchQuery])   
-   
+      this.router.navigate(['/public/search', this.searchQuery])
+
       // Implementa tu lógica de búsqueda aquí
       console.log("Buscando:", this.searchQuery);
     }, 2000);

@@ -97,6 +97,22 @@ p{
   cursor: pointer;
   font-size: 1em;
   font-weight: bold;
+
+  &.rent {
+  color: white;
+
+    background-color: #ff7f00; // Fondo anaranjado específico para renta
+  }
+}
+.thumbnail {
+  filter: grayscale(100%); /* Filtro gris por defecto */
+  transition: filter 0.3s ease; /* Transición suave */
+}
+
+
+.thumbnail.selected {
+  filter: none; /* Sin filtro para la imagen seleccionada */
+  border: 2px solid orange; /* Borde naranja para la imagen seleccionada */
 }
 
 .add-to-cart:hover {

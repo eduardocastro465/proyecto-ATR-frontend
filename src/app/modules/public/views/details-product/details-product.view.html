@@ -8,18 +8,43 @@
             [src]="image"
             alt="Thumbnail"
             (click)="changeMainImage(image)"
+            [class.selected]="image == Detalles.imagenPrincipal"
             class="thumbnail"
           />
         </ng-container>
       </div>
+
       <div class="product-images">
         <!-- <ng-container *ngIf="Detalles"> -->
-        <img
+          <img
+          #mainImage
           *ngIf="Detalles"
           [src]="Detalles.imagenPrincipal"
           alt="Product Main Image"
           class="main-image"
+          (mousemove)="applyZoomEffect($event)"
+          (mouseleave)="resetZoomEffect()"
         />
+        
+        <!-- <img zoom 
+        [src]="Detalles.imagenPrincipal" alt="Image" class="main-image" /> -->
+
+        <!-- Asegúrate de que sea una imagen de alta resolución -->
+        <!-- <lib-ngx-image-zoom
+      *ngIf="Detalles"
+      [thumbImage]="Detalles.imagenPrincipal"
+      [fullImage]="Detalles.imagenPrincipal"
+      [magnification]="2"  
+      [enableScrollZoom]="true"
+      [enableLens]="true"
+      [lensWidth]="140"
+      [lensHeight]="140"
+      alt="Product Main Image"
+          class="main-image"
+
+    
+    ></lib-ngx-image-zoom> -->
+
         <!-- </ng-container> -->
       </div>
     </div>
@@ -67,32 +92,20 @@
       </div>
       <!-- </div> -->
       <p class="price">${{ Detalles.precio }}</p>
-      <!-- <h2 class="description-title">Descripción</h2> -->
-      <!-- <p class="description">{{ Detalles.descripcion | slice:0:100 }}...</p> -->
-
       <!-- Opciones del Detalles -->
       <div class="product-options">
         <!-- Talla -->
         <div class="product-detail">
-          <p>Talla:</p>
-          <span class="circle-option">{{ Detalles.tallaDisponible }}</span>
+          <p>Talla:<span>{{ Detalles.tallaDisponible }}</span></p>
         </div>
-
-        <!-- 
-        <!-- Color -->
-        <div class="product-detail">
-          <p>Color:</p>
-
-          <!-- Color plata -->
-        </div>
-        -->
-
         <!-- Estado (Nuevo o para Renta) -->
         <div class="product-detail">
-          <p>Estado:</p>
-          <span class="circle-option"
-            >{{ Detalles.estado.disponible ? 'Nuevo' : 'Para Renta' }}</span
-          >
+          <p>
+            Estado:
+            <span
+              >{{ Detalles.estado.disponible ? 'Nuevo' : 'Para Renta' }}</span
+            >
+          </p>
         </div>
 
         <!-- Cantidad -->
@@ -101,9 +114,18 @@
           <span class="circle-option">1</span>
         </div>
 
+        <!-- Botón para agregar al carrito (mostrar solo cuando la categoría sea 'renta') -->
+        <button
+          *ngIf="Detalles.categoria == 'renta'"
+          (click)="apartarRentar(Detalles)"
+          class="add-to-cart rent"
+        >
+          Me lo quiero probar
+        </button>
+
         <!-- Botón para agregar al carrito -->
         <button (click)="apartarRentar(Detalles)" class="add-to-cart">
-          Me lo quiero probar
+          Agregar a carrito
         </button>
 
         <!-- Ícono de compartir enlace -->
@@ -117,7 +139,6 @@
     </div>
   </div>
   <div class="loading-container" *ngIf="!Detalles && isLoading">
-   
     <!-- Contenedor de imágenes -->
     <div class="skeleton-image-section">
       <!-- Columna con 3 tarjetas mini -->
@@ -169,28 +190,30 @@
       </div>
     </div>
   </div>
- <div *ngIf="Detalles && !isLoading">
-  <h2 class="description-title">Descripción</h2>
-  <p class="description-summary">{{ Detalles.descripcion }}</p>
+  <div *ngIf="Detalles && !isLoading">
+    <h2 class="description-title">Descripción</h2>
+    <p class="description-summary">{{ Detalles.descripcion }}</p>
 
-  <h2 class="carousel-title">Accesorios incluidos en el look</h2>
-  <div class="carousel">
-    <div class="carousel-item" *ngFor="let Detalles of productos">
-      <img [src]="Detalles.imagen" alt="{{ Detalles.nombre }}" />
-      <h3>{{ Detalles.nombre }}</h3>
+    <h2 class="carousel-title">Accesorios incluidos en el look</h2>
+    <div class="carousel">
+      <div class="carousel-item" *ngFor="let Detalles of productos">
+        <img [src]="Detalles.imagen" alt="{{ Detalles.nombre }}" />
+        <h3>{{ Detalles.nombre }}</h3>
+      </div>
     </div>
-  </div>
 
-  <h2 class="related-title">Productos Relacionados</h2>
-  <div class="related-products">
-    <div class="related-product" *ngFor="let related of productosRelacionados">
-      <img [src]="related.imagen" alt="{{ related.nombre }}" />
-      <h3>{{ related.nombre }}</h3>
-      <p class="price">${{ related.precio }}</p>
-      <!-- <button class="btn-view">Ver Detalles</button> -->
+    <h2 class="related-title">Productos Relacionados</h2>
+    <div class="related-products">
+      <div
+        class="related-product"
+        *ngFor="let related of productosRelacionados"
+      >
+        <img [src]="related.imagen" alt="{{ related.nombre }}" />
+        <h3>{{ related.nombre }}</h3>
+        <p class="price">${{ related.precio }}</p>
+        <!-- <button class="btn-view">Ver Detalles</button> -->
+      </div>
     </div>
-  </div>
-  
   </div>
   <!-- </div> -->
 </div>

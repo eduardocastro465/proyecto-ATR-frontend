@@ -21,7 +21,7 @@ export class ProductoService {
     return this.http.post<Producto>(`${environment.api}/producto/`,producto);
   }
 
-  editarProducto(id: string, producto: Producto): Observable<Producto> {
+  editarProducto(id: string, producto:FormData): Observable<Producto> {
     return this.http.put<Producto>(`${environment.api}/producto/editarProducto/${id}`, producto);
   }
 

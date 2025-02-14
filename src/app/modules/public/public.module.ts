@@ -65,10 +65,12 @@ const MATERIALS =[PasswordModule,
   InputTextModule,FormsModule,InputGroupModule,AvatarModule,AvatarGroupModule,PaginatorModule,OverlayPanelModule,TieredMenuModule,SkeletonModule,CardModule,TabMenuModule,ButtonModule,DialogModule,SidebarModule,CheckboxModule,MenuModule]
 const COMPONENTS =[FooterComponent,HeaderComponent]
 const VIEWS=[HomeView,PublicComponent,PerfilView, AcercaDeView,DetailsProductView,LoginModalComponent]
+
+import { NgxImageZoomModule } from 'ngx-image-zoom';
 @NgModule({
   declarations: [VIEWS,COMPONENTS, CarritoView, TagComponent, PoliticasComponent, TerminosComponent, CitasProbadorView, ResultsComponent, HeroImgComponent, FigureComponent, BreadcrumbComponent, NotFoundComponent, Error500Component, SidevarComponent, CargaComponent, VideosComponent, ProductosComponent],
   exports:[COMPONENTS],
-  imports: [GalleriaModule,CarouselModule,
+  imports: [NgxImageZoomModule,GalleriaModule,CarouselModule,
     CommonModule,ReactiveFormsModule,FormsModule,
     PublicRoutingModule,HttpClientModule, ...MATERIALS,
   ], schemas: [CUSTOM_ELEMENTS_SCHEMA],

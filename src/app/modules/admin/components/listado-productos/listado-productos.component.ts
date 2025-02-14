@@ -24,7 +24,7 @@ export class ListadoProductosComponent implements OnInit,OnChanges {
   filterText: string = '';
   productForm!: FormGroup;
   idProducto!: string;
-  
+  productoEditar: any | null = null; // Guardamos el producto que se va a editar
   
 
 
@@ -133,7 +133,8 @@ export class ListadoProductosComponent implements OnInit,OnChanges {
 
 
   editProduct(id: any) {
-    // this.visible = true;
+    this.productoEditar= id; // Guardamos el producto que se va a editar
+    this.mostrarModalAddVestido = true; // Mostrar el modal
     // this.idCliente = this.router.snapshot.params["id"];
     // if (id !== null) {
     //   console.log("actualizar....");

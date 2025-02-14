@@ -1,31 +1,25 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { ProductoService } from '../../../../shared/services/producto.service';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from "@angular/core";
+import { FormBuilder, FormGroup, FormArray, Validators } from "@angular/forms";
+import { ProductoService } from "../../../../shared/services/producto.service";
 
 @Component({
-  selector: 'app-registo-producto',
-  templateUrl: './registo-producto.component.html',
-  styleUrls: ['./registo-producto.component.scss'],
+  selector: "app-registo-producto",
+  templateUrl: "./registo-producto.component.html",
+  styleUrls: ["./registo-producto.component.scss"],
 })
-export class RegistoProductoComponent implements OnInit,OnChanges {
-  @Input() mostrarModalAddVestido!:boolean;
+export class RegistoProductoComponent implements OnInit, OnChanges {
+  @Input() mostrarModalAddVestido!: boolean;
   @Output() mostrarFormulario = new EventEmitter<boolean>(); // Evento para cerrar el modal
+  @Input() productoEditar: any | null = null; // Recibe el producto a editar
 
-  cerrar() {
-    console.log("cerrado")
-    this.mostrarFormulario.emit(false); // Emitimos false para cerrar el modal
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes["mostrarModalAddVestido"]) {
-      const newVluesmostrarFormulario = changes["mostrarModalAddVestido"].currentValue;
-      this.mostrarModalAddVestido = newVluesmostrarFormulario; // Actualizamos el valor para cerrar el modal
-    
-      console.log("mostrarFormulario cambió a:", newVluesmostrarFormulario);
-    }
-
-    // Aquí puedes agregar lógica adicional si es necesario
-  }
   productoForm: FormGroup;
 
   imagenPrincipal: File | null = null; // Inicializa con null
@@ -36,27 +30,144 @@ export class RegistoProductoComponent implements OnInit,OnChanges {
     private productoService: ProductoService
   ) {
     this.productoForm = this.fb.group({
-      nombre: ['', [Validators.required]],
-      imagenPrincipal: [''], // Aquí sigue siendo un string
-      otrasImagenes: this.fb.array([]), // Inicializa el FormArray
-      categoria: ['venta', [Validators.required]],
-      color: ['', [Validators.required]],
-      textura: [''],
-      talla: ['', [Validators.required]],
-      altura: ['', [Validators.required, Validators.min(30)]],
-      cintura: ['', [Validators.required, Validators.min(20)]],
+      nombre: ["", [Validators.required]],
+      imagenPrincipal: [""],
+      otrasImagenes: this.fb.array([]),
+      categoria: ["venta", [Validators.required]],
+      color: ["", [Validators.required]],
+      textura: [""],
+      talla: ["", [Validators.required]],
+      altura: ["", [Validators.required, Validators.min(30)]],
+      cintura: ["", [Validators.required, Validators.min(20)]],
       precio: [0, [Validators.required, Validators.min(0)]],
       disponible: [true],
-      tipoVenta: ['Venta', [Validators.required]],
+      tipoVenta: ["Venta", [Validators.required]],
       nuevo: [true],
-      descripcion: [''],
+      descripcion: [""],
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes["mostrarModalAddVestido"]) {
+      const newValues = changes["mostrarModalAddVestido"].currentValue;
+      this.mostrarModalAddVestido = newValues;
+    }
+
+    if (changes["productoEditar"] && this.productoEditar) {
+      this.productoService.obtenerDetalleProductoById(this.productoEditar).subscribe(
+        (producto) => {
+          alert("llego id")
+          this.cargarProductoEnFormulario(producto);
+          // this.cargarProductoEnFormulario(this.productoEditar);
+        },
+        (error) => {
+          console.error('Error al cargar el producto:', error);
+        }
+      );
+    }
   }
 
   ngOnInit(): void {}
 
+  cargarProductoEnFormulario(producto: any) {
+    this.productoForm.patchValue({
+      nombre: producto.nombre,
+      imagenPrincipal: producto.imagenPrincipal || "",
+      categoria: producto.categoria,
+      color: producto.color,
+      textura: producto.textura,
+      talla: producto.talla,
+      altura: producto.altura,
+      cintura: producto.cintura,
+      precio: producto.precio,
+      disponible: producto.disponible,
+      tipoVenta: producto.tipoVenta,
+      nuevo: producto.nuevo,
+      descripcion: producto.descripcion,
+    });
+
+    this.otrasImagenes.clear();
+    if (producto.otrasImagenes && producto.otrasImagenes.length > 0) {
+      producto.otrasImagenes.forEach((img: string) => {
+        this.otrasImagenes.push(this.fb.control(img));
+      });
+    }
+  }
+
+  eliminarImagenPrincipal() {
+    // Reiniciar el valor de la imagen principal en el formulario a vacío
+    this.productoForm.patchValue({
+      imagenPrincipal: "",
+    });
+
+    // También reiniciar la variable de la imagen principal
+    this.imagenPrincipal = null; // Restablece la imagen seleccionada a null
+
+    // Puedes agregar aquí cualquier otra lógica adicional que necesites, como borrar el archivo de la imagen si es necesario
+    console.log("Imagen principal eliminada");
+  }
+
   get otrasImagenes(): FormArray {
-    return this.productoForm.get('otrasImagenes') as FormArray;
+    return this.productoForm.get("otrasImagenes") as FormArray;
+  }
+
+  cerrar() {
+    this.mostrarFormulario.emit(false); // Emitimos false para cerrar el modal
+  }
+
+  // Lógica común para agregar y editar productos
+  onAgregarProducto() {
+    if (this.productoForm.invalid) {
+      console.error("Formulario inválido");
+      return;
+    }
+
+    const formData = new FormData();
+    Object.keys(this.productoForm.value).forEach((key) => {
+      formData.append(key, this.productoForm.get(key)?.value);
+    });
+
+    // Verificar si hay imágenes
+    if (!this.imagenPrincipal) {
+      console.error(
+        "No se ha seleccionado ningún archivo para la imagen principal."
+      );
+      return;
+    }
+    formData.append("imagenPrincipal", this.imagenPrincipal);
+
+    if (this.imagenesAdicionales && this.imagenesAdicionales.length > 0) {
+      this.imagenesAdicionales.forEach((imagen) => {
+        formData.append("otrasImagenes", imagen);
+      });
+    }
+
+    // Dependiendo de si estamos editando o agregando, enviamos la solicitud
+    if (this.productoEditar) {
+      // Lógica de edición
+      this.productoService
+        .editarProducto(this.productoEditar, formData)
+        .subscribe(
+          (response) => {
+            console.log("Producto editado exitosamente:", response);
+            this.cerrar();
+          },
+          (err) => {
+            console.error("Error al editar el producto:", err);
+          }
+        );
+    } else {
+      // Lógica de agregar
+      this.productoService.crearProducto(formData).subscribe(
+        (response) => {
+          console.log("Producto creado exitosamente:", response);
+          this.cerrar();
+        },
+        (err) => {
+          console.error("Error al crear el producto:", err);
+        }
+      );
+    }
   }
 
   onImagePrincipalChange(event: Event) {
@@ -65,35 +176,6 @@ export class RegistoProductoComponent implements OnInit,OnChanges {
       const file = input.files[0];
       const reader = new FileReader();
       reader.onload = () => {
-        // Convertir a string y asignar
-        this.productoForm.patchValue({
-          imagenPrincipal: reader.result as string,
-        });
-      };
-      reader.readAsDataURL(file);
-    }
-  }
-
-  // Método para eliminar la imagen principal
-  eliminarImagenPrincipal() {
-    this.productoForm.get('imagenPrincipal')?.setValue(''); // Limpia el valor del control
-  }
-
-  // Método para eliminar una imagen del FormArray
-  eliminarImagen(index: number) {
-    this.otrasImagenes.removeAt(index);
-  }
-  onFileSelected(event: Event): void {
-    const inputElement = event.target as HTMLInputElement;
-    if (inputElement.files && inputElement.files.length > 0) {
-      this.imagenPrincipal = inputElement.files[0];
-      const file = inputElement.files[0];
-
-      console.log(this.imagenPrincipal);
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        // Convertir a string y asignar
         this.productoForm.patchValue({
           imagenPrincipal: reader.result as string,
         });
@@ -103,100 +185,39 @@ export class RegistoProductoComponent implements OnInit,OnChanges {
   }
 
   agregarImagen() {
-    this.otrasImagenes.push(this.fb.control('')); // Añade un control vacío al FormArray
-  } // Maneja la selección de imágenes adicionales
+    this.otrasImagenes.push(this.fb.control(""));
+  }
+
+  eliminarImagen(index: number) {
+    this.otrasImagenes.removeAt(index);
+  }
+
+  onFileSelected(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    if (inputElement.files && inputElement.files.length > 0) {
+      this.imagenPrincipal = inputElement.files[0];
+      const file = inputElement.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.productoForm.patchValue({
+          imagenPrincipal: reader.result as string,
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   otrasImagenesChange(event: Event, index: number): void {
     const inputElement = event.target as HTMLInputElement;
     if (inputElement.files && inputElement.files.length > 0) {
       const file = inputElement.files[0];
-
-      // Guarda el archivo en el arreglo
       this.imagenesAdicionales[index] = file;
 
-      console.log(
-        `Nombre del archivo seleccionado para imagen adicional ${index + 1}: ${
-          file.name
-        }`
-      );
-
-      // Crea un FileReader para leer el contenido del archivo
       const reader = new FileReader();
       reader.onload = () => {
-        this.otrasImagenes.at(index).setValue(reader.result as string); // Almacena la URL en el FormArray
-
-        // console.log(`Preview de la imagen ${index + 1}:`, this.imagenesAdicionalesPreview[index]);
+        this.otrasImagenes.at(index).setValue(reader.result as string);
       };
       reader.readAsDataURL(file);
-
-      // Mostrar el contenido actual del arreglo imagenesAdicionales
-      console.log(
-        'Contenido actual de imagenesAdicionales:',
-        this.imagenesAdicionales
-      );
     }
-  }
-  // } // Método para agregar el producto
-  onAgregarProducto() {
-    const productoNombre = this.productoForm.get('nombre')?.value;
-    const productoCategoria = this.productoForm.get('categoria')?.value;
-    const productoPrecio = this.productoForm.get('precio')?.value;
-    const talla = this.productoForm.get('talla')?.value;
-    const altura = this.productoForm.get('altura')?.value;
-    const cintura = this.productoForm.get('cintura')?.value;
-    const productoDescripcion = this.productoForm.get('descripcion')?.value;
-    const nuevo = this.productoForm.get('nuevo')?.value;
-
-    // Verificar si se ha seleccionado una imagen principal
-    if (!this.imagenPrincipal) {
-      console.error(
-        'No se ha seleccionado ningún archivo para la imagen principal.'
-      );
-      return;
-    } else {
-      console.log('Imagen principal seleccionada:', this.imagenPrincipal);
-    }
-
-    // Crear un objeto FormData y agregar los campos necesarios
-    const formData = new FormData();
-    formData.append('nombre', productoNombre);
-    formData.append('categoria', productoCategoria);
-    formData.append('precio', productoPrecio);
-    formData.append('talla	', talla);
-    formData.append('altura', altura);
-    formData.append('cintura', cintura);
-    formData.append('descripcion', productoDescripcion);
-    formData.append('nuevo', nuevo);
-
-    // Agregar la imagen principal al FormData
-    formData.append('imagenPrincipal', this.imagenPrincipal); // El nombre debe coincidir con el esperado en el backend
-
-    // Verificar y agregar las imágenes adicionales al FormData
-    if (this.imagenesAdicionales && this.imagenesAdicionales.length > 0) {
-      this.imagenesAdicionales.forEach((imagen, index) => {
-        formData.append(`otrasImagenes`, imagen); // Ajusta el nombre según lo que el backend espera
-      });
-    }
-
-    // Mostrar el contenido de FormData (solo para depuración; los archivos no se imprimen directamente)
-    console.log('Contenido del FormData:');
-    formData.forEach((value, key) => {
-      if (value instanceof File) {
-        console.log(`${key}: Archivo - ${value.name}`);
-      } else {
-        console.log(`${key}:`, value);
-      }
-    });
-
-    // Enviar el FormData al servicio del backend
-    this.productoService.crearProducto(formData).subscribe(
-      (response) => {
-        this.cerrar();
-        console.log('Producto creado exitosamente:', response);
-      },
-      (err) => {
-        console.error('Error al crear el producto:', err);
-        // Swal.fire('Error', 'Hubo un error al agregar el producto.', 'error');
-      }
-    );
   }
 }

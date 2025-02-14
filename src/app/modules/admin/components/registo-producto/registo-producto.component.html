@@ -6,7 +6,6 @@
   [(visible)]="mostrarModalAddVestido"
   (onHide)="cerrar()"
 >
-
   <ng-template pTemplate="header">
     <h2>Agregar Vestido</h2>
   </ng-template>
@@ -19,8 +18,8 @@
     <!-- <h2>Agregar vestido</h2> -->
     <div class="image-section">
       <!-- Imagen principal -->
-         <div class="img-principal">
-         <label for="imagenPrincipalInput" class="upload-button">
+      <div class="img-principal">
+        <label for="imagenPrincipalInput" class="upload-button">
           {{
             productoForm.get("imagenPrincipal")?.value ? "Cambiar" : "Cargar"
           }}
@@ -36,13 +35,12 @@
             alt="Imagen principal"
           />
 
-
-          <div  class="icons-bn">
-
-
-            <i (click)="eliminarImagenPrincipal()" class="pi pi-times delete-icon"></i>
+          <div class="icons-bn">
+            <i
+              (click)="eliminarImagenPrincipal()"
+              class="pi pi-times delete-icon"
+            ></i>
           </div>
-
 
           <!-- Ícono para eliminar la imagen -->
           <!-- <button
@@ -51,7 +49,7 @@
             class="delete-button"
           >
             <i class="pi pi-times"></i> -->
-            <!-- Ícono de PrimeIcons para eliminar -->
+          <!-- Ícono de PrimeIcons para eliminar -->
           <!-- </button> -->
         </div>
 
@@ -86,18 +84,17 @@
             (change)="otrasImagenesChange($event, i)"
             hidden
           />
-<div  class="icons-bn">
+          <div class="icons-bn">
+            <label [for]="'otrasImagenesInput' + i" class="upload-button">
+              <i
+                [ngClass]="imagen.value ? 'pi pi-sync' : 'pi pi-file-import'"
+              ></i>
+            </label>
 
-  <label [for]="'otrasImagenesInput' + i" class="upload-button">
-    <i [ngClass]="imagen.value ? 'pi pi-sync' : 'pi pi-file-import'"></i>
-  </label>
-
-  <i (click)="eliminarImagen(i)" class="pi pi-times delete-icon"></i>
-</div>
-
+            <i (click)="eliminarImagen(i)" class="pi pi-times delete-icon"></i>
+          </div>
         </div>
       </div>
-
 
       <!-- Botón para agregar más imágenes -->
       <button type="button" (click)="agregarImagen()">
@@ -122,11 +119,13 @@
         <option value="XXL">XXL</option>
         <option value="Otro">Otro</option>
       </select>
-      
-      
+
       <input type="number" placeholder="Altura (cm)" formControlName="altura" />
-      <input type="number" placeholder="Cintura (cm)" formControlName="cintura" />
-      
+      <input
+        type="number"
+        placeholder="Cintura (cm)"
+        formControlName="cintura"
+      />
 
       <!-- <div class="select-section"> -->
       <!-- <div> -->
@@ -142,22 +141,20 @@
         <option value="amarillo">Amarillo</option>
         <option value="morado">Morado</option>
       </select>
-      
+
       <!-- </div> -->
       <select formControlName="categoria">
         <option value="venta">Venta</option>
         <option value="renta">Renta</option>
       </select>
-      
-        <!-- <div>
+
+      <!-- <div>
       </div> -->
-        <!-- <label>Categoría</label> -->
-       
+      <!-- <label>Categoría</label> -->
     </div>
 
     <!-- Campos adicionales -->
     <div class="group-input">
-
       <input
         type="text"
         placeholder="Textura (opcional)"
@@ -183,7 +180,6 @@
         <option [value]="true">Sí</option>
         <option [value]="false">No</option>
       </select>
-      
     </div>
     <!-- Opciones adicionales -->
     <div>
@@ -191,7 +187,6 @@
         placeholder="Agrega la descripción"
         formControlName="descripcion"
       ></textarea>
-
     </div>
 
     <button class="submit-btn" (click)="onAgregarProducto()">

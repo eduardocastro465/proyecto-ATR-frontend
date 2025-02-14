@@ -5,25 +5,42 @@
   </p> -->
 
   <div class="content">
-    <!-- Left Column: Dress Summary -->
-    <div class="summary">
-      <h2>Resumen de probador</h2>
-      <div class="dress-item" *ngFor="let item of dressItems">
-        <img [src]="item.imagenPrincipal" [alt]="item.nombre" />
-        <div class="details">
-          <h5>{{ item.nombre }}</h5>
-          <!-- <p>Color: {{ item.color }}</p> -->
-          <!-- <p>Talla: {{ item.size }}</p> -->
-          <p>Precio: ${{ item.precio }}</p>
-        </div>
-        <button class="delete-btn" (click)="deleteDressItem(item.id)">
-          <i class="pi pi-trash" style="color: red;"></i> <!-- Ícono de basura -->
-          Eliminar
-        </button>
+  <!-- Left Column: Dress Summary -->
+<div class="summary">
+  <div class="ui top attached tabular menu">
+    <a class="item active" data-tab="renta">Renta</a>
+    <a class="item" data-tab="venta">Venta</a>
+  </div>
 
+  <div class="ui bottom attached tab segment active" data-tab="renta">
+    <div class="dress-item" *ngFor="let item of productosRenta">
+      <img [src]="item.imagenPrincipal" [alt]="item.nombre" />
+      <div class="details">
+        <h5>{{ item.nombre }}</h5>
+        <p>Precio: ${{ item.precio }}</p>
       </div>
-      <!-- <button class="add-dress-btn" (click)="addDressItem()">Agregar otro vestido</button> -->
+      <button class="delete-btn" (click)="deleteDressItem(item.id)">
+        <i class="pi pi-trash" style="color: red;"></i> <!-- Ícono de basura -->
+        Eliminar
+      </button>
     </div>
+  </div>
+
+  <div class="ui bottom attached tab segment" data-tab="venta">
+    <div class="dress-item" *ngFor="let item of productosVenta">
+      <img [src]="item.imagenPrincipal" [alt]="item.nombre" />
+      <div class="details">
+        <h5>{{ item.nombre }}</h5>
+        <p>Precio: ${{ item.precio }}</p>
+      </div>
+      <button class="delete-btn" (click)="deleteDressItem(item.id)">
+        <i class="pi pi-trash" style="color: red;"></i> <!-- Ícono de basura -->
+        Eliminar
+      </button>
+    </div>
+  </div>
+</div>
+
 
     <!-- Right Column: User Data -->
     <div class="user-data">

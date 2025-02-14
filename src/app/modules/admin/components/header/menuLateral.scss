@@ -8,7 +8,7 @@ section.seccion-vista {
 
 /* Cuando el cuerpo está en estado colapsado, modificamos el padding */
 body.collapsed-padding main {
-  margin-left: 7%;  /* Cambia este valor según tus necesidades */
+  margin-left: 7%; /* Cambia este valor según tus necesidades */
 }
 
 /* Si quieres una animación suave */
@@ -30,7 +30,7 @@ body.collapsed-padding main {
 
   // box-shadow: 0 0 3px #0000001a;
   border-right: 1px solid #e0ebebf7;
- 
+
   position: fixed;
   top: 40px;
   left: 0;
@@ -108,7 +108,7 @@ body.collapsed-padding main {
 
   ul {
     list-style: none;
-    padding: 0;
+    padding: 10px;
     width: 100%;
     // margin: 0;
     &::-webkit-scrollbar {
@@ -123,22 +123,28 @@ body.collapsed-padding main {
       background-color: darkgrey;
     }
 
-   
-
     // scrollbar-width: thin;
     li {
       // width: 100%;
       margin-bottom: 10px;
       border-radius: 5px;
+      padding: 5px 5px;
+      // border: dashed 1px;
+      transition: border-bottom 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 
+      &:hover {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
       a {
+        // border: darkgrey dashed 1px;
+
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         // letter-spacing: 1.5px;
         text-decoration: none;
         color: #22262b !important;
-        padding: 10px 10px;
+        padding: 7px 7px;
         display: flex;
         cursor: pointer;
         // color: #2b2e31;
@@ -146,7 +152,7 @@ body.collapsed-padding main {
         // font-family: Arial, Helvetica, sans-serif;
         // font-family: "Poppins",
         //     sans-serif;
-        border-radius: 4px;
+        border-radius: 5px;
         // transition: transform 0.3s;
         // transition: transform 0.3s, box-shadow 0.3s, opacity 0.3s ease;
         opacity: 0.9;
@@ -161,7 +167,7 @@ body.collapsed-padding main {
         // }
 
         &:hover {
-          background-color: #efe4e4;
+          // background-color: #efe4e4;
           opacity: 1;
           // transform: scale(0.9);
           // text-decoration-line: underline;
@@ -208,7 +214,7 @@ body.collapsed-padding main {
       .submenu {
         list-style: none;
         padding: 0 0 0 20px;
-        
+
         li {
           // background-color: #a4bfff;
           margin-bottom: 0;
@@ -229,9 +235,10 @@ body.collapsed-padding main {
   }
 
   .m-tree__itemContent__selected {
-        background: rgb(240, 252, 255);
+    background: rgb(240, 252, 255);
     color: #6b7efa !important;
     font-weight: 700;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
     // color: #28b6b1 !important;
   }
@@ -266,7 +273,6 @@ body.collapsed-padding main {
   left: 0;
   z-index: 1;
 }
-
 
 .collapse-icon {
   text-align: center;

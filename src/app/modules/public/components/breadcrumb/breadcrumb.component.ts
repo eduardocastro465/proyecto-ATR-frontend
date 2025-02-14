@@ -13,7 +13,7 @@ interface MenuItem {
   styles: [
     `
       .ui.breadcrumb {
-        margin-left: 50px;
+        margin-left: 11%;
 
         .section {
           &.active {

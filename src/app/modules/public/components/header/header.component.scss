@@ -1,4 +1,3 @@
-
 nav {
   padding: 0 50px;
   width: 100%;
@@ -11,29 +10,29 @@ nav {
 
   .pi {
     font-size: 14px; // Adjust size of the calendar icon
-    color: #555;     // Icon color
+    color: #555; // Icon color
   }
 
   .counter-badge {
     position: absolute;
-    top: -5px;       // Position the badge at the top-right corner
+    top: -5px; // Position the badge at the top-right corner
     right: -5px;
     background-color: #ff5722; // Badge background color
-    color: #fff;              // Badge text color
+    color: #fff; // Badge text color
     font-size: 8px;
     width: 102%;
-    height: 16px;      // Text size
+    height: 16px; // Text size
     font-weight: bold;
-    padding: 2px 6px;         // Padding around the text
-    border-radius: 50%;       // Make it circular
+    padding: 2px 6px; // Padding around the text
+    border-radius: 50%; // Make it circular
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); // Optional shadow for better visibility
-    display: flex;            // Center the text vertically and horizontally
+    display: flex; // Center the text vertically and horizontally
     justify-content: center;
     align-items: center;
   }
 }
 
-#connection-status{
+#connection-status {
   width: 100%;
   height: 15px;
   background: rgb(255, 37, 37); // Fondo rojo para indicar error
@@ -71,6 +70,8 @@ nav {
 /* // marque */
 .marquee-container {
   width: 100%;
+  display: none;
+
   height: 20px;
   // background: #FFAA80;
   // background: #EE66A6;
@@ -129,7 +130,7 @@ nav {
 .nav-one {
   // display: none;
   // background:#f2ede8;
-  background:#f8f5f2;
+  background: #f8f5f2;
   // background:#f2ede8;
 
   // background: var(--style-navbar-second);
@@ -138,6 +139,7 @@ nav {
   // display: none;
   color: var(--text-style-color);
   height: 20px;
+  display: none;
   .right > div {
     cursor: pointer;
     // border: dashed red;
@@ -156,13 +158,7 @@ nav {
 }
 
 header.app-header {
-  // box-shadow: 0px 0px 10px 10px rgb(255, 244, 230);
-
-  // border-radius: 5px;
   background-color: white;
-  // background-color: #f8f5f2;
-  // background-color: #f8f5f2;
-  // border: 1px solid #ebe3db;
   box-shadow: 0 4px 8px #fff9f39a;
   width: 100%;
 }
@@ -186,22 +182,9 @@ span {
 .navbar-second {
   display: flex;
   justify-content: left;
-  // border: dashed red;
   border-bottom: 1px solid #faf7f7f0;
-  // border: solid 1px #faf7f7;
-  // border: var(--color-brd) solid 1px;
-
-  // background-color: var(--style-navbar-second);
   background-color: white;
-  
-    // top: -60px; /* Inicialmente oculta */
-    transition: transform 0.3s ease, background-color 0.3s ease;
-    /* Inicialmente oculta la barra */
-  // transform: translateY(5%);
-
-  // &.sticky {
-  //   transform: translateY(-5); /* Se desliza suavemente hacia abajo */
-  // }
+  transition: transform 0.3s ease, background-color 0.3s ease;
   height: 50px;
   position: sticky;
   top: 0;
@@ -215,8 +198,6 @@ span {
 li {
   list-style: none;
 }
-
-
 
 p-sidebar {
   .menu-content {
@@ -246,8 +227,6 @@ p-sidebar {
   }
 }
 
-
-
 /* ✅ Mantiene el estilo del header sticky */
 .sticky {
   top: 0;
@@ -260,7 +239,6 @@ p-sidebar {
   transition: background-color 0.5s ease, box-shadow 0.5s ease;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); // Sombra sutil al hacer scroll
 
-
   // transform: translateY(60px); /* Aparece suavemente */
 }
 
@@ -270,7 +248,7 @@ p-sidebar {
   display: flex;
   align-items: center;
   padding: 10px 20px;
-  
+
   a {
     display: flex;
     align-items: center;
@@ -295,7 +273,6 @@ p-sidebar {
   }
 }
 
-
 :host ::ng-deep .content-all {
   padding-top: 40px;
 }
@@ -305,14 +282,14 @@ p-sidebar {
 }
 .nav-menu li {
   a {
-    font-family: Montserrat,sans-serif;
+    font-family: Montserrat, sans-serif;
     // font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     text-decoration: none;
     font-size: 14px;
     padding: 10px 20px;
     border-radius: 50px;
     transition: background-color 0.3s ease;
-    color:#3c3c3c;
+    color: #3c3c3c;
     cursor: pointer;
     // font-weight: 900;
     &:hover {
@@ -333,41 +310,14 @@ p-sidebar {
 .nav-accion li {
   color: var(--color-text);
   transition: transform 0.3s ease;
-
   cursor: pointer;
   margin-right: 30px;
-  // &:hover i {
-  //   color: #007bff;
-  //   transform: scale(1.2);
-  // }
 }
 
 .nav-icon {
   position: relative;
   display: inline-block;
 }
-
-// .muestra-opciones-user {
-//   position: fixed;
-//   top: 100px; /* Valor predeterminado sin scroll */
-//   left: auto;
-//   right: 10px;
-//   font-weight: bold;
-//   background-color: var(--blur-bg);
-//   border: 1px solid #ccc;
-//   border-radius: 5px;
-//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-//   padding: 20px;
-//   z-index: 1000;
-//   list-style: none;
-//   margin: 0;
-//   width: max-content;
-// }
-
-// /* Cambia el top a 60px cuando haya scroll */
-// .app-header.scrolled .muestra-opciones-user {
-//   top: 60px;
-// }
 
 .muestra-opciones-user li {
   padding: 5px;
@@ -397,7 +347,6 @@ p-sidebar {
 // }
 
 @media (max-width: 600px) {
-
   .sticky {
     position: fixed !important;
     top: 0;
@@ -497,7 +446,6 @@ p-sidebar {
 // width: 202%;
 // border: dashed;
 // }
-
 
 .search-btn {
   background-color: #555 !important;
