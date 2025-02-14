@@ -109,22 +109,38 @@ export class ProductosComponent implements OnInit {
         this.isLoading = true; // Mostrar el skeleton al cargar
         this.PRODUCTOSERVICE_.obtenerProductos().subscribe(
           (response) => {
-            console.log("📦 Productos recibidos:", response);
+            // console.log("📦 Productos recibidos:");
             this.productos = response;
             this.numVisibleProducts = Math.min(5, this.productos.length);
             this.isLoading = false; // Ocultar el skeleton
           },
           (error) => {
-            console.error("❌ Error al cargar los productos:", error);
+            console.error("❌ Error al cargar los productos:");
             this.isLoading = false; // Ocultar el skeleton en caso de error
           }
         );
       }
-      
       isPageReloading(): boolean {
-        const navEntries = performance.getEntriesByType("navigation") as PerformanceNavigationTiming[];
-        return navEntries.length > 0 && navEntries[0].type === "reload";
+        if (typeof window === "undefined" || typeof performance === "undefined") {
+          console.warn("No se está ejecutando en un navegador");
+          return false;
+        }
+      
+        if (typeof performance.getEntriesByType === "function") {
+          const navigationEntries = performance.getEntriesByType("navigation") as PerformanceNavigationTiming[];
+          if (navigationEntries.length > 0 && "type" in navigationEntries[0]) {
+            return navigationEntries[0].type === "reload";
+          }
+        }
+      
+        return (window.performance as any)?.navigation?.type === 1;
       }
+      
+      
+      // isPageReloading(): boolean {
+      //   const navEntries = performance.getEntriesByType("navigation") as PerformanceNavigationTiming[];
+      //   return navEntries.length > 0 && navEntries[0].type === "reload";
+      // }
       
       
     
