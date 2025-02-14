@@ -1,5 +1,7 @@
 <main class="box">
-  <app-sidevar></app-sidevar>
+  <div class="app-sidevar">
+    <app-sidevar></app-sidevar>
+  </div>
   <div class="productos">
     <ng-template #sinResultados>
       <h3 *ngIf="!resultadosEncontrados">No se encontraron resultados para: {{ query }}</h3>

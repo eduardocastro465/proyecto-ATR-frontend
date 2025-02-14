@@ -12,6 +12,36 @@ interface MenuItem {
   templateUrl: './breadcrumb.component.html',
   styles: [
     `
+    .ui.breadcrumb {
+  color: gray; // Texto gris para todo el breadcrumb
+  display: flex;
+  align-items: center;
+
+  .section {
+    color: gray;
+    text-decoration: none;
+    // pointer-events: none; // Deshabilita el enlace
+    // cursor: default;
+
+    &:hover {
+      color: gray; // Evita que cambie de color al pasar el mouse
+    }
+  }
+
+  .divider {
+    color: gray;
+  }
+
+  .active {
+    font-weight: bold;
+    color: darkgray;
+  }
+
+  i.pi {
+    color: gray; // Hace que el icono de casa sea gris
+  }
+}
+
       .ui.breadcrumb {
         margin-left: 11%;
 

@@ -1,6 +1,16 @@
 .box {
   display: flex;
-  margin: 20px;
+  margin: 8%;
+  
+}
+.app-sidevar {
+  position: sticky;
+  top: 10%;
+  width: auto; // Hace que ocupe toda la altura de la pantalla
+
+  height: 100vh; // Hace que ocupe toda la altura de la pantalla
+  // overflow-y: auto; // Si el contenido del sidebar es muy grande, se podrá desplazar dentro de él
+  background-color: #f8f9fa; // Color opcional para diferenciar
 }
 
 .titulo {
@@ -13,6 +23,7 @@
   flex-direction: column;
   /* padding: 60px 80px; */
   /* flex-grow: 1; */
+  
   flex-grow: 1;
   padding: 10px;
   background: white;
