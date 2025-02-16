@@ -129,7 +129,7 @@ const MATERIALS = [ DragDropModule,ButtonModule, DropdownModule, InputTextModule
     ListadoAcsVestidoRentaComponent,
 
   ],
-  imports: [ MATERIALS,ReactiveFormsModule,ToastModule ,FormsModule,CommonModule, FormsModule, AdminRoutingModule, FormsModule,HttpClientModule,],
+  imports: [ MATERIALS,ReactiveFormsModule,ToastModule ,CommonModule, AdminRoutingModule, FormsModule,HttpClientModule,],
   providers: [
     UsuarioService,
     ControlAdministrativaService,

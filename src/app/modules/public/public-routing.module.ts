@@ -14,6 +14,7 @@ import { ResultsComponent } from "./views/results/results.component";
 import { NotFoundComponent } from "./views/not-found/not-found.component";
 import { Error500Component } from "./views/error500/error500.component";
 import { TagComponent } from "./components/tag/tag.component";
+import { ProcessRentaComponent } from "./views/process-renta/process-renta.component";
 
 const routes: Routes = [
   {
@@ -93,6 +94,14 @@ const routes: Routes = [
         data: {
           title: "Detalle del Producto",
           breadcrumb: "Detalle del Producto",
+        },
+      },
+      {
+        path: "continuarRenta/:id",
+        component: ProcessRentaComponent,
+        data: {
+          title: "Renata de producto",
+          breadcrumb: "Renta del Producto",
         },
       },
       {

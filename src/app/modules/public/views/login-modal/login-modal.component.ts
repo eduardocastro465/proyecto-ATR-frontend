@@ -132,13 +132,6 @@ cargarWidgetRecaptcha() {
   ngOnDestroy(): void {
     this.timerSubscription?.unsubscribe();
   }
-  // closeModal() {
-  //   this.visible = false; // Cierra el modal
-  //   this.loginForm.reset(); // Limpia los campos del formulario
-  //   this.robot = false;
-  //   this.presionado = false;
-  //   this.captchaToken = null; // Limpia el token del captcha
-  // }
 
 
   @Input() isModalVisible: boolean = false;
@@ -260,13 +253,6 @@ cargarWidgetRecaptcha() {
     localStorage.removeItem("lockInfo"); // O sessionStorage.removeItem si prefieres sessionStorage
   }
 
-  // redirectTo(route: string): void {
-  //   if (route === 'login') {
-  //     this.router.navigate(['/auth/login']);
-  //   } else {
-  //     this.router.navigate(['/auth', route]);
-  //   }
-  // }
 
   recargarPagina() {
     window.location.reload();

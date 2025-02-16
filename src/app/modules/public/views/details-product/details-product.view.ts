@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { ProductoService } from '../../../../shared/services/producto.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IndexedDbService } from '../../commons/services/indexed-db.service';
 declare const $: any;
 
@@ -72,7 +72,8 @@ export class DetailsProductView implements OnInit ,AfterViewInit{
     private productoS_: ProductoService,
     private activatedRoute: ActivatedRoute,
     private renderer: Renderer2,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private router:Router
   ) {
     // this.id=require.para
   }
@@ -133,6 +134,10 @@ export class DetailsProductView implements OnInit ,AfterViewInit{
     if (this.Detalles) {
       this.Detalles.imagenPrincipal = image;
     }
+  }
+ 
+  redirigirContinuarRenta(id: any) {
+    this.router.navigate([`/public/continuarRenta/${id}`]);
   }
 
   apartarRentar(producto: any) {

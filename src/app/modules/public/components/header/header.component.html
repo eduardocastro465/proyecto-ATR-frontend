@@ -67,8 +67,8 @@
     </ul>
 
     <ul class="nav-accion">
-      <li>
-        <!-- Versión Web -->
+      <!-- Versión Web -->
+      <!-- <li>
         <div class="ui action input" *ngIf="!isMobile">
           <input
             type="text"
@@ -81,9 +81,9 @@
             <i *ngIf="isLoading" class="spinner loading icon"></i>
           </button>
         </div>
-      </li>
+      </li> -->
       <!-- Versión Móvil -->
-      <li *ngIf="isMobile">
+      <li>
         <div class="ui search" [ngClass]="{ loading: isLoading }">
           <div class="ui icon input">
             <input

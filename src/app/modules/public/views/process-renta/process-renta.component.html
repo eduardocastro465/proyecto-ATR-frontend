@@ -1,1 +1,119 @@
-<p>process-renta works!</p>
+<div class="container">
+  <!-- Sección de carga -->
+  <div *ngIf="isLoading">Cargando detalles...</div>
+
+  <!-- Mostrar detalles del producto si existen -->
+  <h2>Detalles del producto</h2>
+  <div *ngIf="!isLoading && Detalles" class="producto-detalles">
+    <!-- Información del producto -->
+    <div class="info">
+      <p><strong>ID:</strong> {{ Detalles.id }}</p>
+      <p><strong>Nombre:</strong> {{ Detalles.nombre }}</p>
+      <!-- Agrega más campos según la respuesta de la API -->
+    </div>
+
+    <!-- Imagen principal del producto -->
+    <div class="producto-imagen">
+      <img [src]="Detalles.imagenPrincipal" alt="{{ Detalles.nombre }}" />
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- Formulario de Renta -->
+  <h2>Formulario de Renta</h2>
+  <form #rentaForm="ngForm" (ngSubmit)="onSubmit()" class="renta-form">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="arrendador">Arrendador</label>
+        <input
+          type="text"
+          id="arrendador"
+          name="arrendador"
+          [(ngModel)]="arrendador"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="arrendatario">Arrendatario</label>
+        <input
+          type="text"
+          id="arrendatario"
+          name="arrendatario"
+          [(ngModel)]="arrendatario"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="fechaInicio">Fecha de Inicio</label>
+        <input
+          type="date"
+          id="fechaInicio"
+          name="fechaInicio"
+          [(ngModel)]="fechaInicio"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="fechaFin">Fecha de Fin</label>
+        <input
+          type="date"
+          id="fechaFin"
+          name="fechaFin"
+          [(ngModel)]="fechaFin"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="direccionInmueble">Dirección del Inmueble</label>
+        <input
+          type="text"
+          id="direccionInmueble"
+          name="direccionInmueble"
+          [(ngModel)]="direccionInmueble"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="montoRenta">Monto de la Renta</label>
+        <input
+          type="number"
+          id="montoRenta"
+          name="montoRenta"
+          [(ngModel)]="montoRenta"
+          required
+        />
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="!rentaForm.valid" class="btn-generar-contrato">
+      Generar Contrato
+    </button>
+  </form>
+
+  <!-- Contrato generado -->
+  <div *ngIf="contratoGenerado" class="contrato">
+    <h3>Contrato de Arrendamiento</h3>
+    <p><strong>Arrendador:</strong> {{ arrendador }}</p>
+    <p><strong>Arrendatario:</strong> {{ arrendatario }}</p>
+    <p><strong>Fecha de Inicio:</strong> {{ fechaInicio }}</p>
+    <p><strong>Fecha de Fin:</strong> {{ fechaFin }}</p>
+    <p><strong>Dirección del Inmueble:</strong> {{ direccionInmueble }}</p>
+    <p><strong>Monto de la Renta:</strong> {{ montoRenta }}</p>
+    <p>
+      <em>
+        En Huitzil de Reyes, Hidalgo<br />
+        A los <strong>{{ fechaInicio | date : "dd" }}</strong> días del mes de
+        <strong>{{ fechaInicio | date : "MMMM" }}</strong> del año
+        <strong>{{ fechaInicio | date : "yyyy" }}</strong
+        >.
+      </em>
+    </p>
+  </div>
+</div>

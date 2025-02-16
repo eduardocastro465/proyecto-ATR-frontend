@@ -120,21 +120,26 @@ export class ProductosComponent implements OnInit {
           }
         );
       }
-      isPageReloading(): boolean {
-        if (typeof window === "undefined" || typeof performance === "undefined") {
-          console.warn("No se está ejecutando en un navegador");
-          return false;
-        }
+          
+    isPageReloading(): boolean {
+      return performance.navigation.type === performance.navigation.TYPE_RELOAD
+    }
+    
+      // isPageReloading(): boolean {
+      //   if (typeof window === "undefined" || typeof performance === "undefined") {
+      //     console.warn("No se está ejecutando en un navegador");
+      //     return false;
+      //   }
       
-        if (typeof performance.getEntriesByType === "function") {
-          const navigationEntries = performance.getEntriesByType("navigation") as PerformanceNavigationTiming[];
-          if (navigationEntries.length > 0 && "type" in navigationEntries[0]) {
-            return navigationEntries[0].type === "reload";
-          }
-        }
+      //   if (typeof performance.getEntriesByType === "function") {
+      //     const navigationEntries = performance.getEntriesByType("navigation") as PerformanceNavigationTiming[];
+      //     if (navigationEntries.length > 0 && "type" in navigationEntries[0]) {
+      //       return navigationEntries[0].type === "reload";
+      //     }
+      //   }
       
-        return (window.performance as any)?.navigation?.type === 1;
-      }
+      //   return (window.performance as any)?.navigation?.type === 1;
+      // }
       
       
       // isPageReloading(): boolean {

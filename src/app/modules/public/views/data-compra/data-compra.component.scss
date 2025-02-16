@@ -1,0 +1,66 @@
+.user-data {
+  flex: 1;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.user-data {
+  form {
+    display: grid;
+    gap: 10px;
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+
+      label {
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+
+      input,
+      select {
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+    }
+  }
+
+  .note {
+    background-color: #fff7d1;
+    padding: 10px;
+    font-size: 12px;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+
+  .confirm-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #f78b99;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #d87084;
+    }
+  }
+}
+.business-info p {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #333;
+}
+
+.status.open {
+  color: green;
+  font-weight: bold;
+}

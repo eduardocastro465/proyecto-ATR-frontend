@@ -1,6 +1,7 @@
 .appointment-container {
   padding: 20px;
   font-family: Arial, sans-serif;
+  margin: 10px 150px;
 
   .header {
     color: white;
@@ -18,14 +19,19 @@
   .content {
     display: flex;
     gap: 20px;
+    padding: 15px;
 
-    .summary,
-    .user-data {
-      flex: 1;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      padding: 20px;
-      background-color: #f9f9f9;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+
+    .summary {
+      width: 50%;
+      .card,
+      .dress-item {
+        width: 100%;
+        padding: 15px;
+        border-radius: 10px;
+        // box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+      }
     }
 
     .summary {
@@ -33,6 +39,9 @@
         display: flex;
         gap: 10px;
         margin-bottom: 15px;
+        border: 1px solid #ebebeb;
+        padding: 10px;
+        border-radius: 10px;
 
         img {
           width: 100px;
@@ -43,32 +52,24 @@
           flex: 1;
         }
 
-        // .delete-btn {
-        //   background-color: transparent;
-        //   border: none;
-        //   cursor: pointer;
-        // }
-
-
         .delete-btn {
-          display: flex;              // Alinea el ícono y el texto en fila
-          align-items: center;        // Centra verticalmente el contenido
-          background-color: transparent; // Fondo transparente
-          border: none;               // Sin borde
-          cursor: pointer;            // Cambia el cursor al pasar por encima
-          font-size: 14px;            // Tamaño de la fuente
+          display: flex;
+          align-items: center;
+          background-color: transparent;
+          border: none;
+          cursor: pointer;
+          font-size: 14px;
+          color: #ffc518;
 
-            color: red;
           &:hover {
-            color: rgb(255, 103, 103);           // Cambia el color al pasar el mouse (opcional)
+            color: rgb(255, 103, 103);
           }
 
           i {
-            margin-right: 5px;        // Espacio entre el ícono y el texto
-            font-size: 14px;          // Ajusta el tamaño del ícono según sea necesario
+            margin-right: 5px;
+            font-size: 14px;
           }
         }
-
       }
 
       .add-dress-btn {
@@ -86,52 +87,22 @@
         }
       }
     }
-
-    .user-data {
-      form {
-        display: grid;
-        gap: 10px;
-
-        .form-group {
-          display: flex;
-          flex-direction: column;
-
-          label {
-            font-size: 14px;
-            margin-bottom: 5px;
-          }
-
-          input,
-          select {
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-          }
-        }
-      }
-
-      .note {
-        background-color: #fff7d1;
-        padding: 10px;
-        font-size: 12px;
-        border-radius: 5px;
-        margin-top: 10px;
-      }
-
-      .confirm-btn {
-        display: block;
-        width: 100%;
-        padding: 10px;
-        background-color: #f78b99;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-
-        &:hover {
-          background-color: #d87084;
-        }
-      }
-    }
   }
+}
+
+
+.continue-btn {
+  background-color: white;
+  color: #ffc518;
+  border:none;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.continue-btn:hover {
+  // background-color: blue;
+  color: #27292c;
 }

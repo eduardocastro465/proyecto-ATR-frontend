@@ -117,7 +117,7 @@
         <!-- Botón para agregar al carrito (mostrar solo cuando la categoría sea 'renta') -->
         <button
           *ngIf="Detalles.categoria == 'renta'"
-          (click)="apartarRentar(Detalles)"
+          (click)="redirigirContinuarRenta(Detalles._id)"
           class="add-to-cart rent"
         >
           Me lo quiero probar

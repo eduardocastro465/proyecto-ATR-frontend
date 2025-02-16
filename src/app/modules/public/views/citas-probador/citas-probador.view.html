@@ -1,125 +1,85 @@
 <div class="appointment-container">
-  <!-- <h1 class="header">Citas en Probador</h1> -->
-  <!-- <p class="subheader">
-    Probador en línea: Elige tus 3 vestidos favoritos y te los llevamos a la tienda que tú quieras (SIN COSTO) para que te los puedas medir
-  </p> -->
-
   <div class="content">
-  <!-- Left Column: Dress Summary -->
-<div class="summary">
-  <div class="ui top attached tabular menu">
-    <a class="item active" data-tab="renta">Renta</a>
-    <a class="item" data-tab="venta">Venta</a>
-  </div>
-
-  <div class="ui bottom attached tab segment active" data-tab="renta">
-    <div class="dress-item" *ngFor="let item of productosRenta">
-      <img [src]="item.imagenPrincipal" [alt]="item.nombre" />
-      <div class="details">
-        <h5>{{ item.nombre }}</h5>
-        <p>Precio: ${{ item.precio }}</p>
+    <!-- Left Column: Dress Summary -->
+    <div class="summary">
+      <div class="ui top attached tabular menu">
+        <a class="item active" data-tab="renta" (click)="setTipoCompra('renta')"
+          >Renta</a
+        >
+        <a class="item" data-tab="venta" (click)="setTipoCompra('venta')"
+          >Venta</a
+        >
       </div>
-      <button class="delete-btn" (click)="deleteDressItem(item.id)">
-        <i class="pi pi-trash" style="color: red;"></i> <!-- Ícono de basura -->
-        Eliminar
-      </button>
-    </div>
-  </div>
 
-  <div class="ui bottom attached tab segment" data-tab="venta">
-    <div class="dress-item" *ngFor="let item of productosVenta">
-      <img [src]="item.imagenPrincipal" [alt]="item.nombre" />
-      <div class="details">
-        <h5>{{ item.nombre }}</h5>
-        <p>Precio: ${{ item.precio }}</p>
+      <div class="ui bottom attached tab segment active" data-tab="renta">
+        <div class="dress-item" *ngFor="let item of productosRenta">
+          <img [src]="item.imagenPrincipal" [alt]="item.nombre" />
+          <div class="details">
+            <h5>{{ item.nombre }}</h5>
+            <p>Precio: ${{ item.precio }}</p>
+          </div>
+          <button class="delete-btn" (click)="deleteDressItem(item.id)">
+            Eliminar
+          </button>
+          <button
+            class="continue-btn"
+            (click)="continuarCompra(item, 'renta')"
+          >
+            Continuar
+          </button>
+        </div>
       </div>
-      <button class="delete-btn" (click)="deleteDressItem(item.id)">
-        <i class="pi pi-trash" style="color: red;"></i> <!-- Ícono de basura -->
-        Eliminar
-      </button>
-    </div>
-  </div>
-</div>
 
-
-    <!-- Right Column: User Data -->
-    <div class="user-data">
-      <h2>Ayúdanos con tus datos</h2>
-      <form>
-        <div class="form-group">
-          <label for="date">Fecha</label>
-          <input
-            type="date"
-            id="date"
-            name="date"
-            [(ngModel)]="selectedDate"
-            required
-          />
+      <div class="ui bottom attached tab segment" data-tab="venta">
+        <div class="dress-item" *ngFor="let item of productosVenta">
+          <img [src]="item.imagenPrincipal" [alt]="item.nombre" />
+          <div class="details">
+            <h5>{{ item.nombre }}</h5>
+            <p>Precio: ${{ item.precio }}</p>
+          </div>
+          <button class="delete-btn" (click)="deleteDressItem(item.id)">
+            Eliminar
+          </button>
+          <button class="continue-btn" (click)="mostrarResumen(item)">
+            Continuar
+          </button>
+          
         </div>
-        <div class="form-group">
-          <label for="time">Hora</label>
-          <select id="time" name="time" [(ngModel)]="selectedTime" required>
-            <option value="">Seleccione</option>
-            <!-- <option *ngFor="let time of availableTimes" [value]="time">{{ time }}</option> -->
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="name">Nombre</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            [(ngModel)]="name"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="lastname">Apellidos</label>
-          <input
-            type="text"
-            id="lastname"
-            name="lastname"
-            [(ngModel)]="lastName"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="phone">Celular (WhatsApp de preferencia)</label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            [(ngModel)]="phone"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            [(ngModel)]="email"
-            required
-          />
-        </div>
-      </form>
-      <p class="note">
-        <strong>Importante:</strong>Al realizar un apartado tienes 30 días
-        naturales para realizar la liquidación de tu pedido.
-        <br>
-        La liquidación la puedes hacer en tienda o en línea y te recomendamos contactarnos por
-        WhastApp para confirmar la sucursal y/o datos de tu domicilio.
-        <br>
-        Los productos de tu apartado estarán reservados solo para ti y en caso de
-        que tengamos un detalle con tu apartado te lo haremos saber.
-        <br>
-        En caso de que no hagas tu liquidación máximo en 30 días se te hará un rembolso en
-        monedero electrónico a tu cuenta en Carlo Giovanni, saldo que podrá ser
-        utilizado en el momento que tu quieras. En cuanto al vestido que has
-        apartado, este quedará disponible para venta pasando los 30 días.
-      </p>
-      <!-- <button class="confirm-btn" (click)="confirmAppointment()">Confirmar cita</button> -->
+      </div>
     </div>
+
+    <p *ngIf="tipoCompra === 'renta'">Total Renta: ${{ totalCompra }}</p>
+    <p *ngIf="tipoCompra === 'venta'">Total Venta: ${{ totalCompra }}</p>
+
+    <app-data-compra></app-data-compra>
+    
+    
+    <p-dialog
+      header="Resumen de compra"
+      [(visible)]="mostrarModal"
+      [modal]="true"
+      [closable]="true"
+    >
+      <div class="resumen-compra">
+        <p>Producto: {{ productoSeleccionado?.nombre }}</p>
+        <p>Precio: ${{ productoSeleccionado?.precio }}</p>
+        <p *ngIf="tipoCompra === 'renta'">Total Renta: ${{ productoSeleccionado?.precio }}</p>
+        <p *ngIf="tipoCompra === 'venta'">Total Venta: ${{ totalCompra }}</p>
+        <button
+          pButton
+          label="Descargar"
+          icon="pi pi-download"
+          class="ui-button-success"
+          (click)="descargarResumen()"
+        ></button>
+        <button
+          pButton
+          label="Cerrar"
+          icon="pi pi-times"
+          class="ui-button-secondary"
+          (click)="mostrarModal = false"
+        ></button>
+      </div>
+    </p-dialog>
   </div>
 </div>

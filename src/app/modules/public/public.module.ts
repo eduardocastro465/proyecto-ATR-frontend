@@ -64,14 +64,17 @@ const MATERIALS =[PasswordModule,
   InputMaskModule,
   InputTextModule,FormsModule,InputGroupModule,AvatarModule,AvatarGroupModule,PaginatorModule,OverlayPanelModule,TieredMenuModule,SkeletonModule,CardModule,TabMenuModule,ButtonModule,DialogModule,SidebarModule,CheckboxModule,MenuModule]
 const COMPONENTS =[FooterComponent,HeaderComponent]
-const VIEWS=[HomeView,PublicComponent,PerfilView, AcercaDeView,DetailsProductView,LoginModalComponent]
+const VIEWS=[HomeView,PublicComponent,PerfilView, AcercaDeView,DetailsProductView,LoginModalComponent,DataCompraComponent]
 
 import { NgxImageZoomModule } from 'ngx-image-zoom';
 import { ProcessRentaComponent } from './views/process-renta/process-renta.component';
+import { DataCompraComponent } from './views/data-compra/data-compra.component';
+import { InformacionUserComponent } from './views/informacion-user/informacion-user.component';
+import { TableModule } from 'primeng/table';
 @NgModule({
-  declarations: [VIEWS,COMPONENTS, CarritoView, TagComponent, PoliticasComponent, TerminosComponent, CitasProbadorView, ResultsComponent, HeroImgComponent, FigureComponent, BreadcrumbComponent, NotFoundComponent, Error500Component, SidevarComponent, CargaComponent, VideosComponent, ProductosComponent, ProcessRentaComponent],
+  declarations: [VIEWS,COMPONENTS, CarritoView, TagComponent, PoliticasComponent, TerminosComponent, CitasProbadorView, ResultsComponent, HeroImgComponent, FigureComponent, BreadcrumbComponent, NotFoundComponent, Error500Component, SidevarComponent, CargaComponent, VideosComponent, ProductosComponent, ProcessRentaComponent, DataCompraComponent, InformacionUserComponent],
   exports:[COMPONENTS],
-  imports: [NgxImageZoomModule,GalleriaModule,CarouselModule,
+  imports: [TableModule,NgxImageZoomModule,GalleriaModule,CarouselModule,
     CommonModule,ReactiveFormsModule,FormsModule,
     PublicRoutingModule,HttpClientModule, ...MATERIALS,
   ], schemas: [CUSTOM_ELEMENTS_SCHEMA],
