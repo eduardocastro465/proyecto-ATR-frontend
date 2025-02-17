@@ -266,8 +266,10 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   isUserLoggedIn(): boolean {
+    // const userData = this.sessionService.();
     const userData = this.sessionService.getUserData();
     if (userData) {
+      alert(userData._id)
       this.userROL = userData.rol;
       return this.userROL === ERol.CLIENTE;
     }

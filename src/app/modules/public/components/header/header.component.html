@@ -39,20 +39,15 @@
   <nav class="navbar-second flex" [ngClass]="{ sticky: isSticky }">
     <div class="logo">
       <a [routerLink]="'/public/inicio'">
-        <img
+        <img   *ngIf="isSticky"
           src="https://res.cloudinary.com/dvvhnrvav/image/upload/v1730395938/images-AR/wyicw2mh3xxocscx0diz.png"
           alt="logo sticky"
           class="logo1 logo-sticky"
           [ngClass]="{ visible: isSticky }"
         />
-        <!-- <img
-          src="https://res.cloudinary.com/dvvhnrvav/image/upload/v1730059633/images-AR/g1soiuvsc8qtdlsojskb.png"
-          alt="logo normal"
-          class="logo1 logo-normal"
-          [ngClass]="{ visible: !isSticky }"
-        /> -->
+        
 
-          <span class="logo-text" [ngClass]="{ visible: !isSticky }">Atelier Hgo </span>
+        <span  *ngIf="!isSticky" class="logo-text" [ngClass]="{ visible: !isSticky }">Atelier Hgo </span>
         
       </a>
     </div>

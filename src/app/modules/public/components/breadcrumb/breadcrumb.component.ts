@@ -33,7 +33,7 @@ interface MenuItem {
   }
 
   .active {
-    font-weight: bold;
+    // font-weight: bold;
     color: darkgray;
   }
 
@@ -47,16 +47,16 @@ interface MenuItem {
 
         .section {
           &.active {
-            color: pink;
+            color: #555;
           }
         }
 
         .divider {
           color: inherit;
-          font-size: 0.8em;
+          font-size: 0.5em;
 
           i {
-            font-size: 0.8em;
+            font-size: 0.5em;
           }
         }
       }

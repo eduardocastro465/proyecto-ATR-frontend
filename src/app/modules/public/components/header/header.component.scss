@@ -67,36 +67,29 @@ nav {
   font-weight: bold;
 }
 
-/* // marque */
 .marquee-container {
   width: 100%;
-  display: none;
-
+  display: flex;
   height: 20px;
-  // background: #FFAA80;
-  // background: #EE66A6;
-  // background: #aba59f;
-  // background: #ccc4bc;
-  background: #ff5580;
-  // display: none;
+  background: linear-gradient(90deg, #ffe8e8, #ffddec, #ffe9f1,#fde3f0,  #ffffff);
+  border-bottom: 1px solid #efe9e3;
   text-align: center;
   position: relative;
-  // background-color: var(--color-bg);
 }
 
-.marquee {
+.marquee, .marquee1 {
   font-size: 12px;
-  color: #ffffff; /* Color llamativo */
+  color: rgb(250, 130, 174); /* Texto blanco */
   font-weight: bold;
   opacity: 0;
   position: absolute;
   width: 100%;
-  // border: dashed;
   animation: showHide 9s infinite;
 }
+
 .marquee1 {
   font-size: 12px;
-  color: #ffffff; /* Color llamativo */
+  // color: #ffffff; /* Color llamativo */
   font-weight: bold;
   opacity: 0;
   position: absolute;
@@ -130,7 +123,7 @@ nav {
 .nav-one {
   // display: none;
   // background:#f2ede8;
-  background: #f8f5f2;
+  background: #fffcf9;
   // background:#f2ede8;
 
   // background: var(--style-navbar-second);
@@ -176,7 +169,7 @@ nav {
 
 header.app-header {
   background-color: white;
-  box-shadow: 0 4px 8px #fff9f39a;
+  box-shadow: 0 4px 8px #e7e7e79a;
   width: 100%;
 }
 
@@ -200,7 +193,7 @@ span {
   display: flex;
   justify-content: left;
   border-bottom: 1px solid #faf7f7f0;
-  background-color: white;
+  // background-color: white;
   transition: transform 0.3s ease, background-color 0.3s ease;
   height: 50px;
   position: sticky;
@@ -230,7 +223,7 @@ p-sidebar {
         a {
           text-decoration: none;
           font-size: 14px;
-          color: #555;
+          color: #838282;
           display: flex;
           align-items: center;
 
@@ -250,7 +243,7 @@ p-sidebar {
   z-index: 10;
   width: 100%;
   position: fixed !important;
-  background-color: white;
+  background-color: white !important;
   backdrop-filter: blur(3px);
   border: solid 1px #faf7f7;
   transition: background-color 0.5s ease, box-shadow 0.5s ease;
@@ -264,7 +257,7 @@ p-sidebar {
   position: relative;
   display: flex;
   align-items: center;
-  padding: 10px 20px;
+  padding: 19px  100px;
 
   a {
     display: flex;
@@ -306,7 +299,7 @@ p-sidebar {
     padding: 10px 20px;
     border-radius: 50px;
     transition: background-color 0.3s ease;
-    color: #3c3c3c;
+    color: #9f9a9a;
     cursor: pointer;
     // font-weight: 900;
     &:hover {

@@ -92,7 +92,7 @@ import { Component } from "@angular/core";
     font-size: 1rem;
     line-height: 1.5;
     margin-bottom: 2rem;
-    color:#000000;
+    color:#363636;
     // color:#f5f5f5;
   }
   .cta {
