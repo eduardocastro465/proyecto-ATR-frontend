@@ -84,19 +84,19 @@ export class ProcessRentaComponent implements OnInit {
           token: token // Token generado
         };
 
+        this.enviarTokenAlBackend(token); // Enviamos el token generado al backend
         // Enviar los datos al backend
-        this.productoS_.crearRenta(data).subscribe({
-          next: (response) => {
-            console.log('Renta creada exitosamente:', response);
-            this.contratoGenerado = true;
-            this.isLoading = false; // Desactivamos el loader
-            this.enviarTokenAlBackend(token); // Enviamos el token generado al backend
-          },
-          error: (err) => {
-            console.error('Error al crear la renta:', err);
-            this.isLoading = false; // Desactivamos el loader en caso de error
-          }
-        });
+        // this.productoS_.crearRenta(data).subscribe({
+        //   next: (response) => {
+        //     console.log('Renta creada exitosamente:', response);
+        //     this.contratoGenerado = true;
+        //     this.isLoading = false; // Desactivamos el loader
+        //   },
+        //   error: (err) => {
+        //     console.error('Error al crear la renta:', err);
+        //     this.isLoading = false; // Desactivamos el loader en caso de error
+        //   }
+        // });
       })
       .catch((err) => {
         console.error('Error al suscribirse a notificaciones:', err);
