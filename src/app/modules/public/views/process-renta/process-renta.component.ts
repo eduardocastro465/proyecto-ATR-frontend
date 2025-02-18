@@ -72,6 +72,9 @@ export class ProcessRentaComponent implements OnInit {
       this.swPush.requestSubscription({ serverPublicKey: this.publicKey })
         .then((sub) => {
           const token = JSON.stringify(sub);
+         console.log("enviar=>",token)
+         
+         
           const data = {
             arrendador: this.arrendador,
             arrendatario: this.arrendatario,
