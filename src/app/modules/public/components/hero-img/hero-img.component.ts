@@ -26,7 +26,8 @@ import { Component } from "@angular/core";
       [ngStyle]="{ 'background-image': 'url(' + selectedImage + ')' }"
     >
       <div class="hero-content" @fadeIn>
-        <h1 class="title">Venta y Renta</h1>
+        <h1 class="title">Venta <span class="small">y</span> Renta</h1>
+
         <p class="subtitle">Especial de Verano 2024</p>
         <p class="description">
           LO MÁS TOP DE VESTIDOS EN RENTA PARA FIESTAS, UN ESPACIO DONDE
@@ -108,43 +109,58 @@ import { Component } from "@angular/core";
   .cta:hover {
     background-color: #e6b800;
   }
+  
+.title .small {
+    font-size:5rem; /* Tamaño más pequeño para la "y" */
+}
   @media (max-width: 767px) {
-  // .hero {
-  //   border-radius:5px;
-  //   mask-image:none;
-  //   padding: 0;
-  //   height: 30vh;
-  //   .hero-content {
-  //     text-align: center; // Texto centrado
-  //     color: #fff;
-  //     background-color: #ebe3db79;
-  //     padding: 1rem;
-  //     backdrop-filter: blur(3px);
-  //     .subtitle {
-  //       font-size: 1rem;
-  //       margin-bottom: 0rem;
-  //   color:rgb(255, 255, 255);
-  //     }
-  //     .title {
-  //       font-size: 2rem;
-  //       margin-bottom: 0rem;
-  //     }
-  //     .description {
-  //       font-size: 1rem;
-  //   margin-bottom: 0rem;
-  //   color:rgb(255, 255, 255);
-  //     }
-  //     .cta {
-  //       display: inline-block;
-  //       text-decoration: none;
-  //       padding: 0.75rem 1.5rem;
-  //       border-radius: 5px;
-  //       border: none;
-  //       cursor: pointer;
-  //       transition: background-color 0.3s ease;
-  //     }
-  //   }
-  // }
+      .hero {
+        // border-radius: 10px;
+        // mask-image: none;
+        // margin: 10px;
+        height: 50vh;
+
+        filter: drop-shadow( 15px 0px 15px  rgb(255, 255, 255)); /* Sombra hacia abajo */
+      }
+      .hero-content {
+    // border: dashed 1px;
+    text-align: center;
+    padding: 0rem;
+    width: 70%;
+}
+
+.subtitle {
+    width: 100%;
+    font-size: 0.8rem;
+    word-wrap: break-word;
+    white-space: normal;
+    overflow-wrap: break-word;
+    text-align: center;
+}
+.title .small {
+    font-size: 3.5rem; /* Tamaño más pequeño para la "y" */
+}
+
+
+.title {
+  font-family: innerti;
+
+    font-size: 3.8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1;
+}
+
+.description {
+    font-size: 0.7rem;
+}
+
+.cta {
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+}
+
 }
 /* Optional: Smooth fade-in effect for content */
 @keyframes fadeIn {
@@ -161,9 +177,10 @@ import { Component } from "@angular/core";
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-
-      background-color: rgba(0, 0, 0, 0.5);
-      border: none;
+z-index:1;
+border: none;
+// background-color:none;
+background-color: rgba(0, 0, 0, 0.5);
       color: white;
       padding: 10px;
       cursor: pointer;
@@ -171,10 +188,10 @@ import { Component } from "@angular/core";
       transition: background-color 0.3s;
     }
     .carousel-btn.left {
-      left: 20px;
+      left: 10px;
     }
     .carousel-btn.right {
-      right: 20px;
+      right: 10px;
     }
     .carousel-btn:hover {
       background-color: rgba(0, 0, 0, 0.8);

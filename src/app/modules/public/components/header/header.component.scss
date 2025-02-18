@@ -71,13 +71,21 @@ nav {
   width: 100%;
   display: flex;
   height: 20px;
-  background: linear-gradient(90deg, #ffe8e8, #ffddec, #ffe9f1,#fde3f0,  #ffffff);
+  background: linear-gradient(
+    90deg,
+    #ffe8e8,
+    #ffddec,
+    #ffe9f1,
+    #fde3f0,
+    #ffffff
+  );
   border-bottom: 1px solid #efe9e3;
   text-align: center;
   position: relative;
 }
 
-.marquee, .marquee1 {
+.marquee,
+.marquee1 {
   font-size: 12px;
   color: rgb(250, 130, 174); /* Texto blanco */
   font-weight: bold;
@@ -165,7 +173,6 @@ nav {
     transform: translateY(-10px);
   }
 }
-
 
 header.app-header {
   background-color: white;
@@ -257,7 +264,7 @@ p-sidebar {
   position: relative;
   display: flex;
   align-items: center;
-  padding: 19px  100px;
+  padding: 19px 100px;
 
   a {
     display: flex;
@@ -357,6 +364,18 @@ p-sidebar {
 // }
 
 @media (max-width: 600px) {
+  .logo {
+    // border: dashed 1px #333; // Borde punteado
+    padding: 5px 10px; // Reducir padding para pantallas pequeñas
+    height: auto; // Asegurarse de que la altura se ajuste automáticamente
+
+    img {
+      height: 25px; // Reducir la altura de la imagen para pantallas pequeñas
+    }
+  }
+
+
+
   .sticky {
     position: fixed !important;
     top: 0;
@@ -389,27 +408,7 @@ p-sidebar {
     padding: 0 0px;
     width: 100%;
   }
-  // .sticky {
-  //   .logo > .logo1 {
-  //     // background-image: url("https://res.cloudinary.com/dvvhnrvav/image/upload/v1730395938/images-AR/wyicw2mh3xxocscx0diz.png");
-  //     // background-size: contain;
-  //     // background-repeat: no-repeat;
-  //     // background-position: center;
-  //     width: 50px;
-  //     height: 50px;
-  //     border-radius: 500%;
-  //     margin-left: 5px;
-  //     &::before {
-  //       content: "";
-  //     }
-  //   }
-  // }
-  // .logo1 {
-  //   margin-left: 10px;
-  //   &::before {
-  //     content: "ATELIER";
-  //   }
-  // }
+  
   .navbar-second {
     padding: 0 0px;
     margin-left: 0px;

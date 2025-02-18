@@ -26,20 +26,22 @@ export class ProductosComponent implements OnInit {
     responsiveOptions = [
       {
         breakpoint: "1024px",
-        numVisible: 3,
+        numVisible: 3.5, // Producto central completo y los laterales a la mitad
         numScroll: 1,
       },
       {
         breakpoint: "768px",
-        numVisible: 2,
+        numVisible: 2.5, // Dos productos completos y uno a la mitad
         numScroll: 1,
       },
       {
         breakpoint: "500px",
-        numVisible: 0.5, // Mostrar la mitad del último producto
+        numVisible: 1.5, // Uno completo y el siguiente a la mitad
         numScroll: 1,
       },
     ];
+    
+    
   
     // Inicializamos isLoading en true para mostrar el skeleton
     isLoading: boolean = true;

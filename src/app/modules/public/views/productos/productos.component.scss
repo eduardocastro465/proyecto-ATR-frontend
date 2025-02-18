@@ -270,4 +270,35 @@
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
   }
+
+  
+
+  .custom-carousel {
+    .p-carousel-items-content {
+      justify-content: center;
+    }
+  
+    .p-carousel-item {
+      transition: transform 0.5s ease;
+    }
+  
+    .p-carousel-item-active {
+      transform: scale(1);
+    }
+  
+    .p-carousel-item-prev,
+    .p-carousel-item-next {
+      opacity: 0.7;
+      transform: scale(0.8);
+    }
+  
+    .p-carousel .p-carousel-prev,
+    .p-carousel .p-carousel-next {
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+    }
+  }
   

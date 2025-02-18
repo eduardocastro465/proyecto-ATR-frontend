@@ -73,7 +73,6 @@ export class ProcessRentaComponent implements OnInit {
         .then((sub) => {
           const token = JSON.stringify(sub);
           console.log("enviar=>", token);
-
           const data = {
             arrendador: this.arrendador,
             arrendatario: this.arrendatario,

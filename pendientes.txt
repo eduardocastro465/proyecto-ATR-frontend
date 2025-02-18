@@ -28,3 +28,6 @@ if (error.status === 500) {
         generacion de llaves 
         web-push generate-vapid-keys --json
         {"publicKey":"BA8CjWNIlvuEogKv1eRaHP0Ro6uo3wfq4TWfTJk1-OIqjuHcxKeVrX25ItmnmwhfskcvW9kqX39kO1jpzhnAc5Y","privateKey":"5uPHxFUbR-MFJzLq803YE-7JiEAegfN1GWXDzuU4NkQ"}
+
+Si necesitas que el servidor acepte conexiones externas sin restricciones, usa:
+ng serve --host 0.0.0.0 --disable-host-check

@@ -96,11 +96,10 @@ i.fa-tiktok {
 // }
 // }
 .app-footer {
-
   color: #010101; /* Color oscuro para TikTok */
   // color: #f0ebe5;
-// background: radial-gradient(circle at top, #4b535b 0%, #2b2d36 60%);
-background: #ede6de;
+  // background: radial-gradient(circle at top, #4b535b 0%, #2b2d36 60%);
+  background: #ede6de;
   padding: 20px;
   text-align: center;
 
@@ -120,8 +119,6 @@ background: #ede6de;
         text-transform: uppercase;
         // color: #f0ebe5;
         color: #333b43; /* Color oscuro para TikTok */
-
-
       }
 
       ul {
@@ -135,7 +132,6 @@ background: #ede6de;
             color: #4b535b; /* Color oscuro para TikTok */
 
             // color: #f0ebe5;
-
 
             text-decoration: none;
             transition: color 0.3s ease;
@@ -259,6 +255,31 @@ background: #ede6de;
     /* backdrop-filter: blur(1px); */
     box-shadow: none;
   }
+  .app-footer {
+    color: #010101;
+    background: #ede6de;
+    padding: 20px;
+    text-align: center;
+
+    .footer-section {
+      display: flex;
+      flex-direction: column; // Cambiado a columna para mejor responsividad
+      align-items: center; // Centrar columnas en pantallas pequeñas
+      margin-bottom: 20px;
+
+      .footer-column {
+        width: 100%; // Cambiado a 100% para pantallas pequeñas
+        text-align: center; // Centrar texto dentro de la columna
+        margin: 10px 0; // Agregar margen para separación
+        .social-icons {
+          display: flex;
+          justify-content: center; // Centrar íconos sociales
+          margin: 10px 0;
+        }      
+    }
+  }
+}
+
   // footer {
   //   display: none;
   // }
