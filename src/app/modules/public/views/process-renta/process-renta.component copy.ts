@@ -68,35 +68,41 @@ export class ProcessRentaComponent implements OnInit {
 
   // Método para generar el token y enviarlo al backend
   generarToken(): void {
-    if ('serviceWorker' in navigator && this.swPush) {
-      this.swPush.requestSubscription({ serverPublicKey: this.publicKey })
-        .then((sub) => {
-          const token = JSON.stringify(sub);
-          const data = {
-            arrendador: this.arrendador,
-            arrendatario: this.arrendatario,
-            fechaInicio: this.fechaInicio,
-            fechaFin: this.fechaFin,
-            direccionInmueble: this.direccionInmueble,
-            montoRenta: this.montoRenta,
-            productId: this.productId,
-            token: token // Token generado
-          };
-          
-          this.enviarTokenAlBackend(token); // Enviar el token al backend
-        })
-        .catch((err) => {
-          console.error('Error al suscribirse a notificaciones:', err);
-          alert('Hubo un problema al suscribirse a las notificaciones. Por favor, asegúrese de que el navegador soporte Service Workers.');
-          this.isLoading = false; // Desactiva el loader en caso de error
-        });
-    } else {
-      console.error('Service Workers no están habilitados en este navegador.');
-      alert('El navegador no soporta notificaciones push.');
-      this.isLoading = false; // Desactiva el loader si no es compatible
-    }
+    this.swPush.requestSubscription({ serverPublicKey: this.publicKey })
+      .then((sub) => {
+        const token = JSON.stringify(sub);
+
+        // Datos a enviar al backend
+        const data = {
+          arrendador: this.arrendador,
+          arrendatario: this.arrendatario,
+          fechaInicio: this.fechaInicio,
+          fechaFin: this.fechaFin,
+          direccionInmueble: this.direccionInmueble,
+          montoRenta: this.montoRenta,
+          productId: this.productId,
+          token: token // Token generado
+        };
+
+        this.enviarTokenAlBackend(token); // Enviamos el token generado al backend
+        // Enviar los datos al backend
+        // this.productoS_.crearRenta(data).subscribe({
+        //   next: (response) => {
+        //     console.log('Renta creada exitosamente:', response);
+        //     this.contratoGenerado = true;
+        //     this.isLoading = false; // Desactivamos el loader
+        //   },
+        //   error: (err) => {
+        //     console.error('Error al crear la renta:', err);
+        //     this.isLoading = false; // Desactivamos el loader en caso de error
+        //   }
+        // });
+      })
+      .catch((err) => {
+        console.error('Error al suscribirse a notificaciones:', err);
+        this.isLoading = false;
+      });
   }
-  
 
   // Método para enviar el token de notificación al backend
   enviarTokenAlBackend(token: string): void {
