@@ -27,6 +27,7 @@ interface Producto {
 })
 export class DetailsProductView implements OnInit ,AfterViewInit{
   isLoading: boolean = true;
+  isLoadingRenta: boolean = false;
   images: any[] = []; // Change to any[] to hold the required data
   productName: string = '';
   productPrice: string = '';
@@ -137,7 +138,13 @@ export class DetailsProductView implements OnInit ,AfterViewInit{
   }
  
   redirigirContinuarRenta(id: any) {
+    
+    
+    this.isLoadingRenta = true;
+    setTimeout(() => {
+      this.isLoadingRenta = false;
     this.router.navigate([`/public/continuarRenta/${id}`]);
+    }, 2000); // 2 segundos
   }
 
   apartarRentar(producto: any) {

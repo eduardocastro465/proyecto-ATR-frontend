@@ -226,9 +226,9 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
               this.redirectTo("Mi-perfil"),
           },
           {
-            label: "Configuración",
+            label: "Compras",
             icon: "pi pi-cog",
-            command: (event: MenuItemCommandEvent) => this.redirectTo("Config"),
+            command: (event: MenuItemCommandEvent) => this.redirectTo("compras"),
           },
           {
             label: "Cerrar sesión",
@@ -262,7 +262,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges {
     localStorage.removeItem("token");
     this.isLoggedIn = false;
     this.updateMenuItems();
-    this.router.navigate(["/auth/login"]);
+    this.router.navigate(["/public/inicio"]);
   }
 
   isUserLoggedIn(): boolean {

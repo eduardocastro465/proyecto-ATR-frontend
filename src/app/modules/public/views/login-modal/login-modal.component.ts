@@ -1,41 +1,46 @@
-import { ChangeDetectorRef, Component, ElementRef, Inject, Output, PLATFORM_ID, Renderer2, EventEmitter, Input, OnInit, SimpleChanges, OnChanges, AfterViewInit, ViewChild } from '@angular/core';
-import { IndexedDbService } from '../../../public/commons/services/indexed-db.service';
-import { mensageservice } from '../../../../shared/services/mensage.service';
-import { StorageService } from '../../../../shared/services/storage.service';
-import { SignInService } from '../../../auth/commons/services/sign-in.service';
-import { SessionService } from '../../../../shared/services/session.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MessageService } from 'primeng/api';
-import { DatosEmpresaService } from '../../../../shared/services/datos-empresa.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { ThemeServiceService } from '../../../../shared/services/theme-service.service';
-import { Router } from '@angular/router';
-import { interval, Subscription } from 'rxjs';
-import Swal from 'sweetalert2';
-import { isPlatformBrowser } from '@angular/common';
-import { ERol } from '../../../../shared/constants/rol.enum';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Inject,
+  Output,
+  PLATFORM_ID,
+  Renderer2,
+  EventEmitter,
+  Input,
+  OnInit,
+  SimpleChanges,
+  OnChanges,
+  AfterViewInit,
+  ViewChild,
+} from "@angular/core";
+import { IndexedDbService } from "../../../public/commons/services/indexed-db.service";
+import { mensageservice } from "../../../../shared/services/mensage.service";
+import { StorageService } from "../../../../shared/services/storage.service";
+import { SignInService } from "../../../auth/commons/services/sign-in.service";
+import { SessionService } from "../../../../shared/services/session.service";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MessageService } from "primeng/api";
+import { DatosEmpresaService } from "../../../../shared/services/datos-empresa.service";
+import { NgxUiLoaderService } from "ngx-ui-loader";
+import { ThemeServiceService } from "../../../../shared/services/theme-service.service";
+import { Router } from "@angular/router";
+import { interval, Subscription } from "rxjs";
+import Swal from "sweetalert2";
+import { isPlatformBrowser } from "@angular/common";
+import { ERol } from "../../../../shared/constants/rol.enum";
 // import EventEmitter from 'events';
 
 @Component({
-  selector: 'app-login-modal',
-  templateUrl: './login-modal.component.html',
-  styleUrl: './login-modal.component.scss'
+  selector: "app-login-modal",
+  templateUrl: "./login-modal.component.html",
+  styleUrl: "./login-modal.component.scss",
 })
-export class LoginModalComponent implements OnInit,OnChanges,AfterViewInit {
-
-
+export class LoginModalComponent implements OnInit, OnChanges, AfterViewInit {
   isLoading = false;
   userROL!: string;
 
-
-
-
-
-
-
-
-
-  count!:number;
+  count!: number;
 
   constructor(
     private indexedDbService: IndexedDbService,
@@ -67,42 +72,39 @@ export class LoginModalComponent implements OnInit,OnChanges,AfterViewInit {
       ],
       password: ["", Validators.required],
     });
-  
+
     this.isLoading = false;
-
   }
-ngOnInit(): void {
-  this.getCaptchaToken()
-  console.log('llegó');
-  this.loadCaptchaScript()
-}
-
-  @ViewChild('passwordField') passwordField!: ElementRef;
-
-ngAfterViewInit() {
-  this.cargarWidgetRecaptcha();
-  this.passwordField.nativeElement.setAttribute('autocomplete', 'current-password');
-}
-
-cargarWidgetRecaptcha() {
-  if (typeof grecaptcha !== 'undefined') {
-    grecaptcha.render('captcha-container', {
-      sitekey: '6Ld8joAqAAAAABuc_VUhgDt7bzSOYAr7whD6WeNI',
-    });
-  } else {
-    console.error('El cliente de reCAPTCHA no está disponible.');
+  ngOnInit(): void {
+    this.getCaptchaToken();
+    console.log("llegó");
+    this.loadCaptchaScript();
   }
-}
+
+  @ViewChild("passwordField") passwordField!: ElementRef;
+
+  ngAfterViewInit() {
+    this.cargarWidgetRecaptcha();
+    this.passwordField.nativeElement.setAttribute(
+      "autocomplete",
+      "current-password"
+    );
+  }
+
+  cargarWidgetRecaptcha() {
+    if (typeof grecaptcha !== "undefined") {
+      grecaptcha.render("captcha-container", {
+        sitekey: "6Ld8joAqAAAAABuc_VUhgDt7bzSOYAr7whD6WeNI",
+      });
+    } else {
+      console.error("El cliente de reCAPTCHA no está disponible.");
+    }
+  }
 
   get email() {
     return this.loginForm.get("email");
   }
 
-
-
-
-
-  
   captchaToken: string | null = null;
   //
 
@@ -133,25 +135,24 @@ cargarWidgetRecaptcha() {
     this.timerSubscription?.unsubscribe();
   }
 
-
   @Input() isModalVisible: boolean = false;
   @Output() closed: EventEmitter<string> = new EventEmitter<string>(); // Aquí se define correctamente
   @Output() mostrarFormulario = new EventEmitter<boolean>(); // Evento para cerrar el modal
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['isModalVisible']) {
-      console.log('Estado del modal cambiado:', changes['isModalVisible'].currentValue);
+    if (changes["isModalVisible"]) {
+      console.log(
+        "Estado del modal cambiado:",
+        changes["isModalVisible"].currentValue
+      );
     }
   }
-
 
   close(): void {
     this.mostrarFormulario.emit(false); // Emitimos false para cerrar el modal
 
-    this.closed.emit('Modal cerrado correctamente'); // Se emite el evento correctamente
+    this.closed.emit("Modal cerrado correctamente"); // Se emite el evento correctamente
   }
-
-
 
   getCaptchaToken(): string {
     if (typeof grecaptcha !== "undefined") {
@@ -253,7 +254,6 @@ cargarWidgetRecaptcha() {
     localStorage.removeItem("lockInfo"); // O sessionStorage.removeItem si prefieres sessionStorage
   }
 
-
   recargarPagina() {
     window.location.reload();
   }
@@ -346,7 +346,7 @@ cargarWidgetRecaptcha() {
 
   login(): void {
     this.captchaToken = this.validateCaptcha();
-this.isLoading=true;
+    this.isLoading = true;
     if (this.isLocked) {
       Swal.fire({
         title: "Cuenta bloqueada",
@@ -389,8 +389,8 @@ this.isLoading=true;
             this.storageService.setToken(response.token);
             const userData = this.sessionService.getUserData();
             // window.location.reload();
-this.isLoading=false;
-            
+            this.isLoading = false;
+
             if (userData) {
               this.userROL = userData.rol;
               let navigateTo = "";
@@ -415,8 +415,8 @@ this.isLoading=false;
         },
         (err) => {
           console.error("Error en el inicio de sesión:", err);
-this.isLoading=false;
-          
+          this.isLoading = false;
+
           if (err) {
             if (err.error.message === "Captcha inválido") {
               Swal.fire({

@@ -1,14 +1,17 @@
-
 <p-dialog
   (onHide)="close()"
-  [modal]="true" 
+  [modal]="true"
   [(visible)]="isModalVisible"
   [style]="{ width: '30rem' }"
   class="blur-background"
 >
   <div class="login-container">
     <div class="login-card">
-      <img src="https://res.cloudinary.com/dvvhnrvav/image/upload/v1730395938/images-AR/wyicw2mh3xxocscx0diz.png" alt="Logo de la empresa" class="logo-atelier" />
+      <img
+        src="https://res.cloudinary.com/dvvhnrvav/image/upload/v1730395938/images-AR/wyicw2mh3xxocscx0diz.png"
+        alt="Logo de la empresa"
+        class="logo-atelier"
+      />
 
       <h2>Iniciar sesión</h2>
       <p class="register-text">
@@ -50,16 +53,14 @@
           <p-inputGroup class="input-group">
             <!-- [ngStyle]="{ 'border-radius': '50px', 'border': '2px solid #ccc' }" -->
             <p-password
-            formControlName="password"
-            [toggleMask]="true"
-            [feedback]="false"
-            (input)="verificarPassword()"
-            inputStyleClass="input-login"
-            promptLabel="Ingresa tu contraseña"
-            [disabled]="!loginForm.get('email')"
+              formControlName="password"
+              [toggleMask]="true"
+              [feedback]="false"
+              (input)="verificarPassword()"
+              inputStyleClass="input-login"
+              promptLabel="Ingresa tu contraseña"
+              [disabled]="!loginForm.get('email')"
             >
-          
-
               <!-- <ng-template pTemplate="header">
                 <h6>Escoge una contraseña</h6>
               </ng-template>
@@ -93,12 +94,15 @@
             ¿Olvidaste tu contraseña?
           </a>
         </p>
-        <div
-          id="captcha-container"
-          class="g-recaptcha"
-          data-sitekey="6Ld8joAqAAAAABuc_VUhgDt7bzSOYAr7whD6WeNI"
-          data-theme="light"
-        ></div>
+        <div class="captcha-wrapper">
+          <div
+            id="captcha-container"
+            class="g-recaptcha"
+            data-sitekey="6Ld8joAqAAAAABuc_VUhgDt7bzSOYAr7whD6WeNI"
+            data-theme="light"
+          ></div>
+        </div>
+        
         <div *ngIf="!captchaToken" class="error">
           <small
             >Resuelva el captcha para continuar con el proceso de inicio de
@@ -117,22 +121,22 @@
         >
           {{ errorMessage }}
         </span>
-        <button 
-  type="submit" 
-  class="ui button login-btn" 
-  [class.loading]="isLoading" 
-  [disabled]="isLoading"
->
-  Iniciar sesión
-</button>
-<!-- <div class="social-login">
+        <button
+          type="submit"
+          class="ui button login-btn"
+          [class.loading]="isLoading"
+          [disabled]="isLoading"
+        >
+          Iniciar sesión
+        </button>
+        <!-- <div class="social-login">
         <button class="btn google-btn">Ingresar con Google</button>
         <button class="btn facebook-btn">Ingresar con Facebook</button>
       </div> -->
       </form>
       <div class="footer-links">
         <!-- <a redirecto("terminos")>Términos y Condiciones</a> |//- -->
-        <a (click)="redirectTo('terminos')">Términos y Condiciones</a> |//+
+        <a (click)="redirectTo('terminos')">Términos y Condiciones</a> |
         <a (click)="redirectTo('politicas')">Política de Privacidad</a> |
         <!-- <a href="#">Preguntas Frecuentes</a> -->
       </div>
@@ -140,3 +144,30 @@
   </div>
 </p-dialog>
 
+
+
+<ngx-ui-loader
+  [bgsOpacity]="0.5"  
+  [bgsColor]="'red'"
+  [bgsPosition]="'bottom-right'"
+  [bgsSize]="60"
+  [bgsType]="'ball-spin-clockwise'"
+  blur="5"
+  [fgsColor]="'red'"
+  [fgsPosition]="'center-center'"
+  [fgsSize]="60"
+  [fgsType]="'ball-spin-clockwise'"
+  [gap]="24"
+  [logoPosition]="'center-center'"
+  [logoSize]="120"
+  masterLoaderId="'master'"
+  [overlayBorderRadius]="'0'"
+  [overlayColor]="'rgba(40, 40, 40, 0.8)'"
+  [pbColor]="'red'"
+  [pbDirection]="'ltr'"
+  [pbThickness]="3"
+  [hasProgressBar]="true"
+  [text]="'Atelier'"
+  [textColor]="'#FFFFFF'"
+  [textPosition]="'center-center'"
+></ngx-ui-loader>

@@ -110,14 +110,18 @@
         <div class="product-detail">
           <p>Cantidad: <span>1</span></p>
         </div>
+        <!-- class="add-to-cart rent" -->
 
-        <button
-          *ngIf="Detalles.categoria == 'renta' && Detalles.disponible"
-          (click)="redirigirContinuarRenta(Detalles._id)"
-          class="add-to-cart rent"
-        >
-          Me lo quiero probar
-        </button>
+          <button
+  *ngIf="Detalles.categoria == 'renta' && Detalles.disponible"
+  (click)="redirigirContinuarRenta(Detalles._id)"
+  class="ui add-to-cart rent button"
+  [class.loading]="isLoadingRenta"
+  [class.disabled]="isLoadingRenta"
+>
+  Me lo quiero probar
+</button>
+
 
         <button (click)="apartarRentar(Detalles)" class="add-to-cart">
           <i class="pi pi-shopping-cart"></i> Agregar a carrito

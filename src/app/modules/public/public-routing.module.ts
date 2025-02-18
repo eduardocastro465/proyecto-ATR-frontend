@@ -99,10 +99,10 @@ const routes: Routes = [
       {
         path: "continuarRenta/:id",
         component: ProcessRentaComponent,
-        data: {
-          title: "Renata de producto",
-          breadcrumb: "Renta del Producto",
-        },
+        // data: {
+        //   title: "Renata de producto",
+        //   breadcrumb: "Renta del Producto",
+        // },
       },
       {
         path: "404",

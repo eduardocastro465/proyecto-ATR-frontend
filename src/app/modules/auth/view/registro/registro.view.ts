@@ -28,7 +28,8 @@ declare const $: any;
     // './registro.view.scss',
     '../../../../shared/styles/notificaciones.scss',
   ],
-  styles:`.container {
+  styles:`
+  .container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -41,7 +42,7 @@ declare const $: any;
     width: 100%;
     max-width:1000px;
     background-color: white;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 5px rgba(82, 82, 82, 0.1);
     border-radius: 8px;
     overflow: hidden;
   }
@@ -82,13 +83,13 @@ declare const $: any;
     color: #555;
   }
   
-  input, p-password {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-  }
+  // input, p-password {
+  //   width: 100%;
+  //   padding: 10px;
+  //   border: 1px solid #ccc;
+  //   border-radius: 5px;
+  //   font-size: 16px;
+  // }
   
   .ui.basic.button {
     width: 100%;
@@ -269,44 +270,44 @@ export class RegistroView {
       this.ngxService.stop(); // stop foreground spinner of the master loader with 'default' taskId
     }, 5000);
 
-    if (this.personalDataForm.invalid) {
-      // Recolecta los mensajes de error
-      let errorMessages = '';
+    // if (this.personalDataForm.invalid) {
+    //   // Recolecta los mensajes de error
+    //   let errorMessages = '';
 
-      if (this.personalDataForm.get('username')?.hasError('required')) {
-        errorMessages += '• El nombre es obligatorio.<br>';
-      }
-      if (this.personalDataForm.get('username')?.hasError('maxlength')) {
-        errorMessages += '• El nombre no puede tener más de 15 caracteres.<br>';
-      }
+    //   if (this.personalDataForm.get('username')?.hasError('required')) {
+    //     errorMessages += '• El nombre es obligatorio.<br>';
+    //   }
+    //   if (this.personalDataForm.get('username')?.hasError('maxlength')) {
+    //     errorMessages += '• El nombre no puede tener más de 15 caracteres.<br>';
+    //   }
 
-      if (this.personalDataForm.get('email')?.hasError('required')) {
-        errorMessages += '• El correo es obligatorio.<br>';
-      }
-      if (this.personalDataForm.get('email')?.hasError('pattern')) {
-        errorMessages += '• El formato del correo no es válido.<br>';
-      }
+    //   if (this.personalDataForm.get('email')?.hasError('required')) {
+    //     errorMessages += '• El correo es obligatorio.<br>';
+    //   }
+    //   if (this.personalDataForm.get('email')?.hasError('pattern')) {
+    //     errorMessages += '• El formato del correo no es válido.<br>';
+    //   }
 
-      if (this.personalDataForm.get('telefono')?.hasError('required')) {
-        errorMessages += '• El número telefónico es obligatorio.<br>';
-      }
-      if (this.personalDataForm.get('telefono')?.hasError('pattern')) {
-        errorMessages +=
-          '• El número telefónico debe contener exactamente 10 dígitos.<br>';
-      }
+    //   if (this.personalDataForm.get('telefono')?.hasError('required')) {
+    //     errorMessages += '• El número telefónico es obligatorio.<br>';
+    //   }
+    //   if (this.personalDataForm.get('telefono')?.hasError('pattern')) {
+    //     errorMessages +=
+    //       '• El número telefónico debe contener exactamente 10 dígitos.<br>';
+    //   }
 
-      // Muestra el alert con los errores
-      Swal.fire({
-        icon: 'error',
-        title: 'Errores en el formulario',
-        html: errorMessages,
-        confirmButtonText: 'Ok',
-      });
-      this.personalDataForm.markAllAsTouched(); // Marca todos los campos como tocados
+    //   // Muestra el alert con los errores
+    //   Swal.fire({
+    //     icon: 'error',
+    //     title: 'Errores en el formulario',
+    //     html: errorMessages,
+    //     confirmButtonText: 'Ok',
+    //   });
+    //   this.personalDataForm.markAllAsTouched(); // Marca todos los campos como tocados
 
-      // Desactiva el estado de carga
-      this.isLoadingBasic = false;
-    } else {
+    //   // Desactiva el estado de carga
+    //   this.isLoadingBasic = false;
+    // } else {
       this.showSpinner();
       // isLoadingBasic
       const email = this.personalDataForm.get('email')?.value;
@@ -348,7 +349,7 @@ export class RegistroView {
           this.hideSpinner();
         },
       });
-    }
+    // }
   }
 
   // Obtiene los controles inválidos y sus nombres
