@@ -20,6 +20,10 @@ export class ProductoService {
     // fd.append('image', producto);
     return this.http.post<Producto>(`${environment.api}/producto/`,producto);
   }
+  crearRenta(data:any): Observable<Producto> {
+   
+    return this.http.post<any>(`${environment.api}/rentaUser/`,data);
+  }
 
   editarProducto(id: string, producto:FormData): Observable<Producto> {
     return this.http.put<Producto>(`${environment.api}/producto/editarProducto/${id}`, producto);

@@ -1,7 +1,10 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-// Importa tu servicio (el nombre y ruta puede variar)
 import { ProductoService } from '../../../../shared/services/producto.service';
+import { SwPush } from '@angular/service-worker';
+import { environment } from '../../../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-process-renta',
@@ -9,13 +12,12 @@ import { ProductoService } from '../../../../shared/services/producto.service';
   styleUrls: ['./process-renta.component.scss']
 })
 export class ProcessRentaComponent implements OnInit {
-  
-  // Variables para el control de carga y datos del producto
+
   isLoading: boolean = false;
   productId: string = '';
   Detalles: any;
 
-  // Variables para el formulario de renta
+  // Variables del formulario de renta
   arrendador: string = '';
   arrendatario: string = '';
   fechaInicio: string = '';
@@ -23,26 +25,28 @@ export class ProcessRentaComponent implements OnInit {
   direccionInmueble: string = '';
   montoRenta: number | null = null;
   contratoGenerado: boolean = false;
+  publicKey: string = environment.publicKey;
 
   constructor(
+    private swPush: SwPush,
     private activatedRoute: ActivatedRoute,
     private productoS_: ProductoService,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private http: HttpClient,
+    private ngxService: NgxUiLoaderService
   ) {}
 
   ngOnInit(): void {
     this.isLoading = true;
     this.scrollToTop();
+    this.generarToken(); // Generamos el token antes de enviar los datos
 
-    // Obtenemos el ID del producto desde la ruta
     this.productId = this.activatedRoute.snapshot.params['id'];
 
-    // Llamamos al servicio para obtener detalles del producto
     this.productoS_.obtenerDetalleProductoById(this.productId).subscribe({
       next: (response) => {
         this.isLoading = false;
         this.Detalles = response;
-        // Forzamos la detección de cambios si es necesario
         this.cdRef.detectChanges();
       },
       error: (err) => {
@@ -52,14 +56,60 @@ export class ProcessRentaComponent implements OnInit {
     });
   }
 
-  // Ejemplo de método para hacer scroll al inicio
   scrollToTop(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // Método para el submit del formulario
+  // Método de submit del formulario
   onSubmit(): void {
-    // Aquí podrías realizar validaciones o lógica adicional
-    this.contratoGenerado = true;
+    this.isLoading = true; // Activamos el loader
+    this.generarToken(); // Generamos el token antes de enviar los datos
+  }
+
+  // Método para generar el token y enviarlo al backend
+  generarToken(): void {
+    this.swPush.requestSubscription({ serverPublicKey: this.publicKey })
+      .then((sub) => {
+        const token = JSON.stringify(sub);
+
+        // Datos a enviar al backend
+        const data = {
+          arrendador: this.arrendador,
+          arrendatario: this.arrendatario,
+          fechaInicio: this.fechaInicio,
+          fechaFin: this.fechaFin,
+          direccionInmueble: this.direccionInmueble,
+          montoRenta: this.montoRenta,
+          productId: this.productId,
+          token: token // Token generado
+        };
+
+        // Enviar los datos al backend
+        this.productoS_.crearRenta(data).subscribe({
+          next: (response) => {
+            console.log('Renta creada exitosamente:', response);
+            this.contratoGenerado = true;
+            this.isLoading = false; // Desactivamos el loader
+            this.enviarTokenAlBackend(token); // Enviamos el token generado al backend
+          },
+          error: (err) => {
+            console.error('Error al crear la renta:', err);
+            this.isLoading = false; // Desactivamos el loader en caso de error
+          }
+        });
+      })
+      .catch((err) => {
+        console.error('Error al suscribirse a notificaciones:', err);
+        this.isLoading = false;
+      });
+  }
+
+  // Método para enviar el token de notificación al backend
+  enviarTokenAlBackend(token: string): void {
+    this.http.post('http://localhost:4000/api/v1/enviar-notificacion/ejemplo', { token })
+      .subscribe(
+        () => console.log('Token enviado al backend correctamente'),
+        (err) => console.error('Error al enviar el token al backend:', err)
+      );
   }
 }
