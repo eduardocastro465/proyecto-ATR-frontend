@@ -11,7 +11,7 @@ import { DialogModule } from 'primeng/dialog';
 import { SidebarModule } from 'primeng/sidebar';
 import { AcercaDeView } from './views/acerca-de/acerca-de.view';
 import { FooterComponent } from './components/footer/footer.component';
-import { HeaderComponent } from './components/header/header.component';
+// import { HeaderComponent } from './components/header/header.component';
 import { PerfilView } from './views/perfil/perfil.view';
 import { MenuModule } from 'primeng/menu';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -55,16 +55,15 @@ import { NotFoundComponent } from './views/not-found/not-found.component';
 import { Error500Component } from './views/error500/error500.component';
 import { SidevarComponent } from './components/sidevar/sidevar.component';
 import { CargaComponent } from './components/carga/carga.component';
-// import { Header404Component } from './components/header-404/header-404.component';
 import {  CarouselModule } from 'primeng/carousel';
-import { LoginModalComponent } from './views/login-modal/login-modal.component';
+// import { } from './views/login-modal/login-modal.component';
 import { VideosComponent } from './components/videos/videos.component';
 import { ProductosComponent } from './views/productos/productos.component';
 const MATERIALS =[PasswordModule,
   InputMaskModule,ImageModule,
   InputTextModule,FormsModule,InputGroupModule,AvatarModule,AvatarGroupModule,PaginatorModule,OverlayPanelModule,TieredMenuModule,SkeletonModule,CardModule,TabMenuModule,ButtonModule,DialogModule,SidebarModule,CheckboxModule,MenuModule]
-const COMPONENTS =[FooterComponent,HeaderComponent]
-const VIEWS=[HomeView,PublicComponent,PerfilView, AcercaDeView,DetailsProductView,LoginModalComponent,DataCompraComponent]
+const COMPONENTS =[FooterComponent]
+const VIEWS=[HomeView,PublicComponent,PerfilView, AcercaDeView,DetailsProductView,DataCompraComponent]
 
 import { ImageModule } from 'primeng/image';
 import { NgxImageZoomModule } from 'ngx-image-zoom';
@@ -86,10 +85,11 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { MessageModule } from 'primeng/message';
 import { ComentariosComponent } from './components/comentarios/comentarios.component';
 import { CsrfInterceptor } from '../../shared/services/csrf.interceptor';
+import { HeaderComponent } from '../../shared/components/header/header.component';
 @NgModule({
   declarations: [VIEWS,COMPONENTS, CarritoView, TagComponent, PoliticasComponent, TerminosComponent, CitasProbadorView, ResultsComponent, HeroImgComponent, FigureComponent, BreadcrumbComponent, NotFoundComponent, Error500Component, SidevarComponent, CargaComponent, VideosComponent, ProductosComponent, ProcessRentaComponent, DataCompraComponent, InformacionUserComponent, ComprasComponent, ProcessCompraComponent, RentasComponent, AccesoriosComponent, ComentariosComponent],
   exports:[COMPONENTS],
-  imports: [InputTextModule,FloatLabelModule,
+  imports: [HeaderComponent,InputTextModule,FloatLabelModule,
     InputNumberModule,ConfirmDialogModule,MessageModule,
     CalendarModule,TableModule,NgxImageZoomModule,GalleriaModule,CarouselModule,
     CommonModule,ReactiveFormsModule,

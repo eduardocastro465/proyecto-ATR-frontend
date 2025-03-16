@@ -14,27 +14,43 @@ import {
   AfterViewInit,
   ViewChild,
 } from "@angular/core";
-import { IndexedDbService } from "../../../public/commons/services/indexed-db.service";
-import { mensageservice } from "../../../../shared/services/mensage.service";
-import { StorageService } from "../../../../shared/services/storage.service";
-import { SignInService } from "../../../auth/commons/services/sign-in.service";
-import { SessionService } from "../../../../shared/services/session.service";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { IndexedDbService } from "../../../modules/public/commons/services/indexed-db.service";
+import { mensageservice } from "../../services/mensage.service";
+import { StorageService } from "../../services/storage.service";
+import { SignInService } from "../../../modules/auth/commons/services/sign-in.service";
+import { SessionService } from "../../services/session.service";
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MessageService } from "primeng/api";
-import { DatosEmpresaService } from "../../../../shared/services/datos-empresa.service";
+import { DatosEmpresaService } from "../../services/datos-empresa.service";
 import { NgxUiLoaderService } from "ngx-ui-loader";
-import { ThemeServiceService } from "../../../../shared/services/theme-service.service";
+import { ThemeServiceService } from "../../services/theme-service.service";
 import { Router } from "@angular/router";
 import { interval, Subscription } from "rxjs";
 import Swal from "sweetalert2";
-import { isPlatformBrowser } from "@angular/common";
-import { ERol } from "../../../../shared/constants/rol.enum";
+import { CommonModule, isPlatformBrowser } from "@angular/common";
+import { ERol } from "../../constants/rol.enum";
+import { ToastModule } from "primeng/toast";
+import { InputTextModule } from "primeng/inputtext";
+import { MessageModule } from "primeng/message";
+import { ConfirmDialogModule } from "primeng/confirmdialog";
+import { InputNumberModule } from "primeng/inputnumber";
+import { HttpClientModule } from "@angular/common/http";
+import { DialogModule } from "primeng/dialog";
+import { InputGroupModule } from "primeng/inputgroup";
+import { PasswordModule } from "primeng/password";
 // import EventEmitter from 'events';
 
+
 @Component({
-  selector: "app-login-modal",
-  templateUrl: "./login-modal.component.html",
-  styleUrl: "./login-modal.component.scss",
+  selector: 'app-login-modal',
+  standalone: true, // Marca el componente como standalone
+  imports: [/* The `SidebarModule` in the Angular code you provided is being imported in the `HeaderComponent` class. This module is likely a custom Angular module or a module provided by a third-party library (such as PrimeNG) that provides functionality related to displaying a sidebar component. */
+      FormsModule,ToastModule,InputTextModule,
+        InputNumberModule,ConfirmDialogModule,MessageModule,
+        CommonModule,ReactiveFormsModule,DialogModule,InputGroupModule,PasswordModule,
+        HttpClientModule], // Importa las dependencias necesarias
+  templateUrl: './login-modal.component.html',
+  styleUrls: ['./login-modal.component.scss'],
 })
 export class LoginModalComponent implements OnInit, OnChanges, AfterViewInit {
   isLoading = false;
