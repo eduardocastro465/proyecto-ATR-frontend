@@ -117,6 +117,7 @@ export class LoginModalComponent implements OnInit, OnChanges, AfterViewInit {
   timerSubscription!: Subscription;
 
   loginForm: FormGroup;
+  
   errorMessage: string = "";
   // userROL!: string;
   loading: boolean = false;
@@ -265,24 +266,24 @@ export class LoginModalComponent implements OnInit, OnChanges, AfterViewInit {
     return token ? token : null;
   }
 
-  // inicia() {
-  //   this.ngxService.start(); // start foreground spinner of the master loader with 'default' taskId
-  //   // Stop the foreground loading after 5s
-  //   setTimeout(() => {
-  //     this.ngxService.stop(); // stop foreground spinner of the master loader with 'default' taskId
-  //   }, 3000);
+  inicia() {
+    this.ngxService.start(); // start foreground spinner of the master loader with 'default' taskId
+    // Stop the foreground loading after 5s
+    setTimeout(() => {
+      this.ngxService.stop(); // stop foreground spinner of the master loader with 'default' taskId
+    }, 3000);
 
-  //   // OR
-  //   this.ngxService.startBackground("do-background-things");
-  //   // Do something here...
-  //   this.ngxService.stopBackground("do-background-things");
+    // OR
+    this.ngxService.startBackground("do-background-things");
+    // Do something here...
+    this.ngxService.stopBackground("do-background-things");
 
-  //   this.ngxService.startLoader("loader-01"); // start foreground spinner of the loader "loader-01" with 'default' taskId
-  //   // Stop the foreground loading after 5s
-  //   setTimeout(() => {
-  //     this.ngxService.stopLoader("loader-01"); // stop foreground spinner of the loader "loader-01" with 'default' taskId
-  //   }, 3000);
-  // }
+    this.ngxService.startLoader("loader-01"); // start foreground spinner of the loader "loader-01" with 'default' taskId
+    // Stop the foreground loading after 5s
+    setTimeout(() => {
+      this.ngxService.stopLoader("loader-01"); // stop foreground spinner of the loader "loader-01" with 'default' taskId
+    }, 3000);
+  }
 
   validacionesPassword = {
     tieneMinuscula: false,
@@ -386,6 +387,7 @@ export class LoginModalComponent implements OnInit, OnChanges, AfterViewInit {
       .subscribe(
         (response) => {
           if (response) {
+
             this.storageService.setToken(response.token);
             const userData = this.sessionService.getUserData();
             // window.location.reload();
@@ -399,15 +401,15 @@ export class LoginModalComponent implements OnInit, OnChanges, AfterViewInit {
                 navigateTo = "/admin/home";
               } else if (this.userROL === ERol.CLIENTE) {
                 navigateTo = "/public/inicio";
+              } else if (this.userROL === ERol.TITULAR) {
+                navigateTo = "/titular/home";
               }
 
               this.router.navigate([navigateTo]).then(() => {
                 if (navigateTo === "/public/inicio") {
                   window.location.reload();
                 }
-
-                // this.inicia();
-
+                this.inicia();
                 window.location.reload();
               });
             }
@@ -416,7 +418,6 @@ export class LoginModalComponent implements OnInit, OnChanges, AfterViewInit {
         (err) => {
           console.error("Error en el inicio de sesión:", err);
           this.isLoading = false;
-
           if (err) {
             if (err.error.message === "Captcha inválido") {
               Swal.fire({

@@ -1,9 +1,6 @@
+import { TitularModule } from './modules/titular/titular.module';
 import { Routes } from '@angular/router';
 import { adminGuard } from './shared/guards/auth.guard';
-import { NotFoundComponent } from './modules/public/views/not-found/not-found.component';
-import { PublicComponent } from './modules/public/public.component';
-import { HomeView } from './modules/public/views/home/home.view';
-import { Error500Component } from './modules/public/views/error500/error500.component';
 
 export const routes: Routes = [
     {
@@ -24,6 +21,16 @@ export const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('../app/modules/auth/auth.module').then(m=>m.AuthModule)
+  },
+  {
+    
+  // canActivate: [AuthGuard], // Solo usuarios autenticados pueden acceder
+    path: 'cuenta',
+    loadChildren: () => import('../app/modules/client/client.module').then(m=>m.ClientModule)
+  },
+  {
+    path: 'titular',
+    loadChildren: () => import('../app/modules/titular/titular.module').then(m=>m.TitularModule)
   },
   {
     path: '500', // Ruta para error 500

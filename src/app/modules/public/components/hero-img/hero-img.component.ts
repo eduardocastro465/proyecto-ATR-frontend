@@ -5,7 +5,8 @@ import {
   transition,
   trigger,
 } from "@angular/animations";
-import { Component } from "@angular/core";
+import { Component, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID } from "@angular/core";
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: "app-hero-img",
@@ -27,14 +28,41 @@ import { Component } from "@angular/core";
     >
       <div class="hero-content" @fadeIn>
         <h1 class="title">Venta <span class="small">y</span> Renta</h1>
-
         <p class="subtitle">Especial de Verano 2024</p>
         <p class="description">
           LO MÁS TOP DE VESTIDOS EN RENTA PARA FIESTAS, UN ESPACIO DONDE
           ENCONTRARÁS LO QUE ESTÁS BUSCANDO ✨.
         </p>
         <a href="#" class="cta">Compra Ahora</a>
+
+        <!-- Iconos de redes sociales -->
+        <div class="social-icons">
+          <a href="#" class="icon facebook">
+            <svg
+              viewBox="0 0 24 24"
+              fill="white"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M22 12.073C22 6.504 17.523 2 12 2S2 6.504 2 12.073c0 5.035 3.657 9.209 8.437 9.908v-7.006H7.897v-2.902h2.54v-2.219c0-2.508 1.492-3.89 3.777-3.89 1.095 0 2.238.195 2.238.195v2.455h-1.26c-1.242 0-1.632.773-1.632 1.563v1.896h2.773l-.443 2.902h-2.33v7.006C18.343 21.282 22 17.108 22 12.073z"
+              />
+            </svg>
+          </a>
+
+          <a href="#" class="icon instagram">
+            <svg
+              viewBox="0 0 24 24"
+              fill="white"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M7.5 2C4.462 2 2 4.462 2 7.5v9C2 19.538 4.462 22 7.5 22h9c3.038 0 5.5-2.462 5.5-5.5v-9C22 4.462 19.538 2 16.5 2h-9zM18 4c.827 0 1.5.673 1.5 1.5S18.827 7 18 7s-1.5-.673-1.5-1.5S17.173 4 18 4zM12 6a6 6 0 1 1 0 12 6 6 0 0 1 0-12zm0 2a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"
+              />
+            </svg>
+          </a>
+        </div>
       </div>
+
       <!-- Botón Izquierdo -->
       <button class="carousel-btn left" (click)="prevImage()">
         <i class="angle left icon"></i>
@@ -57,8 +85,13 @@ import { Component } from "@angular/core";
   background-position: center;
   background-color:rgb(252, 230, 230);
   background-attachment: fixed;
-  mask-image: linear-gradient(black 76%, transparent);
+  mask-image: linear-gradient(black 90%, transparent);
   padding: 0 2rem;
+  opacity: 1; /* Asegúrate de que la opacidad inicial sea 1 */
+  transition: opacity 0.5s ease-in-out;
+}/* Agrega esta clase para ocultar temporalmente la imagen */
+.hero.fade-out {
+  opacity: 0;
 }
   
   .hero-content {
@@ -66,19 +99,13 @@ import { Component } from "@angular/core";
     filter: opacity(8);
     color:rgb(255, 0, 179);
     position: relative;
-  z-index: 1;
-  /* margin: auto; */
-  padding: 7rem;
-  /* Agregar un fondo semi-transparente para mejorar la legibilidad */
-    // background-color: #000000;
-  // color: #fff;
-  text-align: center;
+    z-index: 1;
+    padding: 7rem;
+    text-align: center;
     animation: fadeIn 1.5s ease-out;
   }
   .subtitle {
     font-size: 1.2rem;
-    // color:#f3f3f3;
-    // color:#000000;
     margin-bottom: 1rem;
   }
   .title {
@@ -94,7 +121,6 @@ import { Component } from "@angular/core";
     line-height: 1.5;
     margin-bottom: 2rem;
     color:#363636;
-    // color:#f5f5f5;
   }
   .cta {
     display: inline-block;
@@ -113,6 +139,39 @@ import { Component } from "@angular/core";
 .title .small {
     font-size:5rem; /* Tamaño más pequeño para la "y" */
 }
+
+
+.social-icons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+
+    .icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: transparent;
+      border: 2px solid white;
+      transition: background 0.3s;
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      &:hover {
+        background: white;
+
+        svg {
+          fill: black;
+        }
+      }
+    }
+  }
   @media (max-width: 767px) {
       .hero {
         // border-radius: 10px;
@@ -127,6 +186,60 @@ import { Component } from "@angular/core";
     text-align: center;
     padding: 0rem;
     width: 70%;
+}
+.hero-content {
+  transition: transform 0.3s ease, font-size 0.3s ease;
+
+  h1 {
+    font-size: 3rem;
+    transition: font-size 0.3s ease;
+  }
+
+  .subtitle {
+    font-size: 1.5rem;
+    transition: font-size 0.3s ease;
+  }
+
+  .description {
+    font-size: 1rem;
+    transition: font-size 0.3s ease;
+  }
+
+  // When the "scrolled" class is added, chan.ge the style.
+  &.scrolled {
+    transform: translateY(-10px);  // You can add the effect you want, e.g., moving the hero content up.
+    h1 {
+      font-size: 2.5rem; // Example: Reduce font-size on scroll
+    }
+
+    .subtitle {
+      font-size: 1.25rem; // Example: Change subtitle font-size on scroll
+    }
+
+    .description {
+      font-size: 0.9rem; // Example: Change description font-size on scroll
+    }
+  }
+}
+
+
+// Aplicar el efecto cuando se hace scroll
+@media (min-width: 768px) {
+  .scrolled .hero-content {
+    transform: scale(0.9);
+  
+    h1 {
+      font-size: 2.5rem;
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+    }
+
+    .description {
+      font-size: 0.9rem;
+    }
+  }
 }
 
 .subtitle {
@@ -180,7 +293,7 @@ import { Component } from "@angular/core";
 z-index:1;
 border: none;
 // background-color:none;
-background-color: rgba(0, 0, 0, 0.5);
+background-color: transparent;
       color: white;
       padding: 10px;
       cursor: pointer;
@@ -194,24 +307,26 @@ background-color: rgba(0, 0, 0, 0.5);
       right: 10px;
     }
     .carousel-btn:hover {
-      background-color: rgba(0, 0, 0, 0.8);
+      background-color:transparent;
     }
     .carousel-btn i {
       font-size: 2rem;
     }
 `,
 })
-export class HeroImgComponent {
+export class HeroImgComponent implements OnInit, OnDestroy {
   images: string[] = [
     "https://res.cloudinary.com/dvvhnrvav/image/upload/v1736990456/images-AR/gh5ryrsad5fnaxgjgall.jpg",
-    "https://scontent.fpaz3-1.fna.fbcdn.net/v/t39.30808-6/461324196_122179092788124868_97257439273535514_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=833d8c&_nc_ohc=wftOA82u4tgQ7kNvgHJE6RH&_nc_oc=AdjLXatA8FNBccknPB4pgDyH43CJWGVAYJNl5lraAEeFFZ5Kzd92595gBfV5q7rZx4M&_nc_zt=23&_nc_ht=scontent.fpaz3-1.fna&_nc_gid=AVOy8kuUE2L4_Bm1nM420HA&oh=00_AYBJO2QLvEsmDlzE__6M7FjSiafrsYAM9nb2OaywOEc8-A&oe=67B5433A",
-    "https://scontent.fpaz3-1.fna.fbcdn.net/v/t39.30808-6/461136486_122178603002124868_6501731612350359085_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=833d8c&_nc_ohc=t6Epz0rGLW4Q7kNvgGwAoTf&_nc_oc=Adio204Gz9TAx21HY8L7tWB3pj_gjygdn53WDz5ec76A1DzIST_PlJYiSdM8NBYZNwc&_nc_zt=23&_nc_ht=scontent.fpaz3-1.fna&_nc_gid=ANIMCAa59DLfS92LbMa79_A&oh=00_AYA72HwXQlVYg4HpiUjJvcUTfbXe6EJC0igKeDsUlvJTLA&oe=67B55547",
-    // "https://scontent.fntr6-1.fna.fbcdn.net/v/t51.75761-15/474322255_17904945975094225_9108677490445345985_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=127cfc&_nc_ohc=bEdE0F93RE8Q7kNvgGiglG3&_nc_oc=Adhx_gaWeXY447Rlkvb0ARBfb2DuCWItDZG_9CBp_YWWC0P92-0fHv8iHvgyF6ZUYJ0&_nc_zt=23&_nc_ht=scontent.fntr6-1.fna&_nc_gid=A-8Z7miyyXFeAG4unoL8OjH&oh=00_AYC4MJwGoEULBwVQv2JQ2U1mkcjjhoBW2PVrnI20lEPx3w&oe=67B547A2",
-    // "https://scontent.fpaz}3-1.fna.fbcdn.net/v/t39.30808-6/451776584_122166183206124868_2486089495469501853_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=833d8c&_nc_ohc=7i4mVIigkc4Q7kNvgFHb22y&_nc_oc=Adg-pyOY8793cI2hgC1Bxf2nyerBaDGGTwmFyKpSZWHEu8nCosEQOyc8vz01l8hwO_E&_nc_zt=23&_nc_ht=scontent.fpaz3-1.fna&_nc_gid=AzlcihI8ZWAlUYVWsNIW47B&oh=00_AYDrmC_i_9vt2w88lI7k7tHYsGkQSNPpJ-rbW3Z8iightg&oe=67B553DF",
+    "https://res.cloudinary.com/dvvhnrvav/image/upload/v1740548991/images-AR/eo8xyojnqxjhyjz9vfec.jpg",
+    "https://res.cloudinary.com/dvvhnrvav/image/upload/v1740548954/images-AR/olxd7enpsw0xm7h2wz5i.jpg",
+    "https://res.cloudinary.com/dvvhnrvav/image/upload/v1740548954/images-AR/br5qoj8efwj5fzm5a8ls.jpg",
+    "https://res.cloudinary.com/dvvhnrvav/image/upload/v1740548924/images-AR/y9i9sl47oklfv6sjijyl.jpg",
   ];
 
   selectedIndex: number = 0;
   selectedImage: string = this.images[this.selectedIndex];
+
+  constructor(@Inject(PLATFORM_ID) private platformId: any) {}
 
   prevImage() {
     this.selectedIndex =
@@ -223,4 +338,34 @@ export class HeroImgComponent {
     this.selectedIndex = (this.selectedIndex + 1) % this.images.length;
     this.selectedImage = this.images[this.selectedIndex];
   }
+
+  ngOnInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      window.addEventListener("scroll", this.onScroll);
+    }
+  }
+
+  ngOnDestroy() {
+    if (isPlatformBrowser(this.platformId)) {
+      window.removeEventListener("scroll", this.onScroll);
+    }
+  }
+
+  private onScroll = () => {
+    if (window.scrollY > 50) {
+      document.body.classList.add("scrolled");
+    } else {
+      document.body.classList.remove("scrolled");
+    }
+  };
+  @HostListener("window:scroll", [])
+onWindowScroll() {
+  const hero = document.querySelector(".hero-content");
+  if (window.scrollY > 50) {
+    hero?.classList.add("scrolled");
+  } else {
+    hero?.classList.remove("scrolled");
+  }
+}
+
 }

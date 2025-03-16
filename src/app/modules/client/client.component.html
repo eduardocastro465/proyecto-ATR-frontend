@@ -1,0 +1,60 @@
+<app-header></app-header>
+<main>
+  <div class="sidenav">
+    <ul>
+      <li>
+        <div class="group-label-container">
+          <span class="group-label">Cuenta</span>
+        </div>
+        <ul class="submenu">
+          <li (click)="redirectToCliente('perfil')">
+            <i class="pi pi-user"></i> Perfil
+          </li>
+          <li (click)="logout()">
+            <i class="pi pi-sign-out"></i> Cerrar sesión
+          </li>
+        </ul>
+      </li>
+      <li>
+        <div class="group-label-container">
+          <span class="group-label">Servicios</span>
+        </div>
+        <ul class="submenu">
+          <li (click)="redirectToCliente('compras')">
+            <i class="pi pi-shopping-cart"></i> Compras
+          </li>
+          <li (click)="redirectToCliente('rentas')">
+            <i class="pi pi-box"></i> Rentas
+          </li>
+        </ul>
+      </li>
+      <li>
+        <div class="group-label-container">
+          <span class="group-label">Notificaciones</span>
+        </div>
+        <ul class="submenu">
+          <li (click)="redirectToCliente('notificaciones')">
+            <i class="pi pi-bell"></i> Notificaciones
+          </li>
+        </ul>
+      </li>
+      <li>
+        <div class="group-label-container">
+          <span class="group-label">Configuración</span>
+        </div>
+        <ul class="submenu">
+          <li (click)="redirectToCliente('configuracion')">
+            <i class="pi pi-cog"></i> Configuración
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="box">
+    <!-- Enlace con icono de flecha y texto "Inicio" -->
+    <a routerLink="/public/inicio" class="back-link">
+      <i class="pi pi-arrow-left"></i> Inicio
+    </a>
+    <router-outlet></router-outlet>
+  </div>
+</main>

@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CardModule } from 'primeng/card';
@@ -61,28 +61,49 @@ import { LoginModalComponent } from './views/login-modal/login-modal.component';
 import { VideosComponent } from './components/videos/videos.component';
 import { ProductosComponent } from './views/productos/productos.component';
 const MATERIALS =[PasswordModule,
-  InputMaskModule,
+  InputMaskModule,ImageModule,
   InputTextModule,FormsModule,InputGroupModule,AvatarModule,AvatarGroupModule,PaginatorModule,OverlayPanelModule,TieredMenuModule,SkeletonModule,CardModule,TabMenuModule,ButtonModule,DialogModule,SidebarModule,CheckboxModule,MenuModule]
 const COMPONENTS =[FooterComponent,HeaderComponent]
 const VIEWS=[HomeView,PublicComponent,PerfilView, AcercaDeView,DetailsProductView,LoginModalComponent,DataCompraComponent]
 
+import { ImageModule } from 'primeng/image';
 import { NgxImageZoomModule } from 'ngx-image-zoom';
 import { ProcessRentaComponent } from './views/process-renta/process-renta.component';
 import { DataCompraComponent } from './views/data-compra/data-compra.component';
 import { InformacionUserComponent } from './views/informacion-user/informacion-user.component';
 import { TableModule } from 'primeng/table';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { CalendarModule } from 'primeng/calendar';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { ComprasComponent } from './views/compras/compras.component';
+import { ProcessCompraComponent } from './views/process-compra/process-compra.component';
+import { VentayrentaService } from '../../shared/services/ventayrenta.service';
+import { RentasComponent } from './views/rentas/rentas.component';
+import { AccesoriosComponent } from './components/accesorios/accesorios.component';
+import { CartService } from '../../shared/services/cart.service';
+
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { MessageModule } from 'primeng/message';
+import { ComentariosComponent } from './components/comentarios/comentarios.component';
+import { CsrfInterceptor } from '../../shared/services/csrf.interceptor';
 @NgModule({
-  declarations: [VIEWS,COMPONENTS, CarritoView, TagComponent, PoliticasComponent, TerminosComponent, CitasProbadorView, ResultsComponent, HeroImgComponent, FigureComponent, BreadcrumbComponent, NotFoundComponent, Error500Component, SidevarComponent, CargaComponent, VideosComponent, ProductosComponent, ProcessRentaComponent, DataCompraComponent, InformacionUserComponent],
+  declarations: [VIEWS,COMPONENTS, CarritoView, TagComponent, PoliticasComponent, TerminosComponent, CitasProbadorView, ResultsComponent, HeroImgComponent, FigureComponent, BreadcrumbComponent, NotFoundComponent, Error500Component, SidevarComponent, CargaComponent, VideosComponent, ProductosComponent, ProcessRentaComponent, DataCompraComponent, InformacionUserComponent, ComprasComponent, ProcessCompraComponent, RentasComponent, AccesoriosComponent, ComentariosComponent],
   exports:[COMPONENTS],
-  imports: [TableModule,NgxImageZoomModule,GalleriaModule,CarouselModule,
-    CommonModule,ReactiveFormsModule,FormsModule,
+  imports: [InputTextModule,FloatLabelModule,
+    InputNumberModule,ConfirmDialogModule,MessageModule,
+    CalendarModule,TableModule,NgxImageZoomModule,GalleriaModule,CarouselModule,
+    CommonModule,ReactiveFormsModule,
     PublicRoutingModule,HttpClientModule, ...MATERIALS,
   ], schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [Toast,MessageService,provideClientHydration(), [provideHttpClient(withFetch())],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: CsrfInterceptor,
+    multi: true, // Permite múltiples interceptores
+  },VentayrentaService,Toast,MessageService,provideClientHydration(), [provideHttpClient(withFetch())],
   SessionService,
   mensageservice,
   UsuarioService,
-  ToastrService,
+  ToastrService,CartService,
   MessageService,IndexedDbService,
   ConfirmationService,SignInService,
   SignUpService,ProductoService,UsuarioService,DatosEmpresaService,ControlAdministrativaService,ThemeServiceService],

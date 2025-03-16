@@ -1,41 +1,44 @@
-import { ChangeDetectorRef, Component, ElementRef, Inject, Output, PLATFORM_ID, Renderer2, EventEmitter, Input, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { IndexedDbService } from '../../../public/commons/services/indexed-db.service';
-import { mensageservice } from '../../../../shared/services/mensage.service';
-import { StorageService } from '../../../../shared/services/storage.service';
-import { SignInService } from '../../commons/services/sign-in.service';
-import { SessionService } from '../../../../shared/services/session.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MessageService } from 'primeng/api';
-import { DatosEmpresaService } from '../../../../shared/services/datos-empresa.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { ThemeServiceService } from '../../../../shared/services/theme-service.service';
-import { Router } from '@angular/router';
-import { interval, Subscription } from 'rxjs';
-import Swal from 'sweetalert2';
-import { isPlatformBrowser } from '@angular/common';
-import { ERol } from '../../../../shared/constants/rol.enum';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Inject,
+  Output,
+  PLATFORM_ID,
+  Renderer2,
+  EventEmitter,
+  Input,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+} from "@angular/core";
+import { IndexedDbService } from "../../../public/commons/services/indexed-db.service";
+import { mensageservice } from "../../../../shared/services/mensage.service";
+import { StorageService } from "../../../../shared/services/storage.service";
+import { SignInService } from "../../commons/services/sign-in.service";
+import { SessionService } from "../../../../shared/services/session.service";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MessageService } from "primeng/api";
+import { DatosEmpresaService } from "../../../../shared/services/datos-empresa.service";
+import { NgxUiLoaderService } from "ngx-ui-loader";
+import { ThemeServiceService } from "../../../../shared/services/theme-service.service";
+import { Router } from "@angular/router";
+import { interval, Subscription } from "rxjs";
+import Swal from "sweetalert2";
+import { isPlatformBrowser } from "@angular/common";
+import { ERol } from "../../../../shared/constants/rol.enum";
 // import EventEmitter from 'events';
 
 @Component({
-  selector: 'app-login-modal',
-  templateUrl: './login-modal.component.html',
-  styleUrl: './login-modal.component.scss'
+  selector: "app-login-modal",
+  templateUrl: "./login-modal.component.html",
+  styleUrl: "./login-modal.component.scss",
 })
-export class LoginModalComponent implements OnInit,AfterViewInit {
-
-
+export class LoginModalComponent implements OnInit, AfterViewInit {
   isLoading = false;
   userROL!: string;
 
-
-
-
-
-
-
-
-
-  count!:number;
+  count!: number;
 
   constructor(
     private indexedDbService: IndexedDbService,
@@ -67,30 +70,19 @@ export class LoginModalComponent implements OnInit,AfterViewInit {
       ],
       password: ["", Validators.required],
     });
-  
+
     this.isLoading = false;
-
   }
-ngOnInit(): void {
-  console.log('llegó');
-  this.robot = true;
+  ngOnInit(): void {
+    console.log("llegó");
+    this.robot = true;
     this.presionado = false;
-}
-
-
-
-
-
+  }
 
   get email() {
     return this.loginForm.get("email");
   }
 
-
-
-
-
-  
   captchaToken: string | null = null;
   //
 
@@ -128,22 +120,22 @@ ngOnInit(): void {
   //   this.captchaToken = null; // Limpia el token del captcha
   // }
 
-
   @Input() isOpen: boolean = false;
   @Output() closed: EventEmitter<string> = new EventEmitter<string>(); // Aquí se define correctamente
 
-  @ViewChild('passwordField') passwordField!: ElementRef;
+  @ViewChild("passwordField") passwordField!: ElementRef;
 
   ngAfterViewInit() {
     this.cargarWidgetRecaptcha();
-    this.passwordField.nativeElement.setAttribute('autocomplete', 'current-password');
+    this.passwordField.nativeElement.setAttribute(
+      "autocomplete",
+      "current-password"
+    );
   }
 
   close(): void {
-    this.closed.emit('Modal cerrado correctamente'); // Se emite el evento correctamente
+    this.closed.emit("Modal cerrado correctamente"); // Se emite el evento correctamente
   }
-
-
 
   getCaptchaToken(): string {
     if (typeof grecaptcha !== "undefined") {
@@ -245,12 +237,12 @@ ngOnInit(): void {
     localStorage.removeItem("lockInfo"); // O sessionStorage.removeItem si prefieres sessionStorage
   }
   cargarWidgetRecaptcha() {
-    if (typeof grecaptcha !== 'undefined') {
-      grecaptcha.render('captcha-container', {
-        sitekey: '6Ld8joAqAAAAABuc_VUhgDt7bzSOYAr7whD6WeNI',
+    if (typeof grecaptcha !== "undefined") {
+      grecaptcha.render("captcha-container", {
+        sitekey: "6Ld8joAqAAAAABuc_VUhgDt7bzSOYAr7whD6WeNI",
       });
     } else {
-      console.error('El cliente de reCAPTCHA no está disponible.');
+      console.error("El cliente de reCAPTCHA no está disponible.");
     }
   }
 
@@ -263,7 +255,9 @@ ngOnInit(): void {
   // }
 
   recargarPagina() {
-    window.location.reload();
+    if (typeof window !== "undefined") {
+      window.location.reload();
+    }
   }
 
   validateCaptcha() {
@@ -409,12 +403,15 @@ ngOnInit(): void {
 
               this.router.navigate([navigateTo]).then(() => {
                 if (navigateTo === "/public/inicio") {
-                  window.location.reload();
+                  if (typeof window !== "undefined") {
+                    window.location.reload();
+                  }
                 }
 
                 this.inicia();
-
-                window.location.reload();
+                if (typeof window !== "undefined") {
+                  window.location.reload();
+                }
               });
             }
           }

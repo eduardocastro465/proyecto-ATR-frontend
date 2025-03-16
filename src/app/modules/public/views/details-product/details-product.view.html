@@ -1,4 +1,8 @@
-<div class="contiendescripcion">
+<p-confirmDialog></p-confirmDialog>
+
+<div class="contiendescripcion"> <div class="volver" >
+  <i class="pi pi-arrow-left"(click)="volver()">Atrás</i> 
+</div>
   <div class="product-detail-container" *ngIf="Detalles && !isLoading">
     <div class="product-img">
       <div class="thumbnail-images">
@@ -22,6 +26,7 @@
           [src]="Detalles.imagenPrincipal"
           alt="Product Main Image"
           class="main-image"
+          (click)="openModal()"
           (mousemove)="applyZoomEffect($event)"
           (mouseleave)="resetZoomEffect()"
         />
@@ -112,16 +117,26 @@
         </div>
         <!-- class="add-to-cart rent" -->
 
-          <button
-  *ngIf="Detalles.categoria == 'renta' && Detalles.disponible"
-  (click)="redirigirContinuarRenta(Detalles._id)"
-  class="ui add-to-cart rent button"
-  [class.loading]="isLoadingRenta"
-  [class.disabled]="isLoadingRenta"
->
-  Me lo quiero probar
-</button>
+        <!-- <button
+          *ngIf="Detalles.categoria == 'renta' && Detalles.disponible"
+          (click)="redirigirContinuarRenta(Detalles._id)"
+          class="ui add-to-cart rent button"
+          [class.loading]="isLoadingRenta"
+          [class.disabled]="isLoadingRenta"
+        >
+          Me lo quiero probar
+        </button> -->
 
+
+        <button
+        *ngIf="Detalles.disponible"
+        (click)="Detalles.categoria == 'renta' ? redirigirContinuarRenta(Detalles._id) : redirigirContinuarCompra(Detalles._id)"
+        class="ui add-to-cart rent button"
+        [class.loading]="isLoadingBtn"
+        [class.disabled]="isLoadingBtn"
+      >
+        {{ Detalles.categoria == 'renta' ? 'Me lo quiero probar' : 'Continuar con la compra' }}
+      </button>
 
         <button (click)="apartarRentar(Detalles)" class="add-to-cart">
           <i class="pi pi-shopping-cart"></i> Agregar a carrito
@@ -194,24 +209,35 @@
 
     <h2 class="carousel-title">Accesorios incluidos en el look</h2>
     <div class="carousel">
-      <div class="carousel-item" *ngFor="let Detalles of productos">
-        <img [src]="Detalles.imagen" alt="{{ Detalles.nombre }}" />
-        <h3>{{ Detalles.nombre }}</h3>
+      <div class="carousel-item" *ngFor="let detalle of accesorios">
+        <img [src]="detalle.imagen" alt="{{ detalle.nombre }}" />
+        <h3>{{ detalle.nombre }}</h3>
       </div>
     </div>
 
     <h2 class="related-title">Productos Relacionados</h2>
     <div class="related-products">
-      <div
-        class="related-product"
-        *ngFor="let related of productosRelacionados"
-      >
-        <img [src]="related.imagen" alt="{{ related.nombre }}" />
-        <h3>{{ related.nombre }}</h3>
-        <p class="price">${{ related.precio }}</p>
-        <!-- <button class="btn-view">Ver Detalles</button> -->
+      <div class="carousel-track">
+        <div  class="related-product" *ngFor="let related of productosRelacionados">
+          <img [src]="related.imagen" alt="{{ related.nombre }}" />
+          <h3>{{ related.nombre }}</h3>
+          <p class="price">${{ related.precio }}</p>
+        </div>
       </div>
     </div>
+    
   </div>
   <!-- </div> -->
 </div>
+<!-- Modal de la imagen en pantalla completa -->
+<div class="image-modal" *ngIf="isViewImagen" (click)="closeModal($event)">
+  <img
+    #PreviewmainImage
+    (mousemove)="applyZoomEffectPreviewmainImage($event)"
+    (mouseleave)="resetZoomEffectPreviewmainImage()"
+    [src]="Detalles.imagenPrincipal"
+    alt="Imagen Ampliada"
+    class="modal-image"
+  />
+</div>
+º
