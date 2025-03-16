@@ -12,6 +12,7 @@ export interface DressItem {
   nombre: string;
   precio: number;
   imagenPrincipal: string;
+  categoria: string; // Asegúrate de que la interfaz incluya la propiedad `categoria`
 }
 
 @Component({
@@ -39,11 +40,12 @@ export class CitasProbadorView implements OnInit {
     private sessionService: SessionService,
     private indexedDbService: IndexedDbService,
     private router: Router,
-    private  cartService:CartService
+    private cartService: CartService // Inyecta el servicio CartService
   ) {}
 
   async ngOnInit() {
     try {
+      // Obtener productos desde IndexedDB
       const productos = await this.indexedDbService.obtenerProductosApartados();
       this.productosRenta = productos.filter(
         (item) => item.categoria === "renta"
@@ -52,17 +54,20 @@ export class CitasProbadorView implements OnInit {
         (item) => item.categoria === "venta"
       );
 
+      // Inicializar el carrito con los productos obtenidos
+      this.cartService.initializeCart(productos);
+
       this.calcularTotal();
       this.initializeTabs();
-      // this.verificarAcceso();
     } catch (error) {
       console.error("Error al obtener productos apartados:", error);
     }
   }
+
   volver() {
     this.location.back();
-
   }
+
   private initializeTabs() {
     if (typeof $ !== "undefined") {
       $(".menu .item").tab();
@@ -73,16 +78,22 @@ export class CitasProbadorView implements OnInit {
 
   async deleteDressItem(id: string) {
     try {
+      // Eliminar el producto de IndexedDB
       await this.indexedDbService.eliminarProducto(id);
+
+      // Eliminar el producto de las listas locales
       this.productosRenta = this.productosRenta.filter(
         (item) => item.id !== id
       );
       this.productosVenta = this.productosVenta.filter(
         (item) => item.id !== id
       );
-        // Eliminar el producto del carrito
-        this.cartService.removeFromCart(id);
-        this.calcularTotal();
+
+      // Eliminar el producto del carrito
+      this.cartService.removeFromCart(id);
+
+      // Recalcular el total
+      this.calcularTotal();
     } catch (error) {
       console.error("Error al eliminar el producto:", error);
     }
@@ -100,20 +111,6 @@ export class CitasProbadorView implements OnInit {
         : this.productosVenta.reduce((total, item) => total + item.precio, 0);
   }
 
-  // login() {
-  //   const token = localStorage.getItem("token");
-  //   const userData = JSON.parse(localStorage.getItem("userData") || "null");
-
-  //   if (userData && userData.rol === "CLIENTE" && token) {
-  //     this.isLoggedIn = true;
-  //     this.name = userData.name;
-  //     this.lastName = userData.lastName;
-  //     this.email = userData.email;
-  //   } else {
-  //     alert("Acceso denegado. Solo los clientes pueden iniciar sesión.");
-  //   }
-  // }
-
   isUserLoggedIn(): boolean {
     const userData = this.sessionService.getUserData();
     if (userData) {
@@ -123,35 +120,15 @@ export class CitasProbadorView implements OnInit {
     return false;
   }
 
-  // verificarAcceso() {
-  //   const token = localStorage.getItem("token");
-  //   const userData = JSON.parse(localStorage.getItem("userData") || "null");
-
-  //   if (userData && userData.rol === "CLIENTE" && token) {
-  //     this.isLoggedIn = true;
-  //     this.name = userData.name;
-  //     this.lastName = userData.lastName;
-  //     this.email = userData.email;
-  //   }
-  // }
-
   continuarCompra(data: any, tipo: string): void {
     this.isLoggedIn = this.isUserLoggedIn();
 
     this.productoSeleccionado = data;
     if (this.isLoggedIn) {
-      // this.name = userData.name;
-      // this.lastName = userData.lastName;
-      // this.email = userData.email;
       this.mostrarModal = true;
-      // this.router.navigate(['/checkout'], { queryParams: { id, tipo } });
     } else {
       alert("Acceso denegado. Solo los clientes pueden iniciar sesión.");
     }
-    // if (!this.isLoggedIn) {
-    //   alert("Debe iniciar sesión antes de continuar con la compra.");
-    //   return;
-    // }
   }
 
   mostrarResumen(item: any) {

@@ -93,8 +93,9 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges, OnDest
   dressItems: any[] = [];
   // Señal para manejar reactividad
   private dressItemsSignal = signal<any[]>([]);
-  empresaData: any;
   private cartSubscription!: Subscription;
+  empresaData: any;
+  // private cartSubscription!: Subscription;
   imageUrl!: string;
   defaultImageUrl: string =
     "https://res.cloudinary.com/dvvhnrvav/image/upload/v1730395938/images-AR/wyicw2mh3xxocscx0diz.png";
@@ -114,14 +115,10 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges, OnDest
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
 
+    // dressItemCount = this.cartService.dressItemCount; // Usar la señal del servicio
  // Usar la señal computada del servicio para el contador
     this.dressItemCount = this.cartService.dressItemCount;
-    effect(() => {
-      const items = this.cartService.getCartItems();
-      if (items.length > 0) {
-        this.showAlert('Se agregó un producto al carrito');
-      }
-    });
+   
   }
 
   showAlert(message: string) {
@@ -164,28 +161,26 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges, OnDest
     }
   }
 
+ 
+  
   async ngOnInit() {
     this.updateMenuItems(); // Actualiza los elementos del menú
-    try {
-      this.checkInternetConnection();
+    try {  
+      // Inicializar el carrito (si es necesario)
+      this.cartService.initializeCart([]); // Puedes pasar los ítems iniciales aquí
+      // Inicializar el carrito con los productos de IndexedDB
       const productos = await this.indexedDbService.obtenerProductosApartados();
-      this.dressItems = Array.isArray(productos) ? productos : [productos];
-      const items = Array.isArray(productos) ? productos : [productos];
+      this.cartService.initializeCart(productos);
 
-      // Inicializar el carrito con los productos obtenidos
-      this.cartService.initializeCart(items);
       // Suscribirse a cambios en el carrito
-      this.cartSubscription = this.cartService.cartUpdated$.subscribe((message:any) => {
-        if (message) {
-          this.showAlert(message);
-        }
+      this.cartSubscription = this.cartService.cartUpdated$.subscribe(() => {
+        console.log("El carrito ha cambiado");
+        // Aquí puedes realizar acciones adicionales, como mostrar una notificación
       });
-      // console.log(this.dressItems);
     } catch (error) {
       console.error("Error al obtener productos apartados");
     }
   }
-
 
   @HostListener("window:online")
   @HostListener("window:offline")

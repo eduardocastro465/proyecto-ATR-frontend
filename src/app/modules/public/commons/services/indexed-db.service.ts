@@ -1,70 +1,72 @@
 import { Injectable } from '@angular/core';
-import { openDB, IDBPDatabase } from 'idb';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class IndexedDbService {
-  private db!: IDBPDatabase<any>;
+  private db: IDBDatabase | null = null;
 
   constructor() {
-    if (typeof window !== 'undefined') {
-      this.initializeDB();
-    }
+    this.initializeDB();
   }
 
-  private async initializeDB(): Promise<void> {
-    if (!this.db && typeof window !== 'undefined') {
-      try {
-        this.db = await openDB('mi-tienda', 1, {
-          upgrade(db) {
-            if (!db.objectStoreNames.contains('apartados')) {
-              db.createObjectStore('apartados', { keyPath: 'id' });
-            }
-          },
-        });
-        console.log('IndexedDB initialized successfully');
-      } catch {
-        console.log('Error initializing IndexedDB');
+  // Inicializar la base de datos
+  private async initializeDB() {
+    const request = indexedDB.open('MiBaseDeDatos', 1);
+
+    request.onupgradeneeded = (event: IDBVersionChangeEvent) => {
+      const db = (event.target as IDBOpenDBRequest).result;
+      if (!db.objectStoreNames.contains('apartados')) {
+        db.createObjectStore('apartados', { keyPath: 'id' });
       }
-    }
+    };
+
+    request.onsuccess = (event: Event) => {
+      this.db = (event.target as IDBOpenDBRequest).result;
+    };
+
+    request.onerror = (event: Event) => {
+      console.error("Error al abrir la base de datos:", (event.target as IDBOpenDBRequest).error);
+    };
   }
 
+  // Guardar un producto en IndexedDB
   async guardarProducto(producto: any) {
     if (!this.db) await this.initializeDB();
     if (!this.db) return;
 
-    try {
-      console.log('Saving producto:', producto);
-      await this.db.put('apartados', producto);
-      console.log('Producto saved successfully');
-    } catch {
-      console.log('Could not save producto');
-    }
+    const transaction = this.db.transaction('apartados', 'readwrite');
+    const store = transaction.objectStore('apartados');
+    store.put(producto);
   }
 
-  async obtenerProductosApartados() {
-    if (!this.db) await this.initializeDB();
-    if (!this.db) return [];
-
-    try {
-      return await this.db.getAll('apartados');
-    } catch {
-      console.log('Could not retrieve productos apartados');
-      return [];
-    }
-  }
-
-  async eliminarProducto(productoId: any) {
+  // Eliminar un producto de IndexedDB
+  async eliminarProducto(id: string) {
     if (!this.db) await this.initializeDB();
     if (!this.db) return;
 
-    try {
-      console.log('Deleting producto:', productoId);
-      await this.db.delete('apartados', productoId);
-      console.log('Producto deleted successfully');
-    } catch {
-      console.log('Could not delete producto');
-    }
+    const transaction = this.db.transaction('apartados', 'readwrite');
+    const store = transaction.objectStore('apartados');
+    store.delete(id);
+  }
+
+  // Obtener todos los productos de IndexedDB
+  async obtenerProductosApartados(): Promise<any[]> {
+    if (!this.db) await this.initializeDB();
+    if (!this.db) return [];
+
+    return new Promise((resolve, reject) => {
+      const transaction = this.db!.transaction('apartados', 'readonly');
+      const store = transaction.objectStore('apartados');
+      const request = store.getAll();
+
+      request.onsuccess = () => {
+        resolve(request.result);
+      };
+
+      request.onerror = () => {
+        reject(request.error);
+      };
+    });
   }
 }

@@ -74,7 +74,7 @@ import { TableModule } from 'primeng/table';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CalendarModule } from 'primeng/calendar';
 import { FloatLabelModule } from 'primeng/floatlabel';
-import { ComprasComponent } from './views/compras/compras.component';
+// import { ComprasComponent } from './views/compras/compras.component';
 import { ProcessCompraComponent } from './views/process-compra/process-compra.component';
 import { VentayrentaService } from '../../shared/services/ventayrenta.service';
 import { RentasComponent } from './views/rentas/rentas.component';
@@ -87,7 +87,7 @@ import { ComentariosComponent } from './components/comentarios/comentarios.compo
 import { CsrfInterceptor } from '../../shared/services/csrf.interceptor';
 import { HeaderComponent } from '../../shared/components/header/header.component';
 @NgModule({
-  declarations: [VIEWS,COMPONENTS, CarritoView, TagComponent, PoliticasComponent, TerminosComponent, CitasProbadorView, ResultsComponent, HeroImgComponent, FigureComponent, BreadcrumbComponent, NotFoundComponent, Error500Component, SidevarComponent, CargaComponent, VideosComponent, ProductosComponent, ProcessRentaComponent, DataCompraComponent, InformacionUserComponent, ComprasComponent, ProcessCompraComponent, RentasComponent, AccesoriosComponent, ComentariosComponent],
+  declarations: [VIEWS,COMPONENTS, CarritoView, TagComponent, PoliticasComponent, TerminosComponent, CitasProbadorView, ResultsComponent, HeroImgComponent, FigureComponent, BreadcrumbComponent, NotFoundComponent, Error500Component, SidevarComponent, CargaComponent, VideosComponent, ProductosComponent, ProcessRentaComponent, DataCompraComponent, InformacionUserComponent, ProcessCompraComponent, RentasComponent, AccesoriosComponent, ComentariosComponent],
   exports:[COMPONENTS],
   imports: [HeaderComponent,InputTextModule,FloatLabelModule,
     InputNumberModule,ConfirmDialogModule,MessageModule,

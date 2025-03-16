@@ -15,7 +15,7 @@ import { NotFoundComponent } from "./views/not-found/not-found.component";
 import { Error500Component } from "./views/error500/error500.component";
 import { TagComponent } from "./components/tag/tag.component";
 import { ProcessRentaComponent } from "./views/process-renta/process-renta.component";
-import { ComprasComponent } from "./views/compras/compras.component";
+// import { ComprasComponent } from "./views/compras/compras.component";
 import { ProcessCompraComponent } from "./views/process-compra/process-compra.component";
 
 const routes: Routes = [
@@ -52,10 +52,7 @@ const routes: Routes = [
           breadcrumb: "terminos",
         },
       },
-      {
-        path: "Compras",
-        component: ComprasComponent,
-      },
+     
       {
         path: "politicas",
         component: PoliticasComponent,
