@@ -32,7 +32,6 @@ export class CartService {
   async addToCart(producto: any) {
     console.log("Intentando agregar producto al carrito:", producto);
     const currentItems = this.dressItemsSignal();
-
     // Verificar si el producto ya está en el carrito
     const isProductInCart = currentItems.some((item) => item.id === producto.id);
 
