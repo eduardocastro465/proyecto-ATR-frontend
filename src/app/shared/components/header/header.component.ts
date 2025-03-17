@@ -160,8 +160,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges, OnDest
       this.cartSubscription.unsubscribe();
     }
   }
-
- 
   
   async ngOnInit() {
     this.updateMenuItems(); // Actualiza los elementos del menú
@@ -201,20 +199,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges, OnDest
     // Por ejemplo, podrías llamar a updateMenuItems() aquí si es necesario
     this.updateMenuItems();
   }
-
-  //
-  // loadCompanyData() {
-  //   this.datosEmpresaService.traerDatosEmpresa().subscribe(
-  //     (data) => {
-  //       this.empresaData = data[0]; // Guardar los datos en la variable
-  //       this.nombreDeLaPagina = this.empresaData?.tituloPagina;
-  //       this.imageUrl = this.empresaData?.logo;
-  //     },
-  //     (error) => {
-  //       console.error("Error al cargar los datos de la empresa:", error);
-  //     }
-  //   );
-  // }
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
