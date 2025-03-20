@@ -1,7 +1,7 @@
 import {
   CUSTOM_ELEMENTS_SCHEMA,
   importProvidersFrom,
-  NgModule,
+  NgModule,Component,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthRoutingModule } from './auth-routing.module';
@@ -24,13 +24,7 @@ import { UsuarioService } from '../../shared/services/usuario.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  NgxEasyCaptchaService,
-  CAPTCHA_PROVIDER,
-  CAPTCHA_SITE_KEY,
-  STRING_INITIALIZER,
-  CaptchaProvider,
-} from '../../../../projects/angx/ngx-easy-captcha/src/public-api';
+
 import { StepperModule } from 'primeng/stepper';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
@@ -51,6 +45,9 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { NgClass } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { LoginModalComponent } from './view/login-modal/login-modal.component';
+
+import { AngularFireModule } from '@angular/fire/compat';
+import { environment } from '../../../environments/environment';
 
 @NgModule({
   declarations: [
@@ -80,6 +77,7 @@ import { LoginModalComponent } from './view/login-modal/login-modal.component';
     PublicModule,
     ToastrModule.forRoot(),
 
+    AngularFireModule.initializeApp(environment.firebaseConfig),
     //para lo del capchat xd
     NgClass,
     RouterModule,

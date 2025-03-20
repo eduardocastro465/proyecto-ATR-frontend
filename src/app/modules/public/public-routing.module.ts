@@ -52,7 +52,6 @@ const routes: Routes = [
           breadcrumb: "terminos",
         },
       },
-     
       {
         path: "politicas",
         component: PoliticasComponent,

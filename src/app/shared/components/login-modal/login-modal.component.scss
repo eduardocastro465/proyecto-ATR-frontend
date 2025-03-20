@@ -47,11 +47,10 @@ h2 {
   color: #2b2928;
   text-decoration: none;
   font-weight: bold;
-  
 }
 
 .input-group {
-  margin-bottom: 15px;
+  margin-bottom: 8px;
 }
 
 .input-group label {
@@ -88,9 +87,27 @@ h2 {
   margin-right: 10px;
 }
 
+.strong,
+.medium,
+.weak {
+  font-weight: normal !important;
+}
+
 .error {
+  margin-top: 5px;
   color: red;
-  font-size: 0.8rem;
+  font-size: 14px;
+  font-weight: normal;
+  display: block; /* Hace que cada mensaje de error sea un bloque */
+  margin-bottom: 0.25rem;
+}
+.informativo {
+  margin-top: 10px;
+  color: rgb(81, 91, 212);
+  font-size: 14px;
+  font-weight: normal;
+  display: block; /* Hace que cada mensaje de error sea un bloque */
+  margin-bottom: 0.25rem;
 }
 .btn {
   display: block;
@@ -110,15 +127,15 @@ h2 {
   width: 100%;
   cursor: pointer;
   box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.4); // Sombra más abajo y no muy gris
-  
+
   &:hover {
-  background-color: #2b2928;
+    background-color: #2b2928;
+    color: white;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.5); // Aumenta en hover para efecto suave
   }
 
   transition: box-shadow 0.3s ease, background-color 0.3s ease; // Suaviza el cambio
 }
-
 
 .google-btn {
   background-color: #db4437;
@@ -217,11 +234,56 @@ h2 {
   }
 }
 
-
-
 .captcha-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 5px; /* Ajusta según necesites */
+}
+.social-login-container {
+  display: flex;
+  justify-content: space-between; /* Espaciado entre los botones */
+  gap: 10px; /* Espaciado entre los botones */
+  margin-top: 10px;
+}
+
+.google-btn,
+.facebook-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #2b2928;
+  width: 48%; /* Tamaño fijo para mantener proporción */
+  height: 40px; /* Altura fija para que se vean iguales */
+  gap: 6px; /* Espacio uniforme entre la imagen y el texto */
+}
+
+.google-logo,
+.facebook-logo {
+  width: 20px;
+  margin-right: 4px; /* Se redujo de 8px a 4px */
+}
+
+.google-btn:hover,
+.facebook-btn:hover {
+  background-color: #f0f0f0;
+}
+.facebook-btn {
+  background-color: white;
+}
+
+.loading-text {
+  color: blue;
+}
+
+.welcome-text {
+  font-weight: bold;
+  color: green;
 }

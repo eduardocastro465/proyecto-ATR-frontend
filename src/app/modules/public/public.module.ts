@@ -6,7 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { PublicRoutingModule } from './public-routing.module';
 import { PublicComponent } from './public.component';
 import { HomeView } from './views/home/home.view';
-import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { SidebarModule } from 'primeng/sidebar';
 import { AcercaDeView } from './views/acerca-de/acerca-de.view';
@@ -19,7 +19,7 @@ import { DetailsProductView } from './views/details-product/details-product.view
 import { SkeletonModule } from 'primeng/skeleton';
 import { CarritoView } from './views/carrito/carrito.view';
 import { DatosEmpresaService } from '../../shared/services/datos-empresa.service';
-import {  ControlAdministrativaService} from "../../shared/services/control-administrativa.service";
+import { ControlAdministrativaService } from '../../shared/services/control-administrativa.service';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { GalleriaModule } from 'primeng/galleria';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
@@ -55,15 +55,40 @@ import { NotFoundComponent } from './views/not-found/not-found.component';
 import { Error500Component } from './views/error500/error500.component';
 import { SidevarComponent } from './components/sidevar/sidevar.component';
 import { CargaComponent } from './components/carga/carga.component';
-import {  CarouselModule } from 'primeng/carousel';
+import { CarouselModule } from 'primeng/carousel';
 // import { } from './views/login-modal/login-modal.component';
 import { VideosComponent } from './components/videos/videos.component';
 import { ProductosComponent } from './views/productos/productos.component';
-const MATERIALS =[PasswordModule,
-  InputMaskModule,ImageModule,
-  InputTextModule,FormsModule,InputGroupModule,AvatarModule,AvatarGroupModule,PaginatorModule,OverlayPanelModule,TieredMenuModule,SkeletonModule,CardModule,TabMenuModule,ButtonModule,DialogModule,SidebarModule,CheckboxModule,MenuModule]
-const COMPONENTS =[FooterComponent]
-const VIEWS=[HomeView,PublicComponent,PerfilView, AcercaDeView,DetailsProductView,DataCompraComponent]
+const MATERIALS = [
+  PasswordModule,
+  InputMaskModule,
+  ImageModule,
+  InputTextModule,
+  FormsModule,
+  InputGroupModule,
+  AvatarModule,
+  AvatarGroupModule,
+  PaginatorModule,
+  OverlayPanelModule,
+  TieredMenuModule,
+  SkeletonModule,
+  CardModule,
+  TabMenuModule,
+  ButtonModule,
+  DialogModule,
+  SidebarModule,
+  CheckboxModule,
+  MenuModule,
+];
+const COMPONENTS = [FooterComponent];
+const VIEWS = [
+  HomeView,
+  PublicComponent,
+  PerfilView,
+  AcercaDeView,
+  DetailsProductView,
+  DataCompraComponent,
+];
 
 import { ImageModule } from 'primeng/image';
 import { NgxImageZoomModule } from 'ngx-image-zoom';
@@ -86,29 +111,80 @@ import { MessageModule } from 'primeng/message';
 import { ComentariosComponent } from './components/comentarios/comentarios.component';
 import { CsrfInterceptor } from '../../shared/services/csrf.interceptor';
 import { HeaderComponent } from '../../shared/components/header/header.component';
+
 @NgModule({
-  declarations: [VIEWS,COMPONENTS, CarritoView, TagComponent, PoliticasComponent, TerminosComponent, CitasProbadorView, ResultsComponent, HeroImgComponent, FigureComponent, BreadcrumbComponent, NotFoundComponent, Error500Component, SidevarComponent, CargaComponent, VideosComponent, ProductosComponent, ProcessRentaComponent, DataCompraComponent, InformacionUserComponent, ProcessCompraComponent, RentasComponent, AccesoriosComponent, ComentariosComponent],
-  exports:[COMPONENTS],
-  imports: [HeaderComponent,InputTextModule,FloatLabelModule,
-    InputNumberModule,ConfirmDialogModule,MessageModule,
-    CalendarModule,TableModule,NgxImageZoomModule,GalleriaModule,CarouselModule,
-    CommonModule,ReactiveFormsModule,
-    PublicRoutingModule,HttpClientModule, ...MATERIALS,
-  ], schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: CsrfInterceptor,
-    multi: true, // Permite múltiples interceptores
-  },VentayrentaService,Toast,MessageService,provideClientHydration(), [provideHttpClient(withFetch())],
-  SessionService,
-  mensageservice,
-  UsuarioService,
-  ToastrService,CartService,
-  MessageService,IndexedDbService,
-  ConfirmationService,SignInService,
-  SignUpService,ProductoService,UsuarioService,DatosEmpresaService,ControlAdministrativaService,ThemeServiceService],
+  declarations: [
+    VIEWS,
+    COMPONENTS,
+    CarritoView,
+    TagComponent,
+    PoliticasComponent,
+    TerminosComponent,
+    CitasProbadorView,
+    ResultsComponent,
+    HeroImgComponent,
+    FigureComponent,
+    BreadcrumbComponent,
+    NotFoundComponent,
+    Error500Component,
+    SidevarComponent,
+    CargaComponent,
+    VideosComponent,
+    ProductosComponent,
+    ProcessRentaComponent,
+    DataCompraComponent,
+    InformacionUserComponent,
+    ProcessCompraComponent,
+    RentasComponent,
+    AccesoriosComponent,
+    ComentariosComponent,
+  ],
+  exports: [COMPONENTS],
+  imports: [
+    HeaderComponent,
+    InputTextModule,
+    FloatLabelModule,
+    InputNumberModule,
+    ConfirmDialogModule,
+    MessageModule,
+    CalendarModule,
+    TableModule,
+    NgxImageZoomModule,
+    GalleriaModule,
+    CarouselModule,
+    CommonModule,
+    ReactiveFormsModule,
+    PublicRoutingModule,
+    HttpClientModule,
+    ...MATERIALS,
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CsrfInterceptor,
+      multi: true, // Permite múltiples interceptores
+    },
+    VentayrentaService,
+    Toast,
+    MessageService,
+    provideClientHydration(),
+    [provideHttpClient(withFetch())],
+    SessionService,
+    mensageservice,
+    UsuarioService,
+    ToastrService,
+    CartService,
+    MessageService,
+    IndexedDbService,
+    ConfirmationService,
+    SignInService,
+    SignUpService,
+    ProductoService,
+    UsuarioService,
+    DatosEmpresaService,
+    ControlAdministrativaService,
+    ThemeServiceService,
+  ],
 })
-export class PublicModule {
-
-
- }
+export class PublicModule {}

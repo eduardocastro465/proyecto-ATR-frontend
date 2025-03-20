@@ -122,8 +122,33 @@ input[type="password"] {
   color: var(--color-text);
 }
 
-.error-text {
+.error {
+  margin-top: 5px;
   color: red;
+  font-size: 14px;
+  font-weight: normal ;
+  display: block;  /* Hace que cada mensaje de error sea un bloque */
+  margin-bottom: 0.25rem;
+}
+.informativo {
+  margin-top: 10px;
+  color: rgb(90, 103, 245);
+  font-size: 14px;
+  font-weight: normal ;
+}
+.error-message {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.error-message ul {
+  list-style-type: disc; /* Viñetas para la lista */
+  padding-left: 1.5rem; /* Sangría para la lista */
+}
+
+.error-message li {
+  margin-bottom: 0.25rem; /* Espacio entre elementos de la lista */
 }
 
 .dialog-content {

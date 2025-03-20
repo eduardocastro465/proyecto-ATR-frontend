@@ -1,6 +1,7 @@
 import { TitularModule } from './modules/titular/titular.module';
 import { Routes } from '@angular/router';
 import { adminGuard } from './shared/guards/auth.guard';
+import { titularGuard } from './shared/guards/auth.guard';
 
 export const routes: Routes = [
     {
@@ -23,24 +24,21 @@ export const routes: Routes = [
     loadChildren: () => import('../app/modules/auth/auth.module').then(m=>m.AuthModule)
   },
   {
-    
   // canActivate: [AuthGuard], // Solo usuarios autenticados pueden acceder
     path: 'cuenta',
     loadChildren: () => import('../app/modules/client/client.module').then(m=>m.ClientModule)
   },
   {
     path: 'titular',
+    canActivate: [titularGuard] ,
     loadChildren: () => import('../app/modules/titular/titular.module').then(m=>m.TitularModule)
   },
   {
     path: '500', // Ruta para error 500
-    redirectTo: 'public/500' 
+    redirectTo: 'public/500'
   },
   {
     path: '**', // Ruta wildcard para capturar cualquier otra ruta no definida
     redirectTo:'public/404' // Redirige a la ruta 'public'
   },
-
-
-  
 ];

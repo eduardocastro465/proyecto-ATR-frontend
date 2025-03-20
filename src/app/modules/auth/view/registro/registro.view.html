@@ -142,9 +142,25 @@
             (input)="updateRemainingChars()"
             placeholder="ejemplo123"
           />
-          <small *ngIf="remainingChars > 0">Quedan {{ remainingChars }} caracteres.</small>
-          <small *ngIf="personalDataForm.get('username')?.hasError('required') && personalDataForm.get('username')?.touched" class="error-text">El nombre es obligatorio.</small>
-          <small *ngIf="personalDataForm.get('username')?.hasError('pattern') && personalDataForm.get('username')?.touched" class="error-text">Solo letras, números y guiones.</small>
+          <div
+            class="error"
+            *ngIf="personalDataForm.get('username')?.invalid && personalDataForm.get('username')?.touched"
+            class="error-message"
+          >
+            <small class="error" *ngIf="remainingChars > 0"
+              >Quedan {{ remainingChars }} caracteres.</small
+            >
+            <small
+              *ngIf="personalDataForm.get('username')?.hasError('required') && personalDataForm.get('username')?.touched"
+              class="error"
+              >El nombre es obligatorio.</small
+            >
+            <small
+              *ngIf="personalDataForm.get('username')?.hasError('pattern') && personalDataForm.get('username')?.touched"
+              class="error"
+              >Solo letras, números y guiones.</small
+            >
+          </div>
         </div>
 
         <!-- Campo de Correo Electrónico -->
@@ -156,9 +172,23 @@
             formControlName="email"
             placeholder="correo@ejemplo.com"
           />
-          <div *ngIf="personalDataForm.get('email')?.invalid && personalDataForm.get('email')?.touched" class="error-message">
-            <small *ngIf="personalDataForm.get('email')?.hasError('required')" class="error">El correo es obligatorio.</small>
-            <small *ngIf="personalDataForm.get('email')?.hasError('email')" class="error">Formato de correo inválido.</small>
+          <div
+            class="error"
+            *ngIf="personalDataForm.get('email')?.invalid && personalDataForm.get('email')?.touched"
+            class="error-message"
+          >
+            <small
+              class="error"
+              *ngIf="personalDataForm.get('email')?.hasError('required')"
+              class="error"
+              >El correo es obligatorio.</small
+            >
+            <small
+              class="error"
+              *ngIf="personalDataForm.get('email')?.hasError('email')"
+              class="error"
+              >Formato de correo inválido.</small
+            >
           </div>
         </div>
 
@@ -169,11 +199,25 @@
             id="telefono"
             type="text"
             formControlName="telefono"
-            placeholder="555-123-4567"
+            placeholder="Ej: 55 1234 5678"
           />
-          <div *ngIf="personalDataForm.get('telefono')?.touched || personalDataForm.get('telefono')?.dirty" class="error-message">
-            <small *ngIf="personalDataForm.get('telefono')?.hasError('required')" class="error">El teléfono es requerido.</small>
-            <small *ngIf="personalDataForm.get('telefono')?.hasError('pattern')" class="error">El teléfono es inválido.</small>
+          <div
+            class="error"
+            *ngIf="personalDataForm.get('telefono')?.touched || personalDataForm.get('telefono')?.dirty"
+            class="error-message"
+          >
+            <small
+              class="error"
+              *ngIf="personalDataForm.get('telefono')?.hasError('required')"
+              class="error"
+              >El teléfono es requerido.</small
+            >
+            <small
+              class="error"
+              *ngIf="personalDataForm.get('telefono')?.hasError('pattern')"
+              class="error"
+              >El teléfono es inválido.</small
+            >
           </div>
         </div>
 
@@ -201,17 +245,28 @@
             id="password"
             type="password"
             formControlName="password"
-            (input)="verificarPassword()"
             placeholder="Introduce tu contraseña"
+            (input)="verificarPassword()"
           />
-          <ul class="pass-req" *ngIf="faltantes && faltantes.length > 0">
-            <li *ngFor="let item of faltantes">{{ item }}</li>
-          </ul>
-
-          <span *ngIf="isPasswordCompromised" class="toast error">
-            <i class="fas fa-exclamation-circle"></i> Esta contraseña ha sido
-            comprometida. Elija una más segura.
-          </span>
+          <div
+            class="error-message"
+            *ngIf="credentialsForm.get('password')?.invalid && credentialsForm.get('password')?.touched"
+          >
+            <small
+              class="error"
+              *ngIf="credentialsForm.get('password')?.hasError('required')"
+              >La contraseña es obligatoria.</small
+            >
+            <small
+              class="error"
+              *ngIf="credentialsForm.get('password')?.hasError('invalidPassword')"
+            >
+              La contraseña debe contener:
+              <ul>
+                <li *ngFor="let item of faltantes">{{ item }}</li>
+              </ul>
+            </small>
+          </div>
 
           <label for="confirmPassword">Confirma tu contraseña</label>
           <input
@@ -221,15 +276,18 @@
             placeholder="Confirma tu contraseña"
             (input)="verificarCoincidencia()"
           />
-          <!-- <span *ngIf="!coincidenPasswords && credentialsForm.get('confirmPassword')?.touched" class="text-danger">
-            Las contraseñas no coinciden.
-          </span> -->
+          <div
+            class="error-message"
+            *ngIf="credentialsForm.get('confirmPassword')?.touched && !coincidenPasswords"
+          >
+            <small class="error">Las contraseñas no coinciden.</small>
+          </div>
         </div>
 
         <button
           class="register"
           *ngIf="!isLoading"
-          [disabled]="faltantes.length != 0 || !credentialsForm.valid || !coincidenPasswords || isPasswordCompromised"
+          [disabled]="faltantes.length != 0 || !credentialsForm.valid || !coincidenPasswords"
           type="submit"
         >
           Validar y crear cuenta
@@ -244,19 +302,28 @@
         </div>
 
         <button class="social-btn">
-          <img src="https://www.svgrepo.com/show/355037/google.svg" alt="Google" />
+          <img
+            src="https://www.svgrepo.com/show/355037/google.svg"
+            alt="Google"
+          />
           Continuar con Google
         </button>
 
         <button class="social-btn">
-          <img src="https://www.svgrepo.com/show/452196/facebook-1.svg" alt="Facebook" />
+          <img
+            src="https://www.svgrepo.com/show/452196/facebook-1.svg"
+            alt="Facebook"
+          />
           Continuar con GitHub
         </button>
       </div>
 
       <!-- Recuperación de cuenta -->
       <div class="account-recovery">
-        <p>¿Olvidaste tu cuenta? <a routerLink="/auth/forgot-password">Recuperar cuenta</a></p>
+        <p>
+          ¿Olvidaste tu cuenta?
+          <a routerLink="/auth/forgot-password">Recuperar cuenta</a>
+        </p>
       </div>
     </div>
 

@@ -25,7 +25,6 @@ export class SessionService {
     return undefined;
   }
 
-  
   getUserTokenDecode(token: string, providedCode: string): boolean {
     try {
       const decodedData: any = this.helper.decodeToken(token);
@@ -47,7 +46,7 @@ export class SessionService {
   getUserPasswordDecode(password: string): string {
     try {
       const decodedData: any = this.helper.decodeToken(password);
-      
+
       if (decodedData?.hashedCode) {
         return decodedData.hashedCode; // Devuelve el hash decodificado
       } else {

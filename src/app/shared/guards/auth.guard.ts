@@ -23,6 +23,22 @@ export const adminGuard = () => {
   }
 };
 
+export const titularGuard = () => {
+  const sessionService = inject(SessionService);
+  const router = inject(Router);
+
+  const userData = sessionService.getUserData();
+
+  const userROL = userData?.rol;
+
+  if (userROL === ERol.TITULAR) {
+    return true;
+  } else {
+    router.navigate(['/']);
+    return false;
+  }
+};
+
 // export const clientGuard = () => {
 //   const router = inject(Router);
 
