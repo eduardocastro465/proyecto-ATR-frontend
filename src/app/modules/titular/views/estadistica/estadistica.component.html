@@ -1,0 +1,75 @@
+<div class="dashboard-container">
+  <!-- 🔹 Encabezado -->
+  <div class="dashboard-header">
+    <h2>Dashboard de Análisis de Rentas y Stock</h2>
+  </div>
+
+  <div class="dashboard-content">
+    <!-- 🔹 Sección de métricas -->
+    <section class="dashboard-metrics">
+      <div class="card">
+        <h3>Total Vestidos Rentados</h3>
+        <p>{{ totalVestidosRentados }}</p>
+      </div>
+      <div class="card">
+        <h3>Vestidos en Inventario</h3>
+        <p>{{ vestidosEnInventario }}</p>
+      </div>
+      <div class="card">
+        <h3>Aumento en Rentas (%)</h3>
+        <p>{{ aumentoPorcentual }}%</p>
+      </div>
+      <div class="card">
+        <h3>Tasa de Disminución del Inventario</h3>
+        <p>{{ tasaDisminucionInventario }}%</p>
+      </div>
+      <div class="card">
+        <h3>Predicción de Inventario (30 días)</h3>
+        <p>{{ vestidosProyectados }}</p>
+      </div>
+    </section>
+
+    <!-- 🔹 Sección de Gráficos -->
+    <section class="dashboard-charts">
+      <div class="chart">
+        <h3>Cantidad de Vestidos Rentados por Talla</h3>
+        <p-chart type="bar" [data]="tallaChartData"></p-chart>
+      </div>
+      <div class="chart">
+        <h3>Estimación de Vestidos Restantes</h3>
+
+        <p-dropdown
+          [options]="categorias"
+          [(ngModel)]="categoriaSeleccionada"
+          optionLabel="label"
+          placeholder="Selecciona una categoría"
+          (onChange)="filtrarEstimacion()"
+        ></p-dropdown>
+
+        <!-- 🔹 Gráfico dinámico -->
+        <p-chart type="line" [data]="estimacionFiltrada"></p-chart>
+      </div>
+
+      <div class="chart">
+        <h3>Vestidos Rentados por Categoría</h3>
+        <p-chart type="pie" [data]="categoriaChartData"></p-chart>
+      </div>
+      <div class="chart">
+        <h3>Aumento Porcentual en Rentas</h3>
+        <p-chart type="bar" [data]="aumentoRentasData"></p-chart>
+      </div>
+      <div class="chart">
+        <h3>Tasa de Disminución % del Inventario</h3>
+        <p-chart type="line" [data]="tasaDisminucionData"></p-chart>
+      </div>
+      <div class="chart">
+        <h3>Tallas Rentadas por Categoría</h3>
+        <p-chart type="bar" [data]="tallasPorCategoriaChartData"></p-chart>
+      </div>
+      <div class="chart">
+        <h3>Proyección de Inventario</h3>
+        <p-chart type="line" [data]="proyeccionInventarioData"></p-chart>
+      </div>
+    </section>
+  </div>
+</div>

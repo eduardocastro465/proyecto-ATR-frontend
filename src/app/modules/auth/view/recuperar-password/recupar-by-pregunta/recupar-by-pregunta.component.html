@@ -1,0 +1,100 @@
+<!-- Paso 1: Solicitud de correo electrónico -->
+<div *ngIf="esFrmCorreo" class="container2">
+  <a href="javascript:void(0)" (click)="regresarOpciones()" class="regresar-link">
+    <i class="pi pi-arrow-left"></i> Volver
+  </a>
+  <h1>Recuperación de cuenta</h1>
+  <h2>Dirección de correo electrónico</h2>
+  <h5>
+    Ingresa tu correo para buscar tu cuenta y recuperar tu contraseña.
+  </h5>
+  <form [formGroup]="frmbuscarCorreo" (ngSubmit)="enviarYbuscarCorreo()" method="post">
+    <!-- <a href="javascript:void(0)" (click)="regresarCorreo()" class="regresar-link">
+      <i class="pi pi-arrow-left"></i> Volver
+    </a> -->
+    <div class="form-group">
+      <label for="email">Correo Electrónico:</label>
+      <input pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required formControlName="email" type="email"
+        id="email" />
+    </div>
+    <br>
+    <p-button *ngIf="!isLoading" [disabled]="frmbuscarCorreo.invalid" iconPos="right" label="Buscar cuenta"
+      type="submit">
+    </p-button>
+    <button disabled *ngIf="isLoading" class="ui loading button">
+      Loading
+    </button>
+  </form>
+</div>
+<!-- Paso 2: Mostrar pregunta secreta -->
+<div *ngIf="esFrmPreguntaSecreta" class="container2">
+  <a href="javascript:void(0)" (click)="regresarCorreo()" class="regresar-link">
+    <i class="pi pi-arrow-left"></i> Volver
+  </a>
+  <h1>Recuperación de cuenta</h1>
+  <h2>Pregunta secreta</h2>
+  <h5>
+    Hola, <strong>{{ nombreUsuario }}</strong>. Responde tu pregunta secreta para continuar.
+  </h5>
+  <form [formGroup]="frmPreguntaSecreta" (ngSubmit)="verificarRespuesta()" method="post">
+
+    <div class="form-group">
+      <label for="pregunta">Pregunta secreta:</label>
+      <p>{{ preguntaSecreta }}</p>
+    </div>
+    <div class="form-group">
+      <label for="respuesta">Respuesta:</label>
+      <input required formControlName="respuesta" type="text" id="respuesta" />
+    </div>
+    <br>
+
+    <p-button *ngIf="!isLoading" [disabled]="frmPreguntaSecreta.invalid" iconPos="right" label="Verificar respuesta"
+      type="submit">
+    </p-button>
+    <button disabled *ngIf="isLoading" class="ui loading button">
+      Loading
+    </button>
+
+    <!-- <p-button (click)="regresarCorreo()" type="button">Volver</p-button> -->
+  </form>
+</div>
+
+<!-- Formulario para resetear la contraseña -->
+<div *ngIf="esFrmResetPassword" class="container2">
+  <a href="javascript:void(0)" (click)="regresarVerificacion()" class="regresar-link">
+    <i class="pi pi-arrow-left"></i> Volver
+  </a>
+  <h2>Actualiza tu Contraseña</h2>
+  <h5>Crea una nueva contraseña segura</h5>
+  <form [formGroup]="frmActualizaPassword" (ngSubmit)="actualizarPassword()" method="post">
+
+    <div class="form-group">
+      <label for="nueva">Nueva Contraseña</label>
+      <p-password formControlName="nueva" placeholder="Introduce tu contraseña" [toggleMask]="true" [feedback]="false"
+        [maxLength]="16" (input)="verificarPassword()"></p-password>
+      <div>
+        <ul class="pass-req" *ngIf="faltantes && faltantes.length > 0">
+          <li *ngFor="let item of faltantes">{{ item }}</li>
+        </ul>
+      </div>
+
+      <label for="confirma">Confirmar Contraseña</label>
+      <p-password formControlName="confirma" placeholder="Confirma tu contraseña" [toggleMask]="true" [feedback]="false"
+        [maxLength]="16" (input)="verificarCoincidencia()"></p-password>
+      <span *ngIf="!coincidenPasswords" class="text-danger">
+        Las contraseñas no coinciden.
+      </span>
+    </div>
+    <br>
+
+    <p-button *ngIf="!isLoading"
+      [disabled]="this.faltantes.length != 0 || frmActualizaPassword.invalid || !coincidenPasswords" iconPos="right"
+      label="Restablecer Contraseña" type="submit">
+    </p-button>
+    <button disabled *ngIf="isLoading" class="ui loading button">
+      Loading
+    </button>
+    <!-- <p-button (click)="regresar()" type="button">Volver</p-button> -->
+
+  </form>
+</div>

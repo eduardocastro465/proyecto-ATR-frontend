@@ -79,7 +79,8 @@ import { isPlatformBrowser } from '@angular/common';
   align-items: center;
   justify-content: center;
   height: 60vh;
-  filter: drop-shadow(10px 10px 15px rgb(249, 192, 255));
+
+  filter: drop-shadow(10px 10px 15px rgb(249, 192, 255)) contrast(125%);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -97,7 +98,7 @@ import { isPlatformBrowser } from '@angular/common';
   .hero-content {
     width: 55%;
     filter: opacity(8);
-    color:rgb(255, 0, 179);
+    color:rgb(255, 27, 168);
     position: relative;
     z-index: 1;
     padding: 7rem;

@@ -37,6 +37,21 @@ export class UsuarioService {
       }
     );
   }
+
+  getPreguntaSecreta(email: any): Observable<any> {
+    return this.http.post<any>(
+      environment.api + '/verificacion/verificar-correo',
+      { email },
+      {
+        withCredentials: true,
+      }
+    );
+  }
+    // Método para verificar la respuesta secreta
+    verificarRespuestaSecreta(email: string, respuesta: string): Observable<any> {
+      const body = { email, respuesta };
+      return this.http.post(`${environment.api}/verificacion/verificar-respuesta`, body);
+    }
   checkTelefonoExists(telefono: string): Observable<any> {
     return this.http.post<any>(
       environment.api + '/usuarios/check-telefono',
@@ -89,7 +104,7 @@ export class UsuarioService {
   // }
 
   actualizaPasswordxCorreo(
-    email: string,
+    email: any,
     nueva: string
   ): Observable<any> {
     return this.http.put<boolean>(

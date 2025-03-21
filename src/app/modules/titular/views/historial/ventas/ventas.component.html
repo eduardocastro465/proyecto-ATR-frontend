@@ -1,14 +1,53 @@
 <div class="ventas-container">
   <h2>Historial de Ventas</h2>
-  <button pButton label="Generar Reporte" icon="pi pi-file-pdf"  (click)="generarReporte()"></button>
-
+  <!-- <div class="chart-and-summary"> -->
+    <div class="chart-container">
+      <div class="chart">
+        <p-chart type="line" [data]="data"></p-chart>
+      </div>
+   
+    <!-- <div class="resumen-container"> -->
+      <div class="resumen-card">
+        <h3>Resumen de Ventas</h3>
+        <div class="resumen-item">
+          <span>Total de Ventas:</span>
+          <span>{{ ventasResumen.totalVentas | currency }}</span>
+        </div>
+        <div class="resumen-item">
+          <span>Ventas en Línea:</span>
+          <span>{{ ventasResumen.ventasOnline | currency }} ({{ ventasResumen.porcentajeOnline.toFixed(2) }}%)</span>
+        </div>
+        <div class="resumen-item">
+          <span>Ventas Presenciales:</span>
+          <span>{{ ventasResumen.ventasPresenciales | currency }} ({{ ventasResumen.porcentajePresencial.toFixed(2) }}%)</span>
+        </div>
+      </div>
+    </div>
+  <!-- </div> -->
+  <div class="filtro-container">
+    <label for="anio">Año:</label>
+    <select id="anio" [(ngModel)]="anioSeleccionado">
+      <option value="">Todos</option>
+      <option *ngFor="let anio of aniosUnicos" [value]="anio">{{ anio }}</option>
+    </select>
+  
+    <label for="mes">Mes:</label>
+    <select id="mes" [(ngModel)]="mesSeleccionado">
+      <option value="">Todos</option>
+      <option *ngFor="let mes of mesesUnicos" [value]="mes">{{ mes }}</option>
+    </select>
+  
+    <button pButton label="Filtrar" (click)="filtrarVentas()"></button>
+  </div>
+  
+  <button pButton label="Generar Reporte" icon="pi pi-file-pdf" (click)="generarReporte()"></button>
   <p-table [value]="ventas" [paginator]="true" [rows]="5" responsiveLayout="scroll">
     <ng-template pTemplate="header">
       <tr>
         <th>Fecha</th>
         <th>Producto</th>
         <th>Cantidad</th>
-        <th>Total ($)</th>
+        <th>Total</th>
         <th>Método de Pago</th>
       </tr>
     </ng-template>

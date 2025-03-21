@@ -12,7 +12,9 @@ import { DashboardView } from './views/dashboard/dashboard.view';
 import { ChartModule } from 'primeng/chart';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EstadisticaComponent } from './views/estadistica/estadistica.component';
+import { DropdownModule } from 'primeng/dropdown';
 @NgModule({
   declarations: [
     TitularComponent,
@@ -20,11 +22,12 @@ import { ButtonModule } from 'primeng/button';
     VentasComponent,
     RentasComponent,
     InicioView,
-    DashboardView
+    DashboardView,EstadisticaComponent
   ],
   imports: [TableModule,ButtonModule ,
-    CommonModule,ChartModule,
-    TitularRoutingModule
+    CommonModule,ChartModule,DropdownModule,
+    TitularRoutingModule,ReactiveFormsModule,FormsModule
+    
   ]
 })
 export class TitularModule { }

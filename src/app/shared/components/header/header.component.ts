@@ -4,7 +4,6 @@ import {
   Inject,
   OnInit,
   PLATFORM_ID,
-  Renderer2,
   AfterViewInit,
   ElementRef,
   ChangeDetectionStrategy,
@@ -13,69 +12,39 @@ import {
   Input,
   SimpleChanges,
   OnChanges,
-  computed,
-  effect,
   OnDestroy,
-} from "@angular/core";
-import { Router, RouterModule } from "@angular/router";
-import { ConfirmationService, MenuItem, MenuItemCommandEvent, MessageService } from "primeng/api";
-import { CommonModule, isPlatformBrowser } from "@angular/common";
-import { SessionService } from "../../services/session.service";
-import { ERol } from "../../constants/rol.enum";
-import { DatosEmpresaService } from "../../services/datos-empresa.service";
-import { ThemeServiceService } from "../../services/theme-service.service";
-import { CartService } from "../../services/cart.service";
-import { IndexedDbService } from "../../../modules/public/commons/services/indexed-db.service";
+  effect,
+} from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { ConfirmationService, MenuItem, MenuItemCommandEvent, MessageService } from 'primeng/api';
+import { SessionService } from '../../services/session.service';
+import { ERol } from '../../constants/rol.enum';
+import { DatosEmpresaService } from '../../services/datos-empresa.service';
+import { ThemeServiceService } from '../../services/theme-service.service';
+import { CartService } from '../../services/cart.service';
+import { IndexedDbService } from '../../../modules/public/commons/services/indexed-db.service';
 import { Subscription } from 'rxjs';
-import { LoginModalComponent } from "../login-modal/login-modal.component";
-import { ConfirmDialogModule } from "primeng/confirmdialog";
-import { InputNumberModule } from "primeng/inputnumber";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { MessageModule } from "primeng/message";
-import { InputTextModule } from "primeng/inputtext";
-import { FloatLabelModule } from "primeng/floatlabel";
-import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withFetch } from "@angular/common/http";
-import { SidebarModule } from "primeng/sidebar";
-import { Toast, ToastrService } from 'ngx-toastr';
-import { CsrfInterceptor } from "../../services/csrf.interceptor";
-import { UsuarioService } from "../../services/usuario.service";
-import { SignInService } from "../../../modules/auth/commons/services/sign-in.service";
-import { ProductoService } from "../../services/producto.service";
-import { SignUpService } from "../../../modules/auth/commons/services/sign-up.service";
-import { provideClientHydration } from "@angular/platform-browser";
-import { ToastModule } from "primeng/toast";
+import { LoginModalComponent } from '../login-modal/login-modal.component';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MessageModule } from 'primeng/message';
+import { InputTextModule } from 'primeng/inputtext';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { SidebarModule } from 'primeng/sidebar';
+import { ToastModule } from 'primeng/toast';
 
 declare const $: any;
 
-export interface DressItem {
-  id: string;
-  nombre: string;
-  precio: number;
-  imagenPrincipal: string;
-}
-
 @Component({
-  selector: "app-header",
-  standalone: true,
-  imports: [/* The `SidebarModule` in the Angular code you provided is being imported in the `HeaderComponent` class. This module is likely a custom Angular module or a module provided by a third-party library (such as PrimeNG) that provides functionality related to displaying a sidebar component. */
-    FormsModule,ToastModule,SidebarModule,RouterModule,LoginModalComponent,InputTextModule,FloatLabelModule,
-      InputNumberModule,ConfirmDialogModule,MessageModule,
-      CommonModule,ReactiveFormsModule,
-      HttpClientModule],
-  templateUrl: "./header.component.html",
-  styleUrls: ["./header.component.scss"],
+  selector: 'app-header',
+  standalone: false,
+  
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: CsrfInterceptor,
-    multi: true, // Permite múltiples interceptores
-  },Toast,MessageService,
-  SessionService,
-  UsuarioService,
-  ToastrService,CartService,
-  MessageService,IndexedDbService,
-  ConfirmationService,SignInService,
-  SignUpService,ProductoService,UsuarioService,DatosEmpresaService,ThemeServiceService],
+  providers: [MessageService, ConfirmationService],
 })
 export class HeaderComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
   isScrolled = false;
@@ -93,13 +62,39 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges, OnDest
   dressItems: any[] = [];
   // Señal para manejar reactividad
   private dressItemsSignal = signal<any[]>([]);
-  private cartSubscription!: Subscription;
   empresaData: any;
-  // private cartSubscription!: Subscription;
+  private cartSubscription!: Subscription;
   imageUrl!: string;
   defaultImageUrl: string =
     "https://res.cloudinary.com/dvvhnrvav/image/upload/v1730395938/images-AR/wyicw2mh3xxocscx0diz.png";
   isDarkThemeOn = signal(false);
+
+  content: any[] = [
+    { title: "Andorra" },
+    { title: "United Arab Emirates" },
+    { title: "Afghanistan" },
+    { title: "Antigua" },
+    { title: "Anguilla" },
+    { title: "Albania" },
+    { title: "Armenia" },
+    { title: "Netherlands Antilles" },
+    { title: "Angola" },
+    { title: "Argentina" },
+    { title: "American Samoa" },
+    { title: "Austria" },
+    { title: "Australia" },
+    { title: "Aruba" },
+    { title: "Aland Islands" },
+    { title: "Azerbaijan" },
+    { title: "Bosnia" },
+    { title: "Barbados" },
+    { title: "Bangladesh" },
+    { title: "Belgium" },
+    { title: "Burkina Faso" },
+    { title: "Bulgaria" },
+    { title: "Bahrain" },
+    { title: "Burundi" },
+  ];
 
   darkMode = false;
   constructor(
@@ -114,13 +109,17 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges, OnDest
     private messageService: MessageService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
-
-    // dressItemCount = this.cartService.dressItemCount; // Usar la señal del servicio
+    
  // Usar la señal computada del servicio para el contador
     this.dressItemCount = this.cartService.dressItemCount;
-   
+    effect(() => {
+      const items = this.cartService.getCartItems();
+      if (items.length > 0) {
+        this.showAlert('Se agregó un producto al carrito');
+      }
+    });
   }
-
+  
   showAlert(message: string) {
     this.messageService.add({
       severity: 'info',
@@ -160,25 +159,28 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges, OnDest
       this.cartSubscription.unsubscribe();
     }
   }
-  
-  async ngOnInit() {
-    this.updateMenuItems(); // Actualiza los elementos del menú
-    try {  
-      // Inicializar el carrito (si es necesario)
-      this.cartService.initializeCart([]); // Puedes pasar los ítems iniciales aquí
-      // Inicializar el carrito con los productos de IndexedDB
-      const productos = await this.indexedDbService.obtenerProductosApartados();
-      this.cartService.initializeCart(productos);
 
+  async ngOnInit() {
+    try {
+      this.checkInternetConnection();
+      const productos = await this.indexedDbService.obtenerProductosApartados();
+      this.dressItems = Array.isArray(productos) ? productos : [productos];
+      const items = Array.isArray(productos) ? productos : [productos];
+
+      // Inicializar el carrito con los productos obtenidos
+      this.cartService.initializeCart(items);
       // Suscribirse a cambios en el carrito
-      this.cartSubscription = this.cartService.cartUpdated$.subscribe(() => {
-        console.log("El carrito ha cambiado");
-        // Aquí puedes realizar acciones adicionales, como mostrar una notificación
+      this.cartSubscription = this.cartService.cartUpdated$.subscribe((message:any) => {
+        if (message) {
+          this.showAlert(message);
+        }
       });
+      // console.log(this.dressItems);
     } catch (error) {
       console.error("Error al obtener productos apartados");
     }
   }
+
 
   @HostListener("window:online")
   @HostListener("window:offline")
@@ -200,6 +202,20 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges, OnDest
     this.updateMenuItems();
   }
 
+  //
+  // loadCompanyData() {
+  //   this.datosEmpresaService.traerDatosEmpresa().subscribe(
+  //     (data) => {
+  //       this.empresaData = data[0]; // Guardar los datos en la variable
+  //       this.nombreDeLaPagina = this.empresaData?.tituloPagina;
+  //       this.imageUrl = this.empresaData?.logo;
+  //     },
+  //     (error) => {
+  //       console.error("Error al cargar los datos de la empresa:", error);
+  //     }
+  //   );
+  // }
+
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       const nativeElement = this.elementRef.nativeElement;
@@ -211,6 +227,8 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges, OnDest
       $(nativeElement)
         .find(".ui.search")
         .search({
+          type: "category",
+          source: this.content,
           onSelect: (result: any) => {
             console.log("Seleccionado:", result.title);
           },

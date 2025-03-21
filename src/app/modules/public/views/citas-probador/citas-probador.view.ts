@@ -55,7 +55,9 @@ export class CitasProbadorView implements OnInit {
       );
 
       // Inicializar el carrito con los productos obtenidos
-      this.cartService.initializeCart(productos);
+      // this.cartService.initializeCart(productos);
+      // const productos =this.cartService.loadCartItems();
+      console.log("=>"+productos)
 
       this.calcularTotal();
       this.initializeTabs();
@@ -78,9 +80,7 @@ export class CitasProbadorView implements OnInit {
 
   async deleteDressItem(id: string) {
     try {
-      // Eliminar el producto de IndexedDB
-      await this.indexedDbService.eliminarProducto(id);
-
+      
       // Eliminar el producto de las listas locales
       this.productosRenta = this.productosRenta.filter(
         (item) => item.id !== id

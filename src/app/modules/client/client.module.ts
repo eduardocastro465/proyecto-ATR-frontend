@@ -11,12 +11,13 @@ import { FormsModule } from '@angular/forms';
 import { StorageService } from '../../shared/services/storage.service';
 import { UsuarioService } from '../../shared/services/usuario.service';
 import { provideClientHydration } from '@angular/platform-browser';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 import { ButtonModule } from 'primeng/button';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { AvatarModule } from 'primeng/avatar';
-import { HeaderComponent } from '../../shared/components/header/header.component';
+import { HeaderModule } from '../../shared/components/header/header.module';
 import { NotificacionesComponent } from './views/cuenta/notificaciones/notificaciones.component';
+import { DatosEmpresaService } from '../../shared/services/datos-empresa.service';
 
 
 @NgModule({
@@ -27,11 +28,11 @@ import { NotificacionesComponent } from './views/cuenta/notificaciones/notificac
     ClientComponent,
     NotificacionesComponent,
   ],
-  imports: [HeaderComponent,
+  imports: [HeaderModule, 
     CommonModule,  ButtonModule,AvatarModule,AvatarGroupModule,
     ClientRoutingModule,FormsModule
   ]
-  ,providers: [
+  ,providers: [DatosEmpresaService,
     SessionService,UsuarioService,StorageService,
     VentayrentaService,provideClientHydration(), [provideHttpClient(withFetch())]
     

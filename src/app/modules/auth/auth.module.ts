@@ -48,6 +48,9 @@ import { LoginModalComponent } from './view/login-modal/login-modal.component';
 
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from '../../../environments/environment';
+import { RecuparByPreguntaComponent } from './view/recuperar-password/recupar-by-pregunta/recupar-by-pregunta.component';
+import { RecuperarByEmailComponent } from './view/recuperar-password/recuperar-by-email/recuperar-by-email.component';
+import { HeaderModule } from '../../shared/components/header/header.module';
 
 @NgModule({
   declarations: [
@@ -57,6 +60,7 @@ import { environment } from '../../../environments/environment';
     SignInView,
     VerificarCodigoView,
     RegistroView,
+    RecuparByPreguntaComponent,RecuperarByEmailComponent,
     LoginModalComponent,
   ],
   imports: [
@@ -76,7 +80,7 @@ import { environment } from '../../../environments/environment';
     InputGroupModule,
     PublicModule,
     ToastrModule.forRoot(),
-
+    HeaderModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     //para lo del capchat xd
     NgClass,

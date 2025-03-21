@@ -1,0 +1,101 @@
+/* 🔹 Contenedor Principal */
+.dashboard-container {
+  max-width: 1600px;
+  margin: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  background: #f4f6f9;
+}
+
+/* 🔹 Encabezado */
+.dashboard-header {
+  text-align: center;
+  padding: 15px;
+  background: #007bff;
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 22px;
+  font-weight: bold;
+
+}
+
+/* 🔹 Sección de Métricas */
+.dashboard-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+  margin: 20px;
+}
+
+.card {
+  background: #ffffff;
+  
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-weight: bold;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card h3 {
+  font-size: 16px;
+  color: #333;
+}
+
+.card p {
+  font-size: 22px;
+  font-weight: bold;
+  color: #4add45;
+}
+
+/* 🔹 Sección de Gráficos */
+.dashboard-charts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 15px;
+  align-items: start;
+}
+
+/* 🔹 Diseño de las gráficas */
+.chart {
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease-in-out;
+}
+
+.chart:hover {
+  transform: scale(1.02);
+}
+
+.chart h3 {
+  font-size: 16px;
+  color: #333;
+}
+
+/* 🔹 Ajuste de dropdown */
+p-dropdown {
+  margin-bottom: 10px;
+}
+
+/* 🔹 Responsividad */
+@media (max-width: 768px) {
+  .dashboard-metrics,
+  .dashboard-charts {
+    grid-template-columns: 1fr;
+  }
+}

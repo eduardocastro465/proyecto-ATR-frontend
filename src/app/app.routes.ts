@@ -30,7 +30,7 @@ export const routes: Routes = [
   },
   {
     path: 'titular',
-    canActivate: [titularGuard] ,
+    // canActivate: [titularGuard] ,
     loadChildren: () => import('../app/modules/titular/titular.module').then(m=>m.TitularModule)
   },
   {

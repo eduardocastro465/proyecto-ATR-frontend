@@ -6,6 +6,7 @@ import { HistorialComponent } from "./views/historial/historial.component";
 import { RentasComponent } from "./views/historial/rentas/rentas.component";
 import { VentasComponent } from "./views/historial/ventas/ventas.component";
 import { DashboardView } from "./views/dashboard/dashboard.view";
+import { EstadisticaComponent } from "./views/estadistica/estadistica.component";
 
 const routes: Routes = [
   {
@@ -29,6 +30,10 @@ const routes: Routes = [
       {
         path: "historial-ventas",
         component: VentasComponent,
+      },
+      {
+        path: 'analisis-rentas-stock',
+        component: EstadisticaComponent,
       },
     ],
   },
