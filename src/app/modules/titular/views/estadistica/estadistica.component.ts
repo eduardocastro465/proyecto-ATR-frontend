@@ -12,12 +12,10 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-estadistica',
   standalone: false,
-  // standalone: true,
-  // imports: [CommonModule, ChartModule, DropdownModule, FormsModule],
   templateUrl: './estadistica.component.html',
   styleUrls: ['./estadistica.component.scss'],
 })
-export class EstadisticaComponent {
+export class EstadisticaComponent implements OnInit, AfterViewInit {
   // Datos de tarjetas
   totalVestidosRentados: number = 500;
   vestidosEnInventario: number = 800;
@@ -27,13 +25,22 @@ export class EstadisticaComponent {
 
   estimacionFiltrada: any = {};
 
+  // Categorías para el dropdown
   categorias = [
-    { label: 'Gala', value: 'gala' },
-    { label: 'Fiesta', value: 'fiesta' },
-    // { label: 'Casual', value: 'casual' },
+    { label: 'Cuello halter', value: 'CuelloHalter' },
+    { label: 'Cuello redondo', value: 'CuelloRedondo' },
+    { label: 'Cuello cuadrado', value: 'CuelloCuadrado' },
+    { label: 'Escote en forma de corazón', value: 'EscoteCorazon' },
+    { label: 'Escote de hombros descubiertos', value: 'EscoteHombrosDescubiertos' },
+    { label: 'Escote en V', value: 'EscoteV' },
+    { label: 'Vestido largo con cola', value: 'VestidoLargoCola' },
+    { label: 'Vestido largo tipo campana', value: 'VestidoLargoCampana' },
+    { label: 'Vestido largo recto', value: 'VestidoLargoRecto' },
+    { label: 'Vestido largo de sirena', value: 'VestidoLargoSirena' },
+    { label: 'Vestido largo con corte princesa', value: 'VestidoLargoCortePrincesa' },
   ];
 
-  categoriaSeleccionada: string | { label: string; value: string } = 'gala';
+  categoriaSeleccionada: { label: string; value: string } = this.categorias[0]; // Selecciona la primera categoría por defecto
 
   // Datos de los gráficos
   tallaChartData: any;
@@ -65,20 +72,20 @@ export class EstadisticaComponent {
       this.vestidosEnInventario * Math.exp(-tasaDiaria * 30)
     );
   }
+
+  // 📌 Filtrar la estimación basada en la categoría seleccionada
   filtrarEstimacion() {
     if (!this.estimacionInventarioData) {
       console.warn('⚠️ Datos aún no están disponibles.');
       return;
     }
 
-    // Si `categoriaSeleccionada` es un objeto, toma `value`, si es un string, úsalo directamente.
-    const categoriaKey =
-      typeof this.categoriaSeleccionada === 'string'
-        ? this.categoriaSeleccionada
-        : this.categoriaSeleccionada.value;
+    // Obtener la clave de la categoría seleccionada
+    const categoriaKey = this.categoriaSeleccionada.value;
 
     console.log('📊 Filtrando categoría:', categoriaKey);
 
+    // Asignar los datos filtrados
     this.estimacionFiltrada = this.estimacionInventarioData[categoriaKey] || {
       labels: [],
       datasets: [],
@@ -103,11 +110,11 @@ export class EstadisticaComponent {
     };
 
     this.estimacionInventarioData = {
-      gala: {
+      CuelloHalter: {
         labels: ['1 mes', '2 meses', '3 meses', '4 meses'],
         datasets: [
           {
-            label: 'Gala',
+            label: 'Cuello halter',
             data: [200, 150, 100, 50],
             borderColor: '#007bff',
             backgroundColor: 'rgba(0, 123, 255, 0.4)',
@@ -115,11 +122,11 @@ export class EstadisticaComponent {
           },
         ],
       },
-      fiesta: {
+      CuelloRedondo: {
         labels: ['1 mes', '2 meses', '3 meses', '4 meses'],
         datasets: [
           {
-            label: 'Fiesta',
+            label: 'Cuello redondo',
             data: [180, 130, 90, 40],
             borderColor: '#FF6384',
             backgroundColor: 'rgba(255, 99, 132, 0.4)',
@@ -127,26 +134,110 @@ export class EstadisticaComponent {
           },
         ],
       },
-      categorias: {
-        labels: [
-          'Cuello halter',
-          'Cuello redondo',
-          'Cuello cuadrado',
-          'Escote en forma de corazón',
-          'Escote de hombros descubiertos',
-          'Escote en V',
-          'Vestido largo con cola',
-          'Vestido largo tipo campana',
-          'Vestido largo recto',
-          'Vestido largo de sirena',
-          'Vestido largo con corte princesa',
-        ],
+      CuelloCuadrado: {
+        labels: ['1 mes', '2 meses', '3 meses', '4 meses'],
         datasets: [
           {
-            label: 'Categorías',
-            data: [120, 90, 110, 80, 70, 100, 130, 95, 85, 140, 115], // Valores de ejemplo
-            borderColor: '#4CAF50', // Verde
-            backgroundColor: 'rgba(76, 175, 80, 0.4)', // Verde con transparencia
+            label: 'Cuello cuadrado',
+            data: [180, 130, 90, 40],
+            borderColor: '#FF6384',
+            backgroundColor: 'rgba(255, 99, 132, 0.4)',
+            fill: true,
+          },
+        ],
+      },
+      EscoteCorazon: {
+        labels: ['1 mes', '2 meses', '3 meses', '4 meses'],
+        datasets: [
+          {
+            label: 'Escote en forma de corazón',
+            data: [120, 90, 80, 60],
+            borderColor: '#4CAF50',
+            backgroundColor: 'rgba(76, 175, 80, 0.4)',
+            fill: true,
+          },
+        ],
+      },
+      EscoteHombrosDescubiertos: {
+        labels: ['1 mes', '2 meses', '3 meses', '4 meses'],
+        datasets: [
+          {
+            label: 'Escote de hombros descubiertos',
+            data: [150, 110, 85, 70],
+            borderColor: '#AB47BC',
+            backgroundColor: 'rgba(171, 71, 188, 0.4)',
+            fill: true,
+          },
+        ],
+      },
+      EscoteV: {
+        labels: ['1 mes', '2 meses', '3 meses', '4 meses'],
+        datasets: [
+          {
+            label: 'Escote en V',
+            data: [140, 100, 75, 50],
+            borderColor: '#26A69A',
+            backgroundColor: 'rgba(38, 166, 154, 0.4)',
+            fill: true,
+          },
+        ],
+      },
+      VestidoLargoCola: {
+        labels: ['1 mes', '2 meses', '3 meses', '4 meses'],
+        datasets: [
+          {
+            label: 'Vestido largo con cola',
+            data: [130, 95, 85, 60],
+            borderColor: '#8D6E63',
+            backgroundColor: 'rgba(141, 110, 99, 0.4)',
+            fill: true,
+          },
+        ],
+      },
+      VestidoLargoCampana: {
+        labels: ['1 mes', '2 meses', '3 meses', '4 meses'],
+        datasets: [
+          {
+            label: 'Vestido largo tipo campana',
+            data: [140, 105, 90, 70],
+            borderColor: '#42A5F5',
+            backgroundColor: 'rgba(66, 165, 245, 0.4)',
+            fill: true,
+          },
+        ],
+      },
+      VestidoLargoRecto: {
+        labels: ['1 mes', '2 meses', '3 meses', '4 meses'],
+        datasets: [
+          {
+            label: 'Vestido largo recto',
+            data: [160, 120, 100, 80],
+            borderColor: '#7E57C2',
+            backgroundColor: 'rgba(126, 87, 194, 0.4)',
+            fill: true,
+          },
+        ],
+      },
+      VestidoLargoSirena: {
+        labels: ['1 mes', '2 meses', '3 meses', '4 meses'],
+        datasets: [
+          {
+            label: 'Vestido largo de sirena',
+            data: [150, 110, 95, 75],
+            borderColor: '#FF7043',
+            backgroundColor: 'rgba(255, 112, 67, 0.4)',
+            fill: true,
+          },
+        ],
+      },
+      VestidoLargoCortePrincesa: {
+        labels: ['1 mes', '2 meses', '3 meses', '4 meses'],
+        datasets: [
+          {
+            label: 'Vestido largo con corte princesa',
+            data: [170, 130, 110, 90],
+            borderColor: '#EF5350',
+            backgroundColor: 'rgba(239, 83, 80, 0.4)',
             fill: true,
           },
         ],
@@ -158,15 +249,14 @@ export class EstadisticaComponent {
         'Cuello halter',
         'Cuello redondo',
         'Cuello cuadrado',
-        'escote en forma de corazón',
-        'escote de hombros descubiertos',
+        'Escote en forma de corazón',
+        'Escote de hombros descubiertos',
         'Escote en V',
         'Vestido largo con cola',
         'Vestido largo tipo campana',
         'Vestido largo recto',
         'Vestido largo de sirena',
         'Vestido largo con corte princesa',
-
       ],
       datasets: [
         {
@@ -214,19 +304,27 @@ export class EstadisticaComponent {
 
     // 📌 Nueva gráfica: Tallas Rentadas por Categoría
     this.tallasPorCategoriaChartData = {
-      labels: ['S', 'M', 'L'],
-      datasets: [
-        {
-          label: 'Gala',
-          data: [20, 40, 40],
-          backgroundColor: '#FF6384',
-        },
-        {
-          label: 'Fiesta',
-          data: [25, 35, 40],
-          backgroundColor: '#36A2EB',
-        },
-      ],
+      labels: ['S', 'M', 'L'], // Tallas
+      datasets: this.categorias.map((categoria, index) => {
+        const colores = [
+          '#FF6384', // Rojo
+          '#36A2EB', // Azul
+          '#FFCE56', // Amarillo
+          '#4BC0C0', // Turquesa
+          '#9966FF', // Morado
+          '#FF9F40', // Naranja
+          '#C9CBCF', // Gris
+          '#00CC99', // Verde
+          '#FF6B6B', // Rojo claro
+          '#4D80E6', // Azul oscuro
+          '#FFD700', // Dorado
+        ];
+        return {
+          label: categoria.label, // Nombre de la categoría
+          data: [Math.floor(Math.random() * 50) + 20, Math.floor(Math.random() * 50) + 20, Math.floor(Math.random() * 50) + 20], // Datos aleatorios para S, M, L
+          backgroundColor: colores[index % colores.length], // Asignar colores únicos
+        };
+      }),
     };
 
     // 📌 Nueva gráfica: Proyección de Inventario
@@ -242,6 +340,7 @@ export class EstadisticaComponent {
         },
       ],
     };
-    this.filtrarEstimacion();
+
+    this.filtrarEstimacion(); // Filtra la estimación inicial
   }
 }

@@ -48,7 +48,12 @@ import { DialogModule } from 'primeng/dialog';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { PasswordModule } from 'primeng/password';
 
-import { Auth, signInWithPopup,FacebookAuthProvider, GoogleAuthProvider } from '@angular/fire/auth';
+import {
+  Auth,
+  signInWithPopup,
+  FacebookAuthProvider,
+  GoogleAuthProvider,
+} from '@angular/fire/auth';
 
 @Component({
   selector: 'app-login-modal',
@@ -452,13 +457,13 @@ export class LoginModalComponent implements OnInit, OnChanges, AfterViewInit {
       console.error('Error en la autenticación:', error);
     }
   }
-  
+
   async loginWithFacebook() {
     const provider = new FacebookAuthProvider(); // Crea el proveedor de Facebook
     try {
       const result = await signInWithPopup(this.auth, provider); // Inicia sesión con Facebook
       this.loginForm.reset(); // Limpia el formulario
-  
+
       if (result.user) {
         const usuario = {
           uid: result.user.uid, // ID único del usuario
@@ -468,22 +473,21 @@ export class LoginModalComponent implements OnInit, OnChanges, AfterViewInit {
           createdAt: new Date(), // Fecha de creación
           phoneNumber: result.user.phoneNumber || '', // Número de teléfono (si está disponible)
         };
-  
+
         console.log('Usuario autenticado con Facebook:', result.user);
-  
-        // Registra al usuario en tu backend
+
         this.registrarUsuario(usuario);
       }
     } catch (error) {
       console.error('Error en la autenticación con Facebook:', error);
-      this.errorMessage = 'Error al iniciar sesión con Facebook. Inténtalo de nuevo.';
+      this.errorMessage =
+        'Error al iniciar sesión con Facebook. Inténtalo de nuevo.';
     }
   }
 
   registrarUsuario(usuario: any) {
-    this.signInService.signInWithGoogle(usuario).subscribe({
+    this.signInService.signInWithGoogleOrFacebook(usuario).subscribe({
       next: (response) => {
-        console.log('Usuario registrado en el backend:', response);
         this.storageService.setToken(response.token);
         const userData = this.sessionService.getUserData();
         this.isLoading = false;
@@ -510,10 +514,10 @@ export class LoginModalComponent implements OnInit, OnChanges, AfterViewInit {
         }
       },
       error: (error) => {
-        console.error('Error al registrar usuario con Google:', error);
+        console.error('Error al registrar el usuario:', error);
 
         if (error.status === 400) {
-          this.loginError = 'Error en los datos. Verifica tu cuenta de Google.';
+          this.loginError = 'Error en los datos. Verifica tu cuenta.';
         } else if (error.status === 500) {
           this.loginError = 'Error en el servidor. Intenta más tarde.';
         } else {
