@@ -231,7 +231,6 @@ export class RegistoProductoComponent implements OnInit {
     });
 
     // Verificar si hay imágenes
-
     if (this.imagenesAdicionales && this.imagenesAdicionales.length > 0) {
       this.imagenesAdicionales.forEach((imagen) => {
         formData.append("imagenes", imagen);
@@ -303,13 +302,11 @@ export class RegistoProductoComponent implements OnInit {
   }
 
 
-
   otrasImagenesChange(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     if (inputElement.files && inputElement.files.length > 0) {
       Array.from(inputElement.files).forEach((file) => {
         this.imagenesAdicionales.push(file); // Guardar el archivo en el array
-
         const reader = new FileReader();
         reader.onload = () => {
           this.imagenes.push(this.fb.control(reader.result as string)); // Guardar la vista previa

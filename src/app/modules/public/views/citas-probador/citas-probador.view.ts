@@ -11,8 +11,8 @@ export interface DressItem {
   id: string;
   nombre: string;
   precio: number;
-  imagenes: string;
-  opcionesTipoTransaccion	: string; // Asegúrate de que la interfaz incluya la propiedad `opcionesTipoTransaccion	`
+  imagenPrincipal: string;
+  categoria: string; // Asegúrate de que la interfaz incluya la propiedad `categoria`
 }
 
 @Component({
@@ -59,11 +59,12 @@ export class CitasProbadorView implements OnInit {
       this.productosVenta = productos.filter(
         (item) => item.opcionesTipoTransaccion?.toLowerCase() === "venta"
       );
-  
-      // Mostrar los productos filtrados
-      console.log("Productos para renta:", this.productosRenta);
-      console.log("Productos para venta:", this.productosVenta);
-  
+
+      // Inicializar el carrito con los productos obtenidos
+      // this.cartService.initializeCart(productos);
+      // const productos =this.cartService.loadCartItems();
+      console.log("=>"+productos)
+
       this.calcularTotal();
       this.initializeTabs();
     } catch (error) {

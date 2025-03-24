@@ -1,8 +1,4 @@
 <div class="appointment-container">
-  <h1 style="text-align: center; margin-bottom: 1.5rem;">Carrito de compra</h1>
-
-
-
   <div class="content">
     <!-- Left Column: Dress Summary -->
     <div class="summary">
@@ -28,7 +24,7 @@
           <a routerLink="/productos" class="btn-agregar">Explorar productos</a>
         </div>
         <div class="dress-item" *ngFor="let item of productosRenta">
-          <img [src]="item.imagenes" [alt]="item.nombre" />
+          <img [src]="item.imagenPrincipal" [alt]="item.nombre" />
           <div class="details">
             <h5>{{ item.nombre }}</h5>
             <p>Precio: ${{ item.precio | number }}</p>
@@ -57,7 +53,7 @@
           <a routerLink="/productos" class="btn-agregar">Explorar productos</a>
         </div>
         <div class="dress-item" *ngFor="let item of productosVenta">
-          <img [src]="item.imagenes" [alt]="item.nombre" />
+          <img [src]="item.imagenPrincipal" [alt]="item.nombre" />
           <div class="details">
             <h5>{{ item.nombre }}</h5>
             <p>Precio: ${{ item.precio | number }}</p>
@@ -73,19 +69,18 @@
         </div>
       </div>
     </div>
-    <!-- Sección de resumen/total -->
-    <div class="order-summary">
-      <div class="subtotal">
-        <span *ngIf="tipoCompra === 'renta'" class="subtotal-label">Subtotal Renta:</span>
-        <span *ngIf="tipoCompra === 'venta'" class="subtotal-label">Subtotal Venta:</span>
-        <span class="subtotal-amount">${{ totalCompra | number }}</span>
-      </div>
-      <button class="checkout-btn" (click)="continuarCompraTotal()">
-        <i class="pi pi-check-circle"></i> Continuar con la compra
-      </button>
-    </div>
-    <p-dialog header="Resumen de compra" [(visible)]="mostrarModal" [modal]="true" [closable]="true"
-      [style]="{ width: '50vw' }">
+
+    <p *ngIf="tipoCompra === 'renta'">Total Renta: ${{ totalCompra }}</p>
+    <p *ngIf="tipoCompra === 'venta'">Total Venta: ${{ totalCompra }}</p>
+
+    <app-data-compra></app-data-compra>
+
+    <p-dialog
+      header="Resumen de compra"
+      [(visible)]="mostrarModal"
+      [modal]="true"
+      [closable]="true"
+    >
       <div class="resumen-compra">
         <h4>{{ productoSeleccionado?.nombre }}</h4>
         <div class="resumen-details">

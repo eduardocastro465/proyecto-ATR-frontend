@@ -6,40 +6,88 @@
   <div class="product-detail-container" *ngIf="Detalles && !isLoading">
     <div class="product-img">
       <div class="thumbnail-images">
-        <ng-container *ngIf="Detalles.imagenes">
-          <img *ngFor="let image of Detalles.imagenes; let i = index" [src]="image" alt="Thumbnail"
-            (click)="changeMainImage(image)" [class.selected]="image === mainImageUrl" class="thumbnail" />
+        <ng-container>
+          <img
+            *ngFor="let image of Detalles.otrasImagenes"
+            [src]="image"
+            alt="Thumbnail"
+            (click)="changeMainImage(image)"
+            [class.selected]="image == Detalles.imagenPrincipal"
+            class="thumbnail"
+          />
         </ng-container>
       </div>
 
-      <!-- Imagen principal -->
       <div class="product-images">
-        <img #mainImage *ngIf="mainImageUrl" [src]="mainImageUrl" alt="Product Main Image" class="main-image"
-          (click)="openModal()" (mousemove)="applyZoomEffect($event)" (mouseleave)="resetZoomEffect()" />
+        <!-- <ng-container *ngIf="Detalles"> -->
+        <img
+          #mainImage
+          *ngIf="Detalles"
+          [src]="Detalles.imagenPrincipal"
+          alt="Product Main Image"
+          class="main-image"
+          (click)="openModal()"
+          (mousemove)="applyZoomEffect($event)"
+          (mouseleave)="resetZoomEffect()"
+        />
+
+        <!-- <img zoom 
+        [src]="Detalles.imagenPrincipal" alt="Image" class="main-image" /> -->
+
+        <!-- Asegúrate de que sea una imagen de alta resolución -->
+        <!-- <lib-ngx-image-zoom
+      *ngIf="Detalles"
+      [thumbImage]="Detalles.imagenPrincipal"
+      [fullImage]="Detalles.imagenPrincipal"
+      [magnification]="2"  
+      [enableScrollZoom]="true"
+      [enableLens]="true"
+      [lensWidth]="140"
+      [lensHeight]="140"
+      alt="Product Main Image"
+          class="main-image"
+
+    
+    ></lib-ngx-image-zoom> -->
+
+        <!-- </ng-container> -->
       </div>
     </div>
 
-    <!-- Carrusel para móviles -->
-    <div class="image-carousel" *ngIf="!isLoading && Detalles.imagenes">
-      <p-galleria [value]="images" [activeIndex]="selectedImageIndex" [showIndicators]="true" [showThumbnails]="false"
-        [responsiveOptions]="responsiveOptions" [circular]="true" class="styled-galleria"
-        (activeIndexChange)="onImageChange($event)">
+    <!-- para movil -->
+    <div class="image-carousel" *ngIf="!isLoading && Detalles">
+      <p-galleria
+        [value]="images"
+        [activeIndex]="selectedImageIndex"
+        [showIndicators]="true"
+        [showThumbnails]="false"
+        [responsiveOptions]="responsiveOptions"
+        [circular]="true"
+        class="styled-galleria"
+        (activeIndexChange)="onImageChange($event)"
+        (e2eNext)="nextImage()"
+      >
         <ng-template pTemplate="item" let-item>
-          <img [src]="item.itemImageSrc" class="carousel-image" alt="Product Image" />
+          <img
+            [src]="item.itemImageSrc"
+            class="carousel-image"
+            alt="Product Image"
+          />
         </ng-template>
       </p-galleria>
 
-      <!-- Botones de navegación -->
+      <!-- Icono de navegación izquierda -->
       <button class="carousel-nav left" (click)="prevImage()">
         <i class="pi pi-chevron-left"></i>
       </button>
+
+      <!-- Icono de navegación derecha -->
       <button class="carousel-nav right" (click)="nextImage()">
         <i class="pi pi-chevron-right"></i>
       </button>
     </div>
-
     <!-- informacion del producto -->
-    <div class="product-info" data-aos="zoom-in-down">
+    <div class="product-info">
       <h1 class="product-name">{{ Detalles.nombre }}</h1>
 
       <div *ngIf="Detalles.disponible" class="availability">
@@ -51,53 +99,51 @@
         <i class="pi pi-exclamation-triangle"></i>
         <span>La renta para este producto o la publicación está pausada.</span>
       </div>
-      <div class="contenidoTExt">
-        <div class="price-content">
 
-          <p class="price">$MX{{ Detalles.precio }}</p>
+      <p class="price">${{ Detalles.precio }}</p>
 
-        </div>
-        <div *ngIf="Detalles.nuevo" class="new-label">
-          <i class="fas fa-tag"></i>
-          <span>¡Nuevo!</span>
-        </div>
-      </div>
       <!-- Opciones del producto -->
       <div class="product-options">
-        <h2>Acerca de este producto</h2>
-        <!-- Detalles del producto -->
         <div class="product-detail">
-          <p><strong>Talla:</strong> <span>{{ Detalles.talla }}</span></p>
+          <p>Talla: <span>{{ Detalles.tallaDisponible }}</span></p>
         </div>
         <div class="product-detail">
-          <p><strong>Color:</strong> <span>{{ Detalles.color }}</span></p>
+          <p>
+            Estado: <span>{{ Detalles.estado ? 'Nuevo' : 'Para Renta' }}</span>
+          </p>
         </div>
         <div class="product-detail">
-          <p><strong>Forma del cuello:</strong> <span>{{ Detalles.tipoCuello }}</span></p>
+          <p>Cantidad: <span>1</span></p>
         </div>
-        <div class="product-detail">
-          <p><strong>Estilo de la cola:</strong> <span>{{ Detalles.tipoCola }}</span></p>
-        </div>
+        <!-- class="add-to-cart rent" -->
+
+        <!-- <button
+          *ngIf="Detalles.categoria == 'renta' && Detalles.disponible"
+          (click)="redirigirContinuarRenta(Detalles._id)"
+          class="ui add-to-cart rent button"
+          [class.loading]="isLoadingRenta"
+          [class.disabled]="isLoadingRenta"
+        >
+          Me lo quiero probar
+        </button> -->
 
 
-        <div class="product-detail">
-          <p><strong>Cantidad:</strong> <span>1</span></p>
-        </div>
-
-        <!-- Botones de acción -->
-        <button *ngIf="Detalles.disponible"
-          (click)="Detalles.opcionesTipoTransaccion == 'renta' ? redirigirContinuarRenta(Detalles._id) : redirigirContinuarCompra(Detalles._id)"
-          class="ui add-to-cart rent button" [class.loading]="isLoadingBtn" [class.disabled]="isLoadingBtn">
-          {{ Detalles.opcionesTipoTransaccion == 'renta' ? 'Me lo quiero probar' : 'Continuar con la compra' }}
-        </button>
+        <button
+        *ngIf="Detalles.disponible"
+        (click)="Detalles.categoria == 'renta' ? redirigirContinuarRenta(Detalles._id) : redirigirContinuarCompra(Detalles._id)"
+        class="ui add-to-cart rent button"
+        [class.loading]="isLoadingBtn"
+        [class.disabled]="isLoadingBtn"
+      >
+        {{ Detalles.categoria == 'renta' ? 'Me lo quiero probar' : 'Continuar con la compra' }}
+      </button>
 
         <button (click)="apartarRentar(Detalles)" class="add-to-cart">
           <i class="pi pi-shopping-cart"></i> Agregar a carrito
         </button>
 
-        <!-- Compartir enlace -->
         <div class="share-link">
-          <p><strong>Compartir:</strong></p>
+          <p>Compartir:</p>
           <button class="share-button" title="Compartir enlace">
             <i class="pi pi-share-alt"></i>
           </button>
@@ -105,7 +151,6 @@
       </div>
     </div>
   </div>
-
   <div class="loading-container" *ngIf="!Detalles && isLoading">
     <!-- Contenedor de imágenes -->
     <div class="skeleton-image-section">
@@ -173,14 +218,14 @@
     <h2 class="related-title">Productos Relacionados</h2>
     <div class="related-products">
       <div class="carousel-track">
-        <div class="related-product" *ngFor="let related of productosRelacionados">
+        <div  class="related-product" *ngFor="let related of productosRelacionados">
           <img [src]="related.imagen" alt="{{ related.nombre }}" />
           <h3>{{ related.nombre }}</h3>
           <p class="price">${{ related.precio }}</p>
         </div>
       </div>
     </div>
-
+    
   </div>
   <!-- </div> -->
 </div>
@@ -195,3 +240,4 @@
     class="modal-image"
   />
 </div>
+º

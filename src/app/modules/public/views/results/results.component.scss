@@ -321,11 +321,16 @@
   box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
 
-.product-image {
-  cursor: pointer;
-  transition: transform 0.3s;
+.btn-apartar-rentar:active {
+  transform: scale(0.95); /* Reducir ligeramente el tamaño al hacer clic */
+  opacity: 0.8; /* Aumentar la opacidad para dar sensación de presionado */
 }
 
-.product-image:hover {
-  transform: scale(1.05);
+/* Estilos responsivos */
+@media (max-width: 767px) {
+  .btn-apartar-rentar {
+    padding: 6px 12px; /* Reducir el padding en pantallas más pequeñas */
+    font-size: 0.9rem; /* Reducir el tamaño de fuente en pantallas más pequeñas */
+  }
 }
+
