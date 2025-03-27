@@ -36,6 +36,7 @@ import { ControlAccesorioView } from './views/control-accesorio/control-accesori
 import { ListadoAccesorioComponent } from './components/listado-accesorio/listado-accesorio.component';
 import { AsignarAccesoriosVestidoComponent } from './components/asignar-accesorios-vestido/asignar-accesorios-vestido.component';
 import { ListadoAcsVestidoRentaComponent } from './components/listado-acs-vestido-renta/listado-acs-vestido-renta.component';
+import { CategoriaComponent } from './components/categoria/categoria.component';
 
 const routes: Routes = [
   {
@@ -50,6 +51,10 @@ const routes: Routes = [
       {
         path: 'home',
         component: HomeView,
+      },
+      {
+        path: 'lista-categorias',
+        component: CategoriaComponent,
       },
       {
         path: 'cliente',
@@ -91,11 +96,11 @@ const routes: Routes = [
           },
           {
             path: 'registro-producto',
-            component:RegistoProductoComponent,
+            component: RegistoProductoComponent,
           },
           {
             path: 'edit-producto/:id',
-            component:RegistoProductoComponent,
+            component: RegistoProductoComponent,
           },
           {
             path: '',
@@ -106,23 +111,23 @@ const routes: Routes = [
       },
       {
         path: 'control-asignar-acs-vestido-renta',
-            component:ControlAccesorioView,
+        component: ControlAccesorioView,
         children: [
-            {
+          {
 
-                path: 'lista-vestidos-acss',
-                component: ListadoAcsVestidoRentaComponent,
-              },
-              {
-                  path: 'asignar-vestido-accesorio',
-              component: AsignarAccesoriosVestidoComponent,
+            path: 'lista-vestidos-acss',
+            component: ListadoAcsVestidoRentaComponent,
           },
-        //   {
-        //     path: '',
-        //     redirectTo: 'registro-producto',
-        //     pathMatch: 'full',
-        //   },
-             ]     // ],
+          {
+            path: 'asignar-vestido-accesorio',
+            component: AsignarAccesoriosVestidoComponent,
+          },
+          //   {
+          //     path: '',
+          //     redirectTo: 'registro-producto',
+          //     pathMatch: 'full',
+          //   },
+        ]     // ],
       },
       {
         path: 'control-Accesorios',
@@ -279,4 +284,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AdminRoutingModule {}
+export class AdminRoutingModule { }

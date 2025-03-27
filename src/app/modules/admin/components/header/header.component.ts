@@ -156,9 +156,11 @@ resizeSidebar(event: MouseEvent) {
     this.router.navigate([route === "login" ? "/auth/login" : `/admin/control-productos/${route}`]);
   }
   redirectToAccesorios(route: string): void {
-    this.router.navigate([route === "login" ? "/auth/login" : `/admin/control-Accesorios/${route}`]);
+    this.router.navigate([route === "login" ? "/auth/login" : `/admin/${route}`]);
   }
-  
+  redirectToCategorias(ruta: string): void {
+    this.router.navigate([`/admin/${ruta}`]);
+  }
   redirectToAccesoriosYvestidos(route: string): void {
     this.router.navigate([route === "login" ? "/auth/login" : `/admin/control-asignar-acs-vestido-renta/${route}`]);
   }

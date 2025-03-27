@@ -1,0 +1,24 @@
+<div class="categoria-container">
+    <h2 class="categoria-title">Lista de Categorías</h2>
+    <ul class="categoria-list">
+      <li *ngFor="let categoria of categorias" class="categoria-item">
+        <span class="categoria-nombre">{{ categoria.nombre }}</span>
+        <div class="categoria-actions">
+          <button class="btn btn-danger" (click)="eliminarCategoria(categoria.id)">Eliminar</button>
+          <button class="btn btn-primary" (click)="categoriaSeleccionada = categoria">Editar</button>
+        </div>
+      </li>
+    </ul>
+  
+    <div *ngIf="categoriaSeleccionada" class="categoria-editar">
+      <h3>Editar Categoría</h3>
+      <input [(ngModel)]="categoriaSeleccionada.nombre" placeholder="Nombre de la categoría" class="form-control" />
+      <button class="btn btn-success" (click)="actualizarCategoria(categoriaSeleccionada.id, categoriaSeleccionada)">Guardar</button>
+    </div>
+  
+    <div class="categoria-crear">
+      <h3>Crear Nueva Categoría</h3>
+      <input #nuevaCategoria placeholder="Nombre de la categoría" class="form-control" />
+      <button class="btn btn-success" (click)="crearCategoria({ nombre: nuevaCategoria.value })">Crear</button>
+    </div>
+  </div>

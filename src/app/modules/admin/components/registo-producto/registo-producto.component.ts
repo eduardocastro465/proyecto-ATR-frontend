@@ -12,6 +12,7 @@ import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from "@ang
 import { ProductoService } from "../../../../shared/services/producto.service";
 import { MessageService } from 'primeng/api';
 import { Location } from '@angular/common';
+import { CategoriaService } from '../../../../shared/services/categoria.service';
 
 @Component({
   selector: "app-registo-producto",
@@ -20,7 +21,7 @@ import { Location } from '@angular/common';
 })
 export class RegistoProductoComponent implements OnInit {
   @Input() mostrarModalAddVestido!: boolean;
-
+  categorias: any[] = [];
   @Output() mostrarFormulario = new EventEmitter<boolean>(); // Evento para cerrar el modal
   productoId: any | null = null; // Recibe el producto a editar
 
@@ -29,6 +30,7 @@ export class RegistoProductoComponent implements OnInit {
   imagenesAdicionales: File[] = []; // Inicializa como un array vacío
   // imagenes: { file: File; url: string }[] = []; // Array para almacenar archivos y sus URLs base64
   constructor(
+    private categoriaService: CategoriaService,
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private productoService: ProductoService,
@@ -49,7 +51,9 @@ export class RegistoProductoComponent implements OnInit {
       tipoCola: ["", [Validators.required]],
       tipoCapas: ["", [Validators.required]],
       tipoHombro: ["", [Validators.required]],
-      descripcion: [""]
+      descripcion: [""],
+      idCategoria: ['', Validators.required], // Agregar este control
+ 
     });
   }
 
@@ -58,18 +62,32 @@ export class RegistoProductoComponent implements OnInit {
   ngOnInit(): void {
     this.productoId = this.route.snapshot.paramMap.get('id');
     console.log('ID del producto:', this.productoId);
+  
+    // Obtener categorías
+    this.obtenerCategorias();
+  
     if (this.productoId) {
       this.productoService.obtenerDetalleProductoById(this.productoId).subscribe(
         (producto) => {
-          alert("llego id")
+          alert("llego id");
           this.cargarProductoEnFormulario(producto);
-          // this.cargarProductoEnFormulario(this.productoId);
         },
         (error) => {
           console.error('Error al cargar el producto:', error);
         }
       );
     }
+  }
+  
+  obtenerCategorias(): void {
+    this.categoriaService.obtenerCategorias().subscribe(
+      (categorias) => {
+        this.categorias = categorias;
+      },
+      (error) => {
+        console.error('Error al obtener categorías:', error);
+      }
+    );
   }
 
   cargarProductoEnFormulario(producto: any) {
@@ -88,6 +106,7 @@ export class RegistoProductoComponent implements OnInit {
       tipoCapas: producto.tipoCapas || "",
       tipoHombro: producto.tipoHombro || "",
       descripcion: producto.descripcion || "",
+      idCategoria: producto.idCategoria || "",
     });
 
     // Limpiamos el array de imágenes y cargamos las nuevas si existen

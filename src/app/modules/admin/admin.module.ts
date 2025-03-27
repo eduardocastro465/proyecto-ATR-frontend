@@ -69,6 +69,8 @@ import { ConstrolAccesoriosVestidoView } from './views/constrol-accesorios-vesti
 import { AsignarAcsVestidoRentaComponent } from './components/asignar-acs-vestido-renta/asignar-acs-vestido-renta.component';
 import { ListadoAcsVestidoRentaComponent } from './components/listado-acs-vestido-renta/listado-acs-vestido-renta.component';
 import { VentayrentaService } from '../../shared/services/ventayrenta.service';
+import { CategoriaComponent } from './components/categoria/categoria.component';
+import { CategoriaService } from '../../shared/services/categoria.service';
 const VIEWS = [HomeView, FooterComponent];
 
 const MATERIALS = [ DragDropModule,ButtonModule, DropdownModule, InputTextModule, CardModule,CalendarModule, InputNumberModule, ToastrModule,TabViewModule,
@@ -115,6 +117,7 @@ const MATERIALS = [ DragDropModule,ButtonModule, DropdownModule, InputTextModule
     ConstrolAccesoriosVestidoView,
     AsignarAcsVestidoRentaComponent,
     ListadoAcsVestidoRentaComponent,
+    CategoriaComponent,
 
   ],
   imports: [ MATERIALS,ReactiveFormsModule,ToastModule ,CommonModule, AdminRoutingModule, FormsModule,HttpClientModule,],
@@ -122,7 +125,7 @@ const MATERIALS = [ DragDropModule,ButtonModule, DropdownModule, InputTextModule
     UsuarioService,
     ControlAdministrativaService,
     ClientesService,
-    StorageService,
+    StorageService,CategoriaService,
     SessionService,ProductoService,
     DatosEmpresaService,Toast, MessageService, provideClientHydration(), [provideHttpClient(withFetch())],
   ],

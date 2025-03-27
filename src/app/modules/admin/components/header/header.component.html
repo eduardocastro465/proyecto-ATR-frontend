@@ -80,6 +80,31 @@
         </li> -->
       </ul>
     </li>
+    <!-- Categorías -->
+<li class="nav-item">
+  <a
+    tabindex="0"
+    class="nav-link"
+    [class.open]="openSubmenu === 'Categorias-submenu'"
+    (click)="toggleSubmenu('Categorias-submenu');setActiveLink($event)"
+  >
+    <i *ngIf="!isCollapsed" class="pi pi-sort-down-fill submenu-toggle" [class.open]="openSubmenu === 'Categorias-submenu'"></i>
+    <i class="pi pi-folder"></i>
+    <span class="link-text">Categorías</span>
+  </a>
+  <ul *ngIf="openSubmenu === 'Categorias-submenu'" class="submenu" id="Categorias-submenu">
+    <li>
+      <a tabindex="0" (click)="redirectToCategorias('lista-categorias');setActiveLink($event)" class="nav-link">
+        <i class="pi pi-list"></i> Listado de categorías
+      </a>
+    </li>
+    <li>
+      <a tabindex="0" (click)="redirectToCategorias('registro-categoria');setActiveLink($event)" class="nav-link">
+        <i class="pi pi-plus"></i> Agregar categoría
+      </a>
+    </li>
+  </ul>
+</li>
     <!-- Accesorios -->
     <li class="nav-item">
       <a

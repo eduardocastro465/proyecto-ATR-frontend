@@ -44,13 +44,6 @@
       <a class="submit-btn" href="javascript:void(0)" (click)="clearAllImages()">Vaciar todas las imágenes</a>
     </div>
   </div>
-
-
-  <!-- Botones de acciones -->
-  <div class="btns">
-    <a class="submit-btn" href="javascript:void(0)" (click)="fileInput.click()">Seleccionar imágenes</a>
-    <a class="submit-btn" href="javascript:void(0)" (click)="clearAllImages()">Vaciar todas las imágenes</a>
-  </div>
   <div>
 
     <div class="form-grid">
@@ -58,7 +51,15 @@
         <label>Nombre del vestido</label>
         <input type="text" formControlName="nombre" placeholder="Nombre del vestido" />
       </div>
-
+      <div class="group-input">
+        <label>Categoría</label>
+        <select formControlName="idCategoria">
+          <option value="" disabled selected>Seleccionar categoría</option>
+          <option *ngFor="let categoria of categorias" [value]="categoria._id">
+            {{ categoria.nombre }}
+          </option>
+        </select>
+      </div>
       <div class="group-input">
         <label>Talla</label>
         <select formControlName="talla">
@@ -203,7 +204,7 @@
   </div>
 
   <button class="submit-btn" (click)="onAgregarProducto()">
-    Agregar Producto
+    {{productoId?"Guardar cambios":"Agregar producto"}}
   </button>
 </form>
 <!-- </p-dialog> -->
