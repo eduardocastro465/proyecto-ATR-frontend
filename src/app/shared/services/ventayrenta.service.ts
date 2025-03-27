@@ -9,32 +9,55 @@ import { environment } from '../../../environments/environment';  // Asegúrate 
   providedIn: 'root'
 })
 export class VentayrentaService {
+  private apiUrl = `${environment.api}/proceso` // Base URL del backend para rentas
 
   constructor(private http: HttpClient) { }
 
   // Métodos de Venta
   crearVenta(venta: FormData): Observable<any> {
-    return this.http.post<any>(`${environment.api}/proceso/crearVenta`, venta);
+    return this.http.post<any>(`${this.apiUrl}/proceso/crearVenta`, venta);
   }
 
   obtenerVentas(): Observable<any[]> {
-    return this.http.get<any[]>(`${environment.api}/proceso/obtenerVentas`);
+    return this.http.get<any[]>(`${this.apiUrl}/proceso/obtenerVentas`);
   }
 
   obtenerProductosCompradoByIdUser(usuarioId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${environment.api}/proceso/comprasByidUser/${usuarioId}`);
+    return this.http.get<any[]>(`${this.apiUrl}/proceso/comprasByidUser/${usuarioId}`);
   }
 
-  // Métodos de Renta
-  crearRenta(renta: FormData): Observable<any> {
-    return this.http.post<any>(`${environment.api}/proceso/crearRenta`, renta);
+ 
+  
+
+  
+
+
+
+   // Obtener todas las rentas
+   obtenerRentas(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/obtenerRentas`);
   }
 
-  obtenerRentas(): Observable<any[]> {
-    return this.http.get<any[]>(`${environment.api}/proceso/obtenerRentas`);
+
+  // Crear una nueva renta
+  crearRenta(renta: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/crearRenta`, renta);
+  }
+editarRenta(rentaId: string, rentaData: any): Observable<any> {
+  return this.http.put(`${this.apiUrl}/editarRenta/${rentaId}`, rentaData);
+}
+  // Cancelar una renta
+  cancelarRenta(data: { rentaId: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/cancelarRenta`, data);
   }
 
-  obtenerProductosRentadosByIdUser(usuarioId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${environment.api}/proceso/rentasByidUser/${usuarioId}`);
+  // Listar rentas de un usuario específico
+  listarRentasUsuario(usuarioId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/listarRentasUsuario/${usuarioId}`);
+  }
+
+  // Obtener productos rentados por un usuario
+  obtenerProductosRentadosByIdUser(usuarioId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/obtenerProductosRentadosByIdUser/${usuarioId}`);
   }
 }

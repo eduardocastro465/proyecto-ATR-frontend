@@ -56,7 +56,7 @@ userROL!: string;
     this.comprayrentaS_
       .obtenerProductosRentadosByIdUser(usuarioId)
       .subscribe((response) => {
-        this.bolsaDeRentas = response.map(item=>({
+        this.bolsaDeRentas = response.map((item:any)=>({
           
             id: item._id,
             isRecogido: item.isRecogido,
