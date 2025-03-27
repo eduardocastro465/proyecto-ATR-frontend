@@ -11,7 +11,7 @@ export interface DressItem {
   id: string;
   nombre: string;
   precio: number;
-  imagenPrincipal: string;
+  imagenes: any;
   categoria: string; // Asegúrate de que la interfaz incluya la propiedad `categoria`
 }
 
@@ -61,7 +61,7 @@ export class CitasProbadorView implements OnInit {
       );
 
       // Inicializar el carrito con los productos obtenidos
-      // this.cartService.initializeCart(productos);
+      this.cartService.initializeCart(productos);
       // const productos =this.cartService.loadCartItems();
       console.log("=>"+productos)
 

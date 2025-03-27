@@ -1,4 +1,5 @@
 <div class="appointment-container">
+  <h1>Productos agregados al carrito</h1>
   <div class="content">
     <!-- Left Column: Dress Summary -->
     <div class="summary">
@@ -24,7 +25,7 @@
           <a routerLink="/productos" class="btn-agregar">Explorar productos</a>
         </div>
         <div class="dress-item" *ngFor="let item of productosRenta">
-          <img [src]="item.imagenPrincipal" [alt]="item.nombre" />
+          <img [src]="item.imagenes[0]" [alt]="item.nombre" />
           <div class="details">
             <h5>{{ item.nombre }}</h5>
             <p>Precio: ${{ item.precio | number }}</p>
@@ -53,7 +54,7 @@
           <a routerLink="/productos" class="btn-agregar">Explorar productos</a>
         </div>
         <div class="dress-item" *ngFor="let item of productosVenta">
-          <img [src]="item.imagenPrincipal" [alt]="item.nombre" />
+          <img [src]="item.imagenes[0]" [alt]="item.nombre" />
           <div class="details">
             <h5>{{ item.nombre }}</h5>
             <p>Precio: ${{ item.precio | number }}</p>
@@ -68,12 +69,13 @@
           </div>
         </div>
       </div>
+      <p *ngIf="tipoCompra === 'renta'">Total Renta: ${{ totalCompra }}</p>
+      <p *ngIf="tipoCompra === 'venta'">Total Venta: ${{ totalCompra }}</p>
+  
     </div>
-
-    <p *ngIf="tipoCompra === 'renta'">Total Renta: ${{ totalCompra }}</p>
-    <p *ngIf="tipoCompra === 'venta'">Total Venta: ${{ totalCompra }}</p>
-
     <app-data-compra></app-data-compra>
+
+   
 
     <p-dialog
       header="Resumen de compra"
