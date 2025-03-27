@@ -2,6 +2,7 @@ import { TitularModule } from './modules/titular/titular.module';
 import { Routes } from '@angular/router';
 import { adminGuard } from './shared/guards/auth.guard';
 import { titularGuard } from './shared/guards/auth.guard';
+import { clientGuard } from './shared/guards/auth.guard';
 
 export const routes: Routes = [
     {
@@ -16,7 +17,7 @@ export const routes: Routes = [
     },
   {
     path: 'admin',
-    // canActivate: [adminGuard],
+    canActivate: [adminGuard],
     loadChildren: () => import('../app/modules/admin/admin.module').then(m=>m.AdminModule)
   },
   {
@@ -24,13 +25,13 @@ export const routes: Routes = [
     loadChildren: () => import('../app/modules/auth/auth.module').then(m=>m.AuthModule)
   },
   {
-  // canActivate: [AuthGuard], // Solo usuarios autenticados pueden acceder
+  canActivate: [clientGuard], // Solo usuarios autenticados pueden acceder
     path: 'cuenta',
     loadChildren: () => import('../app/modules/client/client.module').then(m=>m.ClientModule)
   },
   {
     path: 'titular',
-    // canActivate: [titularGuard] ,
+    canActivate: [titularGuard] ,
     loadChildren: () => import('../app/modules/titular/titular.module').then(m=>m.TitularModule)
   },
   {

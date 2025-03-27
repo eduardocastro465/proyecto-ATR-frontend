@@ -39,19 +39,23 @@ export const titularGuard = () => {
   }
 };
 
-// export const clientGuard = () => {
-//   const router = inject(Router);
+export const clientGuard = () => {
+  const sesionS_ = inject(SessionService);
 
-//   const rol = localStorage.getItem('rol');
+  const userData = sesionS_.getUserData();
+  const router = inject(Router);
 
-//   // Verificar si el rol es admin
-//   if (rol && rol === 'cliente') {
-//     return true; // Usuario tiene rol de admin
-//   } else {
-//     router.navigate(['/']);
-//     return false; // Usuario no tiene rol de admin
-//   }
-// };
+  const userROL = userData?.rol; // Obtener el rol del usuario
+
+  // Verificar si el rol es admin
+
+  if (userROL === ERol.CLIENTE) {
+    return true; // Usuario tiene rol de admin
+  } else {
+    router.navigate(['/public/inicio']);
+    return false; // Usuario tiene rol de admin
+  }
+};
 // export const EmployeeGuard = () => {
 //   const router = inject(Router);
 
