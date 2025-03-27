@@ -213,4 +213,22 @@ export class ProductosComponent implements OnInit {
   scrollRight() {
     this.carousel.nativeElement.scrollBy({ left: 200, behavior: 'smooth' });
   }
+
+
+
+
+  // Función para cambiar la imagen al hacer hover
+  cambiarImagen(producto: any, event: MouseEvent) {
+    const imgElement = event.target as HTMLImageElement;
+    if (producto.imagenes.length > 1) {
+      imgElement.src = producto.imagenes[1]; // Cambiar a la segunda imagen
+    }
+  }
+
+  // Función para restaurar la imagen al salir del hover
+  restaurarImagen(producto: any, event: MouseEvent) {
+    const imgElement = event.target as HTMLImageElement;
+    imgElement.src = producto.imagenPrincipal || producto.imagenes[0]; // Restaurar la primera imagen
+  }
+
 }

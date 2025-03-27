@@ -47,10 +47,12 @@ export class DetailsProductView implements OnInit, AfterViewInit {
   selectedSize: string = '';
   // sizes: any[] = [];
   isViewImagen: boolean = false;
-  productosRelacionados:any;
-
-
-  accesorios:any;
+  productosRelacionados: any;
+  mainImageUrl: string = ''; // URL de la imagen principal
+  showImages: boolean = false; // Variable para mostrar/ocultar las imágenes secundarias
+  imagenes: any; // Sigue siendo un array de cadenas para imágenes adicionales en base64
+ 
+  accesorios: any;
   productId!: any;
   Detalles: any = null; // Inicializado en null
   responsiveOptions: any[] = [
@@ -112,32 +114,45 @@ export class DetailsProductView implements OnInit, AfterViewInit {
   ) {
     // this.id=require.para
   }
+
   ngOnInit() {
     this.isLoading = true;
     this.scrollToTop();
-    this.productId = this.activatedRoute.snapshot.params['id'];
-    this.productoS_.obtenerDetalleProductoById(this.productId)
-      .subscribe((response:any) => {
+    this.ngxService.stop(); // Inicia el loader
+    AOS.init({
+      duration: 650, // Duración de la animación en milisegundos
+      once: true, // Si `true`, la animación solo se ejecuta una vez
+    });
+    const productId = this.activatedRoute.snapshot.params['id'];
+
+    // Obtener detalles del producto
+    this.productoS_.obtenerDetalleProductoById(productId)
+      .subscribe((response: any) => {
         this.isLoading = false;
         this.Detalles = response;
+        this.imagenes = this.Detalles.imagenes;
+
+        // Establecer la primera imagen como imagen principal
+        if (this.Detalles.imagenes && this.Detalles.imagenes.length > 0) {
+          this.mainImageUrl = this.Detalles.imagenes[0];
+        }
+
+        // Preparar imágenes para el carrusel
+        this.images = this.Detalles.imagenes.map((img: string) => ({
+          itemImageSrc: img,
+          thumbnailImageSrc: img
+        }));
+
         this.cdRef.detectChanges(); // Forzar la actualización del DOM
       });
-      this.productoS_.obtenerAccesorios()
-      .subscribe((accesorios:any) => {
-        this.accesorios = accesorios.map((item:any) => ({
-          nombre: item.nombre,
-          imagen: item.imagenPrincipal, // Ajuste del nombre de la propiedad
-        }));
-      });
-      this.productoS_
-      .obtenerProductos()
-      .subscribe((accesorios:any) => {
-        this.productosRelacionados = accesorios.map((item:any) => ({
-          nombre: item.nombre,
-          imagen: item.imagenPrincipal, // Ajuste del nombre de la propiedad
-        }));
-      });
-    
+
+
+      setTimeout(() => {
+        Fancybox.bind('[data-fancybox="gallery"]', {
+          // Aquí puedes agregar configuraciones adicionales si es necesario
+          // por ejemplo, velocidad de transición, etc.
+        });
+      }, 100);
   }
   scrollToTop() {
     window.scrollTo(0, 0); // Esto lleva la página a la parte superior
@@ -164,6 +179,7 @@ export class DetailsProductView implements OnInit, AfterViewInit {
     const image = this.mainImage.nativeElement;
     this.renderer.setStyle(image, 'transform', 'scale(1)');
   }
+  // Aplicar efecto de zoom en la imagen del modal
   applyZoomEffectPreviewmainImage(event: MouseEvent): void {
     const img = this.PreviewmainImage.nativeElement;
     const { offsetX, offsetY } = event;
@@ -182,29 +198,12 @@ export class DetailsProductView implements OnInit, AfterViewInit {
     img.style.transform = 'scale(1)';
   }
 
-  prevImage() {
-    this.selectedImageIndex =
-      (this.selectedImageIndex - 1 + this.images.length) % this.images.length;
-  }
-  nextImage() {
-    this.selectedImageIndex =
-      (this.selectedImageIndex + 1) % this.images.length;
-  }
 
-  onImageChange(event: any) {
-    this.selectedImageIndex = event.index;
-  }
 
   // Imagen principal del Detalles
 
   // // Lista de imágenes en miniatura
   thumbnailImages!: string[];
-  changeMainImage(image: string) {
-    if (this.Detalles) {
-      this.Detalles.imagenPrincipal = image;
-    }
-  }
- 
   redirigirContinuarRenta(id: any) {
     this.isLoadingBtn = true;
     setTimeout(() => {
@@ -225,8 +224,8 @@ export class DetailsProductView implements OnInit, AfterViewInit {
       id: producto._id,
       nombre: producto.nombre,
       precio: producto.precio,
-      imagenPrincipal: producto.imagenPrincipal,
-      categoria: producto.categoria,
+      imagenes: producto.imagenes[0],
+      opcionesTipoTransaccion: producto.opcionesTipoTransaccion,
     };
 
     try {
@@ -286,12 +285,11 @@ export class DetailsProductView implements OnInit, AfterViewInit {
       }))
     );
   }
-
   // Cerrar el modal de la imagen en pantalla completa
   btnClose(): void {
     this.isViewImagen = false;
   }
-  
+
   closeModal(event: MouseEvent) {
     // Verifica si el clic fue en el fondo y no en la imagen
     if ((event.target as HTMLElement).classList.contains('image-modal')) {
@@ -301,5 +299,36 @@ export class DetailsProductView implements OnInit, AfterViewInit {
   verDetalles(id: number) {
     this.router.navigate(["/public/Detail/" + id]);
   }
+
+
+  // }}}
+  // Cambiar la imagen principal al hacer clic en una miniatura
+  changeMainImage(imageUrl: string) {
+    this.mainImageUrl = imageUrl;
+  }
+
+  // Cambiar la imagen en el carrusel
+  onImageChange(index: number) {
+    this.selectedImageIndex = index;
+  }
+
+  // Navegar a la imagen anterior en el carrusel
+  prevImage() {
+    if (this.selectedImageIndex > 0) {
+      this.selectedImageIndex--;
+    } else {
+      this.selectedImageIndex = this.images.length - 1; // Ir a la última imagen
+    }
+  }
+
+  // Navegar a la siguiente imagen en el carrusel
+  nextImage() {
+    if (this.selectedImageIndex < this.images.length - 1) {
+      this.selectedImageIndex++;
+    } else {
+      this.selectedImageIndex = 0; // Volver a la primera imagen
+    }
+  }
+
 
 }
