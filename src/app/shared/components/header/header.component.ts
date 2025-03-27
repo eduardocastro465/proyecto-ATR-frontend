@@ -34,13 +34,14 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { SidebarModule } from 'primeng/sidebar';
 import { ToastModule } from 'primeng/toast';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 declare const $: any;
 
 @Component({
   selector: 'app-header',
   standalone: false,
-  
+
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -53,7 +54,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges, OnDest
   items: MenuItem[] = [];
   isLoggedIn = false;
   // Señal para manejar el contador
-  dressItemCount!:any;
+  dressItemCount!: any;
   userROL!: string;
   isSticky = false;
   searchQuery = ""; // Bind search input
@@ -69,37 +70,17 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges, OnDest
     "https://res.cloudinary.com/dvvhnrvav/image/upload/v1730395938/images-AR/wyicw2mh3xxocscx0diz.png";
   isDarkThemeOn = signal(false);
 
-  content: any[] = [
-    { title: "Andorra" },
-    { title: "United Arab Emirates" },
-    { title: "Afghanistan" },
-    { title: "Antigua" },
-    { title: "Anguilla" },
-    { title: "Albania" },
-    { title: "Armenia" },
-    { title: "Netherlands Antilles" },
-    { title: "Angola" },
-    { title: "Argentina" },
-    { title: "American Samoa" },
-    { title: "Austria" },
-    { title: "Australia" },
-    { title: "Aruba" },
-    { title: "Aland Islands" },
-    { title: "Azerbaijan" },
-    { title: "Bosnia" },
-    { title: "Barbados" },
-    { title: "Bangladesh" },
-    { title: "Belgium" },
-    { title: "Burkina Faso" },
-    { title: "Bulgaria" },
-    { title: "Bahrain" },
-    { title: "Burundi" },
-  ];
+  showSuggestions: boolean = false;
+  isLoading: boolean = false;
+
+  // Categorías de búsqueda
+  suggestions: string[] = ['Color', 'Cuello', 'Talla', 'Material', 'Diseño', 'Manga', 'Estampado'];
+  filteredSuggestions: string[] = [];
 
   darkMode = false;
   constructor(
     private indexedDbService: IndexedDbService,
-
+    private ngxService: NgxUiLoaderService,
     private sessionService: SessionService,
     private datosEmpresaService: DatosEmpresaService,
     private elementRef: ElementRef,
@@ -109,8 +90,8 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges, OnDest
     private messageService: MessageService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
-    
- // Usar la señal computada del servicio para el contador
+
+    // Usar la señal computada del servicio para el contador
     this.dressItemCount = this.cartService.dressItemCount;
     effect(() => {
       const items = this.cartService.getCartItems();
@@ -119,7 +100,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges, OnDest
       }
     });
   }
-  
+
   showAlert(message: string) {
     this.messageService.add({
       severity: 'info',
@@ -170,7 +151,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges, OnDest
       // Inicializar el carrito con los productos obtenidos
       this.cartService.initializeCart(items);
       // Suscribirse a cambios en el carrito
-      this.cartSubscription = this.cartService.cartUpdated$.subscribe((message:any) => {
+      this.cartSubscription = this.cartService.cartUpdated$.subscribe((message: any) => {
         if (message) {
           this.showAlert(message);
         }
@@ -227,8 +208,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges, OnDest
       $(nativeElement)
         .find(".ui.search")
         .search({
-          type: "category",
-          source: this.content,
+
           onSelect: (result: any) => {
             console.log("Seleccionado:", result.title);
           },
@@ -251,15 +231,15 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges, OnDest
     this.isScrolled = scrollTop > 10;
   }
 
-  isLoading = false;
 
   onSearch() {
     this.isLoading = true;
+    this.ngxService.start(); // Inicia el loader
     // Reemplaza con la llamada real a la API de búsqueda
     setTimeout(() => {
       this.isLoading = false;
       this.router.navigate(["/public/search", this.searchQuery]);
-
+      this.ngxService.stop(); // Detiene el loader
       // Implementa tu lógica de búsqueda aquí
       console.log("Buscando:", this.searchQuery);
     }, 2000);
@@ -289,44 +269,44 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges, OnDest
     // Asigna items de menú con el tipo correcto
     this.items = this.isLoggedIn
       ? [
-          {
-            label: "Mi perfil",
-            icon: "pi pi-user",
-            command: (event: MenuItemCommandEvent) =>
-              this.redirectTo("Mi-perfil"),
-          },
-          {
-            label: "Compras",
-            icon: "pi pi-cog",
-            command: (event: MenuItemCommandEvent) =>
-              this.redirectTo("Compras"),
-          },
-          {
-            label: "Cerrar sesión",
-            icon: "pi pi-sign-out",
-            command: (event: MenuItemCommandEvent) => this.logout(),
-          },
-        ]
+        {
+          label: "Mi perfil",
+          icon: "pi pi-user",
+          command: (event: MenuItemCommandEvent) =>
+            this.redirectTo("Mi-perfil"),
+        },
+        {
+          label: "Compras",
+          icon: "pi pi-cog",
+          command: (event: MenuItemCommandEvent) =>
+            this.redirectTo("Compras"),
+        },
+        {
+          label: "Cerrar sesión",
+          icon: "pi pi-sign-out",
+          command: (event: MenuItemCommandEvent) => this.logout(),
+        },
+      ]
       : [
-          {
-            label: "Iniciar sesión",
-            icon: "pi pi-sign-in",
-            command: (event: MenuItemCommandEvent) =>
-              this.redirectTo("Sign-in"),
-          },
-          {
-            label: "Registrarme",
-            icon: "pi pi-user-plus",
-            command: (event: MenuItemCommandEvent) =>
-              this.redirectTo("Sign-up"),
-          },
-          {
-            label: "Activar cuenta",
-            icon: "pi pi-check-circle",
-            command: (event: MenuItemCommandEvent) =>
-              this.redirectTo("Activar-cuenta"),
-          },
-        ];
+        {
+          label: "Iniciar sesión",
+          icon: "pi pi-sign-in",
+          command: (event: MenuItemCommandEvent) =>
+            this.redirectTo("Sign-in"),
+        },
+        {
+          label: "Registrarme",
+          icon: "pi pi-user-plus",
+          command: (event: MenuItemCommandEvent) =>
+            this.redirectTo("Sign-up"),
+        },
+        {
+          label: "Activar cuenta",
+          icon: "pi pi-check-circle",
+          command: (event: MenuItemCommandEvent) =>
+            this.redirectTo("Activar-cuenta"),
+        },
+      ];
   }
 
   logout() {
@@ -364,5 +344,40 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnChanges, OnDest
     this.isModalVisible = false;
     this.router.navigate(["/cuenta/", route]
     );
+  }
+
+
+
+
+  // Filtra las sugerencias al escribir en el input
+  filterSuggestions(): void {
+    if (this.searchQuery.length === 0) {
+      this.filteredSuggestions = [];
+      return;
+    }
+    const query = this.searchQuery.toLowerCase();
+    this.filteredSuggestions = this.suggestions.filter(suggestion =>
+      suggestion.toLowerCase().includes(query)
+    );
+  }
+
+  // Resalta coincidencias en negrita
+  highlightMatch(suggestion: string): string {
+    const query = this.searchQuery;
+    if (!query) return suggestion;
+    const regex = new RegExp(`(${query})`, 'gi');
+    return suggestion.replace(regex, `<b>$1</b>`);
+  }
+
+  // Selecciona una sugerencia y ejecuta la búsqueda
+  selectSuggestion(suggestion: string): void {
+    this.searchQuery = suggestion;
+    this.onSearch();
+  }
+  // Oculta las sugerencias al perder el foco (con retraso para permitir selección)
+  hideSuggestions(): void {
+    setTimeout(() => {
+      this.showSuggestions = false;
+    }, 200);
   }
 }

@@ -1,0 +1,20 @@
+<div data-aos="zoom-in-right" class="about-container">
+
+  <!-- Sección Preguntas Frecuentes -->
+  <div class="faq-section">
+    <h2>Preguntas Frecuentes</h2>
+
+    <div class="faq-list">
+      <div class="faq-item" *ngFor="let faq of faqs; let i = index">
+        <button class="faq-question" (click)="toggleFAQ(i)" [attr.aria-expanded]="faq.isOpen">
+          {{ faq.question }}
+          <span class="toggle-icon">{{ faq.isOpen ? '−' : '+' }}</span>
+        </button>
+
+        <div class="faq-answer" [class.active]="faq.isOpen">
+          <p>{{ faq.answer }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,16 @@
 <p-toast></p-toast>
 <!-- <p-confirmdialog></p-confirmdialog> -->
+<!-- Loader transparente -->
+<ngx-ui-loader
+  [fgsColor]="'#FF69B4'"
+  [fgsSize]="40"
+  [overlayColor]="'rgba(0, 0, 0, 0)'" 
+  blur="10"
+  [pbColor]="'#FFA500'"
+  [hasProgressBar]="true"
+  [textColor]="'#FF69B4'" 
+  [textPosition]="'center-center'">
+</ngx-ui-loader>
 
 <!-- <body> -->
 <header class="app-header" [ngClass]="{ scrolled: isScrolled }">
@@ -41,8 +52,6 @@
         <img *ngIf="isSticky"
           src="https://res.cloudinary.com/dvvhnrvav/image/upload/v1730395938/images-AR/wyicw2mh3xxocscx0diz.png"
           alt="logo sticky" class="logo1 logo-sticky" [ngClass]="{ visible: isSticky }" />
-
-
         <span *ngIf="!isSticky" class="logo-text" [ngClass]="{ visible: !isSticky }">Atelier </span>
         <!-- <span  *ngIf="!isSticky" class="logo-text" [ngClass]="{ visible: !isSticky }">Atelier Hgo </span> -->
 
@@ -53,9 +62,10 @@
     <ul *ngIf="!isMobile" class="nav-menu flex">
       <li><a (click)="redirectTo('search')">Productos</a></li>
       <li><a (click)="redirectTo('AcercaDe')">Acerca de nosotros</a></li>
-      <li><a (click)="redirectTo('Servicios')">Servicios</a></li>
-      <!-- <li><a (click)="redirectTo('terminos')">Términos y condiciones</a></li> -->
-      <!-- <li><a (click)="redirectTo('politicas')">Políticas de privacidad</a></li> -->
+      <li><a (click)="redirectTo('Preguntas')">Preguntas frecuentes</a></li>
+      <li><a (click)="redirectTo('MisionVision')">Misión y visión</a></li>
+      <li><a (click)="redirectTo('terminos')">Términos y condiciones</a></li>
+      <li><a (click)="redirectTo('politicas')">Políticas de privacidad</a></li>
 
     </ul>
 

@@ -36,6 +36,9 @@ export class AppComponent implements OnInit {
   userROL: string = "";
 
   publicKey: string = environment.publicKey; // Este es el valor que debes obtener en la consola de Firebase.
+  isLoading: boolean = false; // Loader de carga
+  firstTime: boolean = false; // Control de la primera vez
+
 
   constructor(
     private swPush: SwPush,
@@ -66,7 +69,8 @@ export class AppComponent implements OnInit {
     this.showWelcomeMessage = this.isUserLoggedIn();
     if (typeof sessionStorage !== "undefined") {
       if (!sessionStorage.getItem("firstSession") && !this.isUserLoggedIn()) {
-        this.ngxService.start();
+        this.firstTime = true;
+          this.showWelcomeLoader();
 
         setTimeout(() => {
           this.ngxService.stop();
@@ -76,6 +80,26 @@ export class AppComponent implements OnInit {
     } else {
       console.warn("sessionStorage no está disponible en este entorno.");
     }
+  }
+
+    // ✅ Loader de bienvenida (solo primera vez)
+  showWelcomeLoader() {
+    this.ngxService.start();
+    setTimeout(() => {
+      this.ngxService.stop();
+      sessionStorage.setItem("firstSession", "true");
+      this.firstTime = false; // Desactiva el loader de bienvenida
+    }, 2000);
+  }
+
+  // ✅ Loader de carga (para búsquedas o recargas)
+  showLoadingLoader() {
+    this.isLoading = true;
+    this.ngxService.start();
+    setTimeout(() => {
+      this.ngxService.stop();
+      this.isLoading = false;
+    }, 1500);
   }
 
   isUserLoggedIn(): boolean {

@@ -147,7 +147,7 @@ export class SignUpView implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       AOS.init({
-        duration: 1200, // Customize AOS animation duration
+        duration: 650, // Customize AOS animation duration
         once: true, // Whether animation should happen only once
       });
     }

@@ -12,6 +12,10 @@ interface MenuItem {
   templateUrl: './breadcrumb.component.html',
   styles: [
     `
+    .ui.breadcrumb .active.section {
+      padding:5px;
+  font-weight: normal;
+}
     .ui.breadcrumb {
   color: gray; // Texto gris para todo el breadcrumb
   display: flex;
@@ -28,18 +32,14 @@ interface MenuItem {
     }
   }
 
-  .divider {
-    color: gray;
-  }
+ 
 
   .active {
     // font-weight: bold;
     color: darkgray;
   }
 
-  i.pi {
-    color: gray; // Hace que el icono de casa sea gris
-  }
+  
 }
 
       .ui.breadcrumb {
@@ -51,14 +51,7 @@ interface MenuItem {
           }
         }
 
-        .divider {
-          color: inherit;
-          font-size: 0.5em;
-
-          i {
-            font-size: 0.5em;
-          }
-        }
+       
       }
     `,
   ],
@@ -67,7 +60,7 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
   menuItems: string[] = [];  // Mantendremos solo los nombres de los breadcrumbs
   subscription!: Subscription;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.subscription = this.router.events

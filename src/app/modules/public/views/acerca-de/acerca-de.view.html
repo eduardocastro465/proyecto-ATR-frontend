@@ -4,67 +4,34 @@
   (onClick)="showTermsDialog()"
 ></p-button> -->
 
-<p-dialog
-  header="Términos y Condiciones"
-  [(visible)]="displayTermsDialog"
-  [modal]="true"
-  [closable]="false"
-  [draggable]="false"
-  [resizable]="false"
-  styleClass="form-terminos"
->
-  <!-- [width]="600" -->
-  <div class="terminos-content">
-    <div *ngFor="let politicas of politicasDePrivacidad" class="terminos">
-      <h4>{{ politicas?.titulo }}</h4>
-      <p>{{ politicas?.contenido }}</p>
-      <br />
-    </div>
-  </div>
-
-  <ng-template pTemplate="footer">
-    <div class="terminos-opcion">
-      <input type="checkbox" [(ngModel)]="termsAccepted" />
-      <label for="">He leído y acepto los términos y condiciones</label>
-    </div>
-    <p-button
-      label="Aceptar"
-      [disabled]="!termsAccepted"
-      icon="pi pi-check"
-      (onClick)="acceptTerms()"
-    ></p-button>
-  </ng-template>
-</p-dialog>
-
 <!-- <body> -->
-  <div class="container">
-    <div class="info-container">
-      <div class="info-section">
-        <h1 class="title">{{ empresaData?.tituloPagina || 'Nombre de la página' }}</h1>
-        <h2 class="subtitle">{{ empresaData?.slogan || 'Slogan' }}</h2>
-        <p class="description">
-          Ubicación: {{ empresaData?.direccion || 'Dirección' }}
-        </p>
-        <div class="terms">
-          <p>
-            Condiciones aplican. Consulte nuestros términos de servicio para más
-            detalles.
-            <a
-              style="color: blue; cursor: pointer"
-              (click)="verTerminosYcondiciones()"
-              >Términos y Condiciones</a
-            >
-          </p>
-        </div>
-        <div class="buttons">
-          <button class="btn">Ver Catálogo</button>
-          <button class="btn">Contáctanos</button>
-        </div>
-      </div>
+<div class="container">
+
+  <div class="info-container">
+   
+
+    <!-- Sección de Información (Derecha) -->
+    <div class="info-section">
+      <h1 class="title">{{ empresaData?.tituloPagina || 'Nombre de la página' }}</h1>
+      <h2 class="subtitle">{{ empresaData?.slogan || 'Slogan' }}</h2>
+      <p class="description">
+        Ubicación: {{ empresaData?.direccion || 'Dirección' }}
+      </p>
     </div>
-    <div class="map-container">
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3721.2339826928983!2d-98.42498282496526!3d21.143084680534965!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d7270075cbae4b%3A0x20478da56a478c40!2sAtelier%20Renta%20%26%20Venta%20de%20Vestidos!5e0!3m2!1ses!2smx!4v1738597744235!5m2!1ses!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+     <!-- Sección de Contactos (Izquierda) -->
+     <div class="contacts">
+      <h2>Contactos</h2>
+      <p>Teléfono: {{ empresaData?.telefono || 'Número de teléfono' }}</p>
+      <p>Email: {{ empresaData?.email || 'Correo electrónico' }}</p>
     </div>
   </div>
-  
+
+  <div class="map-container">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3721.2339826928983!2d-98.42498282496526!3d21.143084680534965!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d7270075cbae4b%3A0x20478da56a478c40!2sAtelier%20Renta%20%26%20Venta%20de%20Vestidos!5e0!3m2!1ses!2smx!4v1738597744235!5m2!1ses!2smx"
+      width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+</div>
+
 <!-- </body>7 -->

@@ -2,8 +2,8 @@ import {
   Component,
   HostListener,
   Inject,
-  OnInit,ViewChild,
-  PLATFORM_ID,ElementRef
+  OnInit, ViewChild,
+  PLATFORM_ID, ElementRef
 } from "@angular/core";
 import { isPlatformBrowser } from "@angular/common";
 import { Router } from "@angular/router";
@@ -12,6 +12,7 @@ import { ERol } from "../../../../shared/constants/rol.enum";
 import { DatosEmpresaService } from "../../../../shared/services/datos-empresa.service";
 import { ProductoService } from "../../../../shared/services/producto.service";
 import { IndexedDbService } from "../../commons/services/indexed-db.service";
+import { NgxUiLoaderService } from "ngx-ui-loader";
 
 @Component({
   selector: "app-productos",
@@ -63,11 +64,12 @@ export class ProductosComponent implements OnInit {
   constructor(
     private indexedDbService: IndexedDbService,
     private router: Router,
+    private ngxService: NgxUiLoaderService,
     private sessionService: SessionService,
     private datosEmpresaService: DatosEmpresaService,
     private PRODUCTOSERVICE_: ProductoService,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) { }
 
   private detectDevice() {
     if (typeof window !== "undefined") {
@@ -85,6 +87,7 @@ export class ProductosComponent implements OnInit {
   // Antes de recargar o cerrar la página, vaciamos productos y mostramos el skeleton
   @HostListener("window:beforeunload", ["$event"])
   onBeforeUnload(event: Event) {
+    this.ngxService.start(); // Inicia el loader
     console.log("⏳ La página se está recargando...");
     this.isLoading = true;
     this.productos = []; // Vaciar los productos en la carga
@@ -93,6 +96,7 @@ export class ProductosComponent implements OnInit {
   // HostListener para window:load (se dispara al cargar la página)
   @HostListener("window:load", ["$event"])
   onWindowLoad(event: Event) {
+    this.ngxService.stop(); // Detiene el loader
     console.log("✅ La página se ha cargado completamente.");
     // Cargar los productos después de que la página se haya cargado
     this.cargarProductos();
@@ -112,6 +116,8 @@ export class ProductosComponent implements OnInit {
       // console.log("⏳ La página se está recargando, no se cargarán los productos.");
       this.isLoading = false;
       this.cargarProductos();
+      this.ngxService.start(); // Inicia el loader
+
     }
 
     this.detectDevice();
@@ -121,6 +127,8 @@ export class ProductosComponent implements OnInit {
     this.isLoading = true; // Mostrar el skeleton al cargar
     this.PRODUCTOSERVICE_.obtenerProductos().subscribe(
       (response) => {
+        this.ngxService.stop(); // Inicia el loader
+
         // console.log("📦 Productos recibidos:");
         this.productos = response;
         this.numVisibleProducts = Math.min(5, this.productos.length);
@@ -134,7 +142,7 @@ export class ProductosComponent implements OnInit {
   }
 
   isPageReloading(): boolean {
-    
+
     return performance.navigation.type === performance.navigation.TYPE_RELOAD;
   }
 
@@ -160,6 +168,7 @@ export class ProductosComponent implements OnInit {
   // }
 
   verDetalles(id: number) {
+    this.ngxService.start(); // Inicia el loader
     this.router.navigate(["/public/Detail/" + id]);
   }
 
@@ -195,7 +204,7 @@ export class ProductosComponent implements OnInit {
     }
   }
 
-    @ViewChild('carousel', { static: false }) carousel!: ElementRef;
+  @ViewChild('carousel', { static: false }) carousel!: ElementRef;
 
   scrollLeft() {
     this.carousel.nativeElement.scrollBy({ left: -200, behavior: 'smooth' });
@@ -204,4 +213,23 @@ export class ProductosComponent implements OnInit {
   scrollRight() {
     this.carousel.nativeElement.scrollBy({ left: 200, behavior: 'smooth' });
   }
+
+
+
+
+
+  // Función para cambiar la imagen al hacer hover
+  cambiarImagen(producto: any, event: MouseEvent) {
+    const imgElement = event.target as HTMLImageElement;
+    if (producto.imagenes.length > 1) {
+      imgElement.src = producto.imagenes[1]; // Cambiar a la segunda imagen
+    }
+  }
+
+  // Función para restaurar la imagen al salir del hover
+  restaurarImagen(producto: any, event: MouseEvent) {
+    const imgElement = event.target as HTMLImageElement;
+    imgElement.src = producto.imagenPrincipal || producto.imagenes[0]; // Restaurar la primera imagen
+  }
+
 }

@@ -306,56 +306,64 @@ p {
      
       .producto-card {
         flex: 0 0 auto;
-        width: 200px;
+        width: 290px; // Aumenta el ancho de la tarjeta (de 200px a 250px)
         background: #fff;
         text-align: center;
         transition: transform 0.3s ease-in-out;
         position: relative;
         overflow: hidden; // Evita que el efecto hover sobresalga
-        // padding: 5px;
-
+        padding: 10px; // Añade un poco de padding interno
+        border: 1px solid rgba(0, 0, 0, 0.1); // Borde sutil
+        border-radius: 8px; // Bordes redondeados
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); // Sombra suave
+      
         &:hover {
-          transform: scale(1.02);
+          transform: scale(1.05); // Aumenta ligeramente el efecto de escala al hacer hover
+          box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); // Sombra más pronunciada al hacer hover
         }
-
+      
         .product-image {
           width: 100%;
-          height: 300px; // Fijamos una altura estándar
+          height: 390px; // Aumenta la altura de la imagen (de 300px a 350px)
           display: flex;
           align-items: center;
           justify-content: center;
           overflow: hidden;
-
+          border-radius: 8px; // Bordes redondeados para la imagen
+      
           img {
             width: 100%;
-            height: 200%;
-            object-fit: cover; // Ajusta imagen sin deformarla
+            height: 100%; // La imagen ocupa toda la altura del contenedor
+            object-fit: cover; // Ajusta la imagen sin deformarla
             cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+      
             &:hover {
-              transform: scale(1.02);
+              transform: scale(1.1); // Efecto de zoom al hacer hover
             }
           }
         }
-
+      
         .hover-overlay {
           position: absolute;
           top: 0;
           left: 0;
           width: 100%;
           height: 100%;
-          background: rgba(80, 80, 80, 0.185);
-          color: rgb(255, 255, 255);
+          background: rgba(0, 0, 0, 0.5); // Fondo semitransparente más oscuro
+          color: white;
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 16px;
+          font-size: 18px; // Aumenta el tamaño de la fuente
           font-weight: bold;
           opacity: 0;
           transition: opacity 0.3s ease-in-out;
+          border-radius: 8px; // Bordes redondeados para el overlay
         }
-
+      
         &:hover .hover-overlay {
-          opacity: 1;
+          opacity: 1; // Muestra el overlay al hacer hover
         }
       }
     }

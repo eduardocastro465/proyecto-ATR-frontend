@@ -111,8 +111,10 @@ import { MessageModule } from 'primeng/message';
 import { ComentariosComponent } from './components/comentarios/comentarios.component';
 import { CsrfInterceptor } from '../../shared/services/csrf.interceptor';
 import { HeaderModule } from '../../shared/components/header/header.module';
+import { MisionVisionComponent } from './views/mision-vision/mision-vision.component';
+import { PreguntasComponent } from './views/preguntas/preguntas.component';
 @NgModule({
-  declarations: [VIEWS,COMPONENTS, CarritoView, TagComponent, PoliticasComponent, TerminosComponent, CitasProbadorView, ResultsComponent, HeroImgComponent, FigureComponent, BreadcrumbComponent, NotFoundComponent, Error500Component, SidevarComponent, CargaComponent, VideosComponent, ProductosComponent, ProcessRentaComponent, DataCompraComponent, InformacionUserComponent, ProcessCompraComponent, RentasComponent, AccesoriosComponent, ComentariosComponent],
+  declarations: [VIEWS,COMPONENTS, CarritoView, TagComponent, PoliticasComponent, TerminosComponent, CitasProbadorView, ResultsComponent, HeroImgComponent, FigureComponent, BreadcrumbComponent, NotFoundComponent, Error500Component, SidevarComponent, CargaComponent, VideosComponent, ProductosComponent, ProcessRentaComponent, DataCompraComponent, InformacionUserComponent, ProcessCompraComponent, RentasComponent, AccesoriosComponent, ComentariosComponent, MisionVisionComponent, PreguntasComponent],
   exports:[COMPONENTS],
   imports: [HeaderModule,InputTextModule,FloatLabelModule,
     InputNumberModule,ConfirmDialogModule,MessageModule,

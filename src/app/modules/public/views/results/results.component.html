@@ -1,80 +1,85 @@
-<!-- <app-hero-img></app-hero-img> -->
-
-<main class="box">
-  <div class="app-sidevar">
+<main data-aos="zoom-in-right" class="box main-container">
+  <div class="sidebar-wrapper">
     <app-sidevar></app-sidevar>
   </div>
-  <div class="productos">
-    <ng-template #sinResultados>
-      <h3 *ngIf="!resultadosEncontrados">No se encontraron resultados para: {{ query }}</h3>
-      <p *ngIf="!resultadosEncontrados">Sugerencias:</p>
-      <ul *ngIf="!resultadosEncontrados">
-        <li>Verifica la ortografía</li>
-        <li>Usa términos más generales</li>
-        <li>Prueba con otra palabra clave</li>
+  
+  <div class="products-container">
+    <!-- Búsqueda y sugerencias -->
+    <div class="search-suggestions" *ngIf="!isLoading && getSearchSuggestions().length > 0">
+      <p class="suggestions-title">Quizás quisiste buscar:</p>
+      <ul class="suggestions-list">
+        <li class="suggestion-item" *ngFor="let suggestion of getSearchSuggestions()">
+          <a class="suggestion-link" 
+             (click)="searchQuery = suggestion.split(': ')[1]; applyFilters()">
+            {{ suggestion }}
+          </a>
+        </li>
       </ul>
-
-
-
-      <div *ngIf="query && !resultadosEncontrados">
-        <h3>Todos los productos</h3>
-        <div class="listado-productos">
-          <div *ngFor="let producto of todosProductos" class="producto-card p-mb-4">
-            <div class="ribbon">Nuevo</div>
-            <div class="product-image">
-              <img
-                (click)="verDetalles(producto._id)"
-                [src]="producto.imagenPrincipal"
-                alt="{{ producto.nombre }}"
-              />
-            </div>
-            <div class="product-content">
-              <p>{{ producto.nombre }}</p>
-              <p>MX$:<strong> {{ producto.precio | currency }}</strong></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </ng-template>
-
-    <div *ngIf="resultadosEncontrados; else sinResultados">
-      <h3 *ngIf="query">Búsquedas relacionadas: {{ query }}</h3>
-      <p *ngIf="query">{{ query }}: {{ results.length }}</p>
-
-      <div class="listado-productos">
-        <div *ngFor="let producto of results" class="producto-card p-mb-4">
-          <div class="ribbon">Nuevo</div>
-          <div class="product-image">
-            <img
-              (click)="verDetalles(producto._id)"
-              [src]="producto.imagenPrincipal"
-              alt="{{ producto.nombre }}"
-            />
-          </div>
-          <div class="product-content">
-            <p>{{ producto.nombre }}</p>
-            <p>MX$:<strong> {{ producto.precio | currency }}</strong></p>
-          </div>
-        </div>
-      </div>
     </div>
-
-    <!-- Mostrar todos los productos solo si no hay query -->
-    <div *ngIf="!query && !resultadosEncontrados">
-      <h3>Todos los productos</h3>
-      <div class="listado-productos">
-        <div *ngFor="let producto of todosProductos" class="producto-card p-mb-4">
-          <div class="ribbon">Nuevo</div>
-          <div class="product-image">
-            <img
-              (click)="verDetalles(producto._id)"
-              [src]="producto.imagenPrincipal"
-              alt="{{ producto.nombre }}"
-            />
+  
+    <!-- Resultados -->
+    <div class="results-wrapper" *ngIf="!isLoading && hasResults">
+      <!-- Filtros activos -->
+      <div class="active-filters-container" *ngIf="hasActiveFilters()">
+        <span class="filter-tag" *ngIf="currentQueryParams['color']">
+          <span class="filter-label">Color:</span>
+          <span class="filter-value">{{ currentQueryParams['color'] }}</span>
+          <button class="filter-remove-btn" (click)="clearFilter('color')">×</button>
+        </span>
+        
+        <span class="filter-tag" *ngIf="currentQueryParams['talla']">
+          <span class="filter-label">Talla:</span>
+          <span class="filter-value">{{ currentQueryParams['talla'] }}</span>
+          <button class="filter-remove-btn" (click)="clearFilter('talla')">×</button>
+        </span>
+        
+        <span class="filter-tag" *ngIf="currentQueryParams['tipoCuello']">
+          <span class="filter-label">Cuello:</span>
+          <span class="filter-value">{{ currentQueryParams['tipoCuello'] }}</span>
+          <button class="filter-remove-btn" (click)="clearFilter('tipoCuello')">×</button>
+        </span>
+      </div>
+  
+      <!-- Productos -->
+      <div class="products-grid">
+        <div *ngFor="let product of filteredProducts" class="product-card">
+          <div class="card-badges">
+            <span class="badge new-badge" *ngIf="product.nuevo">Nuevo</span>
+            <span class="badge size-badge">{{ product.talla }}</span>
+            <span class="badge color-badge">{{ product.color }}</span>
+            <span class="badge neck-badge">{{ product.tipoCuello }}</span>
           </div>
-          <div class="product-content">
-            <p>{{ producto.nombre }}</p>
-            <p>MX$:<strong> {{ producto.precio | currency }}</strong></p>
+          
+          <img class="product-image" 
+               [src]="product.imagenes[0]" 
+               [alt]="product.nombre"
+               (click)="viewProductDetails(product._id)">
+          
+          <div class="card-info">
+            <h3 class="product-name">{{ product.nombre }}</h3>
+            <div class="price-section">
+              <p class="product-price">{{ product.precio | currency:'MXN':'symbol':'1.2-2' }}</p>
+              <span class="rent-tag" *ngIf="product.opcionesTipoTransaccion === 'renta'">Renta</span>
+            </div>
+            
+            <div class="product-actions">
+              <button class="quick-view-btn" 
+                      (click)="viewProductDetails(product._id)">
+                Ver detalles
+              </button>
+              <button (click)="apartarRentar(product)" class="add-to-cart-btn">
+                <i class="fas fa-shopping-cart"></i>
+              </button>
+            </div>
+            
+            <div class="product-attributes">
+              <span class="attribute">
+                <i class="fas fa-ruler-vertical"></i> Altura: {{ product.altura }} cm
+              </span>
+              <span class="attribute">
+                <i class="fas fa-tshirt"></i> Cintura: {{ product.cintura }} cm
+              </span>
+            </div>
           </div>
         </div>
       </div>

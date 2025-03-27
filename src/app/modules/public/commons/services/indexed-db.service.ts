@@ -6,81 +6,159 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class IndexedDbService {
   private db: IDBDatabase | null = null;
-  private productosSubject = new BehaviorSubject<any[]>([]); // Emite cambios en los productos
-  productos$ = this.productosSubject.asObservable(); // Observable para suscribirse
+  private productosSubject = new BehaviorSubject<any[]>([]);
+  productos$ = this.productosSubject.asObservable();
+  private indexedDBSupported: boolean;
 
   constructor() {
-    this.initializeDB();
+    // Verificar si IndexedDB está soportado en el navegador
+    this.indexedDBSupported = this.checkIndexedDBSupport();
+    
+    if (this.indexedDBSupported) {
+      this.initializeDB();
+    } else {
+      console.warn('IndexedDB no está soportado en este navegador');
+    }
+  }
+
+  // Método para verificar soporte de IndexedDB
+  private checkIndexedDBSupport(): boolean {
+    try {
+      if (!('indexedDB' in window)) {
+        console.warn('IndexedDB no está disponible en window');
+        return false;
+      }
+      return true;
+    } catch (e) {
+      console.error('Error al verificar IndexedDB:');
+      return false;
+    }
   }
 
   // Inicializar la base de datos
   private async initializeDB() {
-    const request = indexedDB.open('Atelierdb', 1);
+    if (!this.indexedDBSupported) {
+      console.warn('No se puede inicializar IndexedDB: no soportado');
+      return;
+    }
 
-    request.onupgradeneeded = (event: IDBVersionChangeEvent) => {
-      const db = (event.target as IDBOpenDBRequest).result;
-      if (!db.objectStoreNames.contains('apartados')) {
-        db.createObjectStore('apartados', { keyPath: 'id' });
-      }
-    };
+    try {
+      const request = indexedDB.open('Atelierdb', 1);
 
-    request.onsuccess = (event: Event) => {
-      this.db = (event.target as IDBOpenDBRequest).result;
-      this.actualizarProductos(); // Cargar productos al inicializar
-    };
+      request.onupgradeneeded = (event: IDBVersionChangeEvent) => {
+        const db = (event.target as IDBOpenDBRequest).result;
+        if (!db.objectStoreNames.contains('apartados')) {
+          db.createObjectStore('apartados', { keyPath: 'id' });
+        }
+      };
 
-    request.onerror = (event: Event) => {
-      console.error("Error al abrir la base de datos:", (event.target as IDBOpenDBRequest).error);
-    };
+      request.onsuccess = (event: Event) => {
+        this.db = (event.target as IDBOpenDBRequest).result;
+        console.log('Conexión a IndexedDB establecida correctamente');
+        this.actualizarProductos();
+      };
+
+      request.onerror = (event: Event) => {
+        console.error("Error al abrir la base de datos:");
+      };
+    } catch (error) {
+      console.error('Error al inicializar IndexedDB:');
+    }
   }
 
-  // Actualizar la lista de productos y notificar a los suscriptores
+  // Método para verificar si la base de datos está lista
+  private async ensureDBReady(): Promise<boolean> {
+    if (!this.indexedDBSupported) return false;
+    
+    if (!this.db) {
+      await new Promise(resolve => setTimeout(resolve, 100));
+      return this.db !== null;
+    }
+    return true;
+  }
+
+  // Actualizar la lista de productos
   private async actualizarProductos() {
-    const productos = await this.obtenerProductosApartados();
-    this.productosSubject.next(productos); // Emitir la nueva lista de productos
+    try {
+      const productos = await this.obtenerProductosApartados();
+      this.productosSubject.next(productos);
+    } catch (error) {
+      console.error('Error al actualizar productos:');
+    }
   }
 
-  // Guardar un producto en IndexedDB
+  // Guardar un producto
   async guardarProducto(producto: any) {
-    if (!this.db) await this.initializeDB();
-    if (!this.db) return;
+    if (!this.indexedDBSupported) {
+      console.warn('No se puede guardar: IndexedDB no soportado');
+      return;
+    }
 
-    const transaction = this.db.transaction('apartados', 'readwrite');
-    const store = transaction.objectStore('apartados');
-    store.put(producto);
+    if (!await this.ensureDBReady()) {
+      console.error('No se pudo inicializar la base de datos');
+      return;
+    }
 
-    await this.actualizarProductos(); // Actualizar y notificar
+    try {
+      const transaction = this.db!.transaction('apartados', 'readwrite');
+      const store = transaction.objectStore('apartados');
+      store.put(producto);
+      await this.actualizarProductos();
+    } catch (error) {
+      console.error('Error al guardar producto:');
+    }
   }
 
-  // Eliminar un producto de IndexedDB
+  // Eliminar un producto
   async eliminarProducto(id: string) {
-    if (!this.db) await this.initializeDB();
-    if (!this.db) return;
+    if (!this.indexedDBSupported) return;
 
-    const transaction = this.db.transaction('apartados', 'readwrite');
-    const store = transaction.objectStore('apartados');
-    store.delete(id);
+    if (!await this.ensureDBReady()) {
+      console.error('No se pudo inicializar la base de datos');
+      return;
+    }
 
-    await this.actualizarProductos(); // Actualizar y notificar
+    try {
+      const transaction = this.db!.transaction('apartados', 'readwrite');
+      const store = transaction.objectStore('apartados');
+      store.delete(id);
+      await this.actualizarProductos();
+    } catch (error) {
+      console.error('Error al eliminar producto');
+    }
   }
 
-  // Obtener todos los productos de IndexedDB
+  // Obtener todos los productos
   async obtenerProductosApartados(): Promise<any[]> {
-    if (!this.db) await this.initializeDB();
-    if (!this.db) return [];
+    if (!this.indexedDBSupported) {
+      console.warn('IndexedDB no soportado, retornando array vacío');
+      return [];
+    }
+
+    if (!await this.ensureDBReady()) {
+      console.error('No se pudo inicializar la base de datos');
+      return [];
+    }
 
     return new Promise((resolve, reject) => {
-      const transaction = this.db!.transaction('apartados', 'readonly');
-      const store = transaction.objectStore('apartados');
-      const request = store.getAll();
+      try {
+        const transaction = this.db!.transaction('apartados', 'readonly');
+        const store = transaction.objectStore('apartados');
+        const request = store.getAll();
 
-      request.onsuccess = () => {
-        resolve(request.result);
-      };
+        request.onsuccess = () => {
+          console.log('Productos obtenidos de IndexedDB:', request.result);
+          resolve(request.result);
+        };
 
-      request.onerror = () => {
-        reject(request.error);
-      };
+        request.onerror = () => {
+          console.error('Error al obtener productos');
+          reject(request.error);
+        };
+      } catch (error) {
+        console.error('Error en la transacción');
+        reject(error);
+      }
     });
   }
 }

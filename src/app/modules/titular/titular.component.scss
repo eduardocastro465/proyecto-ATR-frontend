@@ -32,8 +32,8 @@ footer {
   list-style: none;
   cursor: pointer;
   font-size: 14px;
-  background-color: #007bff; /* Fondo gris */
-  color: #fff; /* Texto negro */
+  background-color: #3097ff; /* Fondo gris */
+  color: #313942; /* Texto negro */
   padding: 8px 12px;
   border-radius: 5px;
   transition: 0.3s;
@@ -100,7 +100,7 @@ nav i {
 }
 
 main {
-  margin-left: 20px; /* Ajuste para evitar solapamiento con el menú */
+  // margin-left: 290px; /* Ajuste para evitar solapamiento con el menú */
   margin-top: 20px;
   padding: 20px;
   flex-grow: 1;

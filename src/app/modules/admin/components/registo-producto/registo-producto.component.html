@@ -9,174 +9,174 @@
   <ng-template pTemplate="header">
     <h2>Agregar Vestido</h2>
   </ng-template> -->
+  <h1 *ngIf="productoId">Editar producto</h1>
+ <!-- Botón "Volver" para cerrar el modal -->
+ <button 
+ *ngIf="productoId"
+ type="button" class="submit-btn"
+ (click)="volver()">  <!-- Llama al método `volver()` -->
+ Volver
+</button>
 
-  <form
-    class="form-container"
-    enctype="multipart/form-data"
-    [formGroup]="productoForm"
-  >
-    <div class="image-section">
-      <div class="img-principal">
-        <label for="imagenPrincipalInput" class="upload-button">
-          {{
-            productoForm.get("imagenPrincipal")?.value ? "Cambiar" : "Cargar"
-          }}
-          imagen
-        </label>
-        <div
-          *ngIf="productoForm.get('imagenPrincipal')?.value"
-          class="main-image"
-        >
-          <img
-            [src]="productoForm.get('imagenPrincipal')?.value"
-            alt="Imagen principal"
-          />
-          <div class="icons-bn">
-            <i
-              (click)="eliminarImagenPrincipal()"
-              class="pi pi-times delete-icon"
-            ></i>
-          </div>
-        </div>
-        <input
-          id="imagenPrincipalInput"
-          type="file"
-          accept="image/*"
-          (change)="onFileSelected($event)"
-          hidden
-        />
-      </div>
-
-      <div class="otrasImagenes" formArrayName="otrasImagenes">
-        <div
-          *ngFor="let imagen of otrasImagenes.controls; let i = index"
-          class="additional-images"
-        >
-          <div>
-            <img
-              *ngIf="imagen.value"
-              [src]="imagen.value"
-              alt="Imagen adicional {{ i + 1 }}"
-            />
-          </div>
-          <input
-            accept="image/*"
-            [id]="'otrasImagenesInput' + i"
-            type="file"
-            (change)="otrasImagenesChange($event, i)"
-            hidden
-          />
-          <div class="icons-bn">
-            <label [for]="'otrasImagenesInput' + i" class="upload-button">
-              <i
-                [ngClass]="imagen.value ? 'pi pi-sync' : 'pi pi-file-import'"
-              ></i>
-            </label>
-            <i (click)="eliminarImagen(i)" class="pi pi-times delete-icon"></i>
+  <form class="form-container" enctype="multipart/form-data" [formGroup]="productoForm">
+    <!-- Área de arrastrar y soltar -->
+    <label for=""> Agregar imagenes</label>
+    <div class="upload-area">
+      <p>Haz clic aquí para <a class="link" href="javascript:void(0)" (click)="fileInput.click()">Seleccionar imágenes</a></p>
+    
+      <!-- Input oculto para seleccionar múltiples imágenes -->
+      <input type="file" (change)="otrasImagenesChange($event)" multiple accept="image/*" style="display: none;" #fileInput />
+    
+      <!-- Previsualización de imágenes -->
+      <div formArrayName="imagenes" class="image-preview">
+        <div *ngFor="let imagen of imagenes.controls; let i = index" class="image-container">
+          <div class="image-wrapper">
+            <img [src]="imagen.value" alt="Imagen {{ i + 1 }}" />
+    
+            <!-- Botón para eliminar la imagen -->
+            <button class="delete-button" (click)="eliminarImagen(i)">×</button>
           </div>
         </div>
       </div>
-
-      <button type="button" (click)="agregarImagen()">
-        Agregar más imágenes
-      </button>
+    
+      <!-- Botones de acciones -->
+      <div class="btns">
+        <a class="submit-btn" href="javascript:void(0)" (click)="fileInput.click()">Seleccionar imágenes</a>
+        <a class="submit-btn" href="javascript:void(0)" (click)="clearAllImages()">Vaciar todas las imágenes</a>
+      </div>
     </div>
-
+    
+  
+  
     <div class="form-grid">
       <div class="group-input">
         <label>Nombre del vestido</label>
-        <input
-          type="text"
-          formControlName="nombre"
-          placeholder="Nombre del vestido"
-        />
+        <input type="text" formControlName="nombre" placeholder="Nombre del vestido" />
       </div>
-
+  
       <div class="group-input">
         <label>Talla</label>
         <select formControlName="talla">
-          <option *ngFor="let talla of tallas" [value]="talla">
-            {{ talla }}
+          <option value="" disabled selected>Seleccionar</option>
+  
+          <option *ngFor="let talla of tallas" [value]="talla.value">
+            {{ talla.label }}
           </option>
         </select>
       </div>
-
+  
       <div class="group-input">
         <label>Altura (cm)</label>
-        <input
-          type="number"
-          formControlName="altura"
-          placeholder="Altura (cm)"
-        />
+        <input type="number" formControlName="altura" placeholder="Altura (cm)" />
       </div>
-
+  
       <div class="group-input">
         <label>Cintura (cm)</label>
-        <input
-          type="number"
-          formControlName="cintura"
-          placeholder="Cintura (cm)"
-        />
+        <input type="number" formControlName="cintura" placeholder="Cintura (cm)" />
       </div>
-
+  
       <div class="group-input">
         <label>Color</label>
         <select formControlName="color">
-          <option *ngFor="let color of colores" [value]="color">
-            {{ color }}
+          <option *ngFor="let color of colores" [value]="color.value">
+            {{ color.label }}
           </option>
         </select>
       </div>
-
-      <div class="group-input">
-        <label>Textura (opcional)</label>
-        <input
-          type="text"
-          formControlName="textura"
-          placeholder="Textura (opcional)"
-        />
-      </div>
-
+  
+  
+  
+      <!-- <div class="group-input">
+          <label>Textura (opcional)</label>
+          <input type="text" formControlName="textura" placeholder="Textura (opcional)" />
+        </div> -->
+  
       <div class="group-input">
         <label>Ingrese el precio</label>
-        <input
-          type="number"
-          formControlName="precio"
-          placeholder="Ingrese el precio"
-        />
+        <input type="number" formControlName="precio" placeholder="Ingrese el precio" />
       </div>
-
+  
       <div class="group-input">
-        <label>Tipo de Venta</label>
-        <select formControlName="tipoVenta">
-          <option *ngFor="let tipo of tiposVenta" [value]="tipo">
-            {{ tipo }}
+        <label>Opciones para el tipo de transacción (Renta o Venta)</label>
+        <select formControlName="opcionesTipoTransaccion">
+          <option value="" disabled selected>Seleccionar</option>
+          <option *ngFor="let tipo of opcionesTipoTransaccion" [value]="tipo.value">
+            {{ tipo.label }}
           </option>
         </select>
       </div>
-
+  
       <div class="group-input">
-        <label>Estado del producto</label>
+        <label>Selecciona aquí la opción si quieres que el producto se muestre como nuevo o no</label>
         <select formControlName="nuevo">
-          <option *ngFor="let estado of estadoProducto" [value]="estado">
-            {{ estado }}
+          <option value="" disabled selected>Seleccionar</option>
+          <option *ngFor="let estado of estadoProducto" [value]="estado.value">
+            {{ estado.label }}
+          </option>
+        </select>
+      </div>
+  
+    </div>
+  
+    <h2>Características del vestido</h2>
+    <div class="form-grid">
+      <!-- Campo de características del vestido (solo visible si la categoría es "Vestido") -->
+  
+      <div class="form-group">
+        <label>Tipo de Cuello</label>
+        <select formControlName="tipoCuello">
+          <option value="" disabled selected>Seleccionar</option>
+  
+          <option *ngFor="let cuello of opcionesCaracteristicasVestido.tipoCuello" [value]="cuello.value">
+            {{ cuello.label }}
+          </option>
+        </select>
+      </div>
+  
+      <!-- Selección de tipo de cola -->
+      <div class="form-group">
+        <label>Tipo de Cola</label>
+        <select formControlName="tipoCola">
+          <option value="" disabled selected>Seleccionar</option>
+  
+          <option *ngFor="let cola of opcionesCaracteristicasVestido.tipoCola" [value]="cola.value">
+            {{ cola.label }}
+          </option>
+        </select>
+      </div>
+  
+      <!-- Selección de tipo de capas -->
+      <div class="form-group">
+        <label>Tipo de Capas</label>
+        <select formControlName="tipoCapas">
+          <option value="" disabled selected>Seleccionar</option>
+  
+          <option *ngFor="let capa of opcionesCaracteristicasVestido.tipoCapas" [value]="capa.value">
+            {{ capa.label }}
+          </option>
+        </select>
+      </div>
+  
+      <!-- Selección de tipo de hombro -->
+      <div class="form-group">
+        <label>Tipo de Hombro</label>
+        <select formControlName="tipoHombro">
+          <option value="" disabled selected>Seleccionar</option>
+  
+          <option *ngFor="let hombro of opcionesCaracteristicasVestido.tipoHombro" [value]="hombro.value">
+            {{ hombro.label }}
           </option>
         </select>
       </div>
     </div>
-
+  
     <div>
       <label>Descripción</label>
-      <textarea
-        formControlName="descripcion"
-        placeholder="Agrega la descripción"
-        rows="5"
-        cols="30"
-      ></textarea>
+      <textarea formControlName="descripcion" placeholder="Agrega la descripción" rows="5" cols="30"></textarea>
     </div>
-
+  
     <button class="submit-btn" (click)="onAgregarProducto()">
-      Agregar Producto
+      {{productoId?"Guardar cambios":"Guardar prodcto"}}
     </button>
   </form>
-<!-- </p-dialog> -->
+  <!-- </p-dialog> -->

@@ -10,13 +10,14 @@ declare const $: any;
   selector: 'app-listado-productos',
   templateUrl: './listado-productos.component.html',
   styleUrls: [
-    '../../../../shared/styles/tablePrime.scss',  
+    '../../../../shared/styles/tablePrime.scss',
     '../../../../shared/styles/form.scss',
   ],
 })
-export class ListadoProductosComponent implements OnInit,OnChanges {
+export class ListadoProductosComponent implements OnInit, OnChanges {
   allProducts: Producto[] = [];
   visible: boolean = false;
+  esRenta: boolean = false;
   mostrarModalAddVestido: boolean = false;
   totalRecords: number = 0;
   rows: number = 5; // Número de registros por página
@@ -26,28 +27,36 @@ export class ListadoProductosComponent implements OnInit,OnChanges {
   productForm!: FormGroup;
   idProducto!: string;
   productoEditar: any | null = null; // Guardamos el producto que se va a editar
-  
 
 
-  constructor(private productoS: ProductoService,private router:Router ) {}
-  abrirModal(){
+
+  constructor(private productoS: ProductoService, private router: Router) { }
+  abrirModal() {
     console.log("abierto")
-    this.mostrarModalAddVestido=true;
+    this.mostrarModalAddVestido = true;
   }
-
-  cerrarModalHandler(valor: boolean) {
-    this.mostrarModalAddVestido = valor; // Actualizamos el valor para cerrar el modal
+  cerrarModal() {
+    this.mostrarModalAddVestido = false;
+    this.productoEditar = null; // Opcional: resetear el producto en edición
+  }
+  cerrarModalHandler(mostrar: boolean) {
+    this.mostrarModalAddVestido = mostrar;
+    
+    // Opcional: resetear productoEditar si es necesario
+    if (!mostrar) {
+      this.productoEditar = null;
+    }
   }
   ngOnChanges(changes: SimpleChanges): void {
-      if (changes["mostrarFormulario"]) {
-        const newVluesmostrarFormulario = changes["mostrarFormulario"].currentValue;
-    this.mostrarModalAddVestido = newVluesmostrarFormulario; // Actualizamos el valor para cerrar el modal
-       
-        console.log("mostrarFormulario  en listado producto cambió a:", newVluesmostrarFormulario);
-      }
-  
-      // Aquí puedes agregar lógica adicional si es necesario
+    if (changes["mostrarFormulario"]) {
+      const newVluesmostrarFormulario = changes["mostrarFormulario"].currentValue;
+      this.mostrarModalAddVestido = newVluesmostrarFormulario; // Actualizamos el valor para cerrar el modal
+
+      console.log("mostrarFormulario  en listado producto cambió a:", newVluesmostrarFormulario);
     }
+
+    // Aquí puedes agregar lógica adicional si es necesario
+  }
 
 
   ngOnInit(): void {
@@ -56,7 +65,7 @@ export class ListadoProductosComponent implements OnInit,OnChanges {
     this.getProductos();
   }
 
- 
+
   getProductos() {
     this.productoS.obtenerProductos().subscribe(
       (response) => {
@@ -134,9 +143,9 @@ export class ListadoProductosComponent implements OnInit,OnChanges {
 
 
   editProduct(id: any) {
-    this.productoEditar= id; // Guardamos el producto que se va a editar
+    this.productoEditar = id; // Guardamos el producto que se va a editar
     this.mostrarModalAddVestido = true; // Mostrar el modal
-    this.router.navigate([`admin/control-productos/edit-producto/${id}`]); 
+    this.router.navigate([`admin/control-productos/edit-producto/${id}`]);
   }
   onPageChange(event: any) {
     this.first = event.first;
@@ -151,4 +160,20 @@ export class ListadoProductosComponent implements OnInit,OnChanges {
       this.first + this.rows
     );
   }
+  toggleAvailability(product: any) {
+    product.disponibilidad = !product.disponibilidad; // Cambia el estado de disponibilidad
+    // Aquí puedes agregar lógica adicional para actualizar el producto en tu backend si es necesario
+  }
+  justifyOptions = [
+    { label: 'Disponible', icon: 'pi pi-check', value: true },
+    { label: 'No Disponible', icon: 'pi pi-times', value: false }
+  ];
+  // Función para truncar el texto
+  truncateText(text: string, maxLength: number): string {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + '...'; // Recorta el texto y agrega puntos suspensivos
+    }
+    return text; // Devuelve el texto original si no es necesario truncarlo
+  }
+
 }

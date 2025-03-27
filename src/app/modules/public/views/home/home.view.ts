@@ -13,6 +13,7 @@ import { ERol } from "../../../../shared/constants/rol.enum";
 import { DatosEmpresaService } from "../../../../shared/services/datos-empresa.service";
 import { ProductoService } from "../../../../shared/services/producto.service";
 import { IndexedDbService } from "../../commons/services/indexed-db.service";
+import AOS from 'aos';
 
 @Component({
   selector: "app-home",
@@ -84,7 +85,10 @@ export class HomeView implements OnInit {
 
   ngOnInit() {
     // Al iniciar la carga, vaciamos el array de productos
-
+    AOS.init({
+      duration: 650, // Duración de la animación en milisegundos
+      once: true, // Si `true`, la animación solo se ejecuta una vez
+    });
     this.detectDevice();
     this.checkBrowserEnvironment();
 

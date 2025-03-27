@@ -28,7 +28,7 @@ body.collapsed-padding main {
     color: #495464;
     border: 1px solid rgba(224, 235, 235, 0.968627451);
     position: fixed;
-    top: 70px;
+    top: 90px;
     left: 12px;
     display: flex;
     flex-direction: column;
@@ -116,18 +116,19 @@ body.collapsed-padding main {
       background-color: darkgrey;
     }
 
-    // scrollbar-width: thin;
-    li {
-      // width: 100%;
-      margin-bottom: 10px;
-      border-radius: 5px;
-      padding: 5px 5px;
-      // border: dashed 1px;
-      transition: border-bottom 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-
-      &:hover {
+     .nav-item:hover {
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       }
+      li {
+        // width: 100%;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        padding: 5px 5px;
+        // border: dashed 1px;
+        transition: border-bottom 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        rollbar-width: thin;
+
+      
       a {
         // border: darkgrey dashed 1px;
 
@@ -136,7 +137,7 @@ body.collapsed-padding main {
         text-overflow: ellipsis;
         // letter-spacing: 1.5px;
         text-decoration: none;
-        color: #22262b !important;
+        color: #1a1b1d !important;
         padding: 7px 7px;
         display: flex;
         cursor: pointer;
@@ -167,7 +168,7 @@ body.collapsed-padding main {
           /* Aumenta el tamaño al 110% */
           // box-shadow: 0 8px 16px rgba(85, 85, 85, 0.475);
 
-          color: #6366f1;
+          color: #3b82f6;
         }
 
         // a.selected {
@@ -177,7 +178,7 @@ body.collapsed-padding main {
         // }
 
         i {
-          color: #282b2d;
+          color: #2b2f30;
           margin-right: 10px;
         }
 
@@ -219,23 +220,28 @@ body.collapsed-padding main {
             white-space: nowrap;
             text-overflow: ellipsis;
             &:hover {
-              text-decoration-line: underline;
+              color: #060606;
+
             }
           }
         }
       }
     }
   }
-
   .m-tree__itemContent__selected {
-    background: rgb(244, 240, 255);
-    color: #3e8eff !important;
-    font-weight: 700;
-    box-shadow: 0 4px 6px rgba(206, 216, 255, 0.556);
-
-    // color: #28b6b1 !important;
+    border: solid 1px #3b82f6; /* Borde azul claro */
+    color: #3e8eff !important; /* Color de texto azul PrimeNG */
+    font-weight: 700; /* Texto en negrita */
+    background-color: #ffffff; /* Fondo azul claro para resaltar */
+    // box-shadow: 0 4px 6px rgba(62, 142, 255, 0.3); /* Sombra azul suave */
   }
-
+  
+  /* Estilos adicionales para el nav-item seleccionado */
+  .nav-item.selected {
+    box-shadow: 0 4px 6px rgba(62, 142, 255, 0.3); /* Sombra azul suave */
+    background-color: #e9f2ff; /* Fondo azul claro */
+    border-radius: 4px; /* Bordes redondeados */
+  }
   .toggle-btn {
     margin-top: auto;
     padding: 10px 20px;

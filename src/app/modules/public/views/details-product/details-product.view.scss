@@ -71,7 +71,7 @@ div.contiendescripcion {
 
   .product-info {
     width: 50%;
-    padding: 10px;
+    padding: 10px 40px;
     // border: none;
   }
 
@@ -93,6 +93,7 @@ div.contiendescripcion {
   align-items: center;
   justify-content: center;
   width: 100%;
+  height: 580px; /* Altura del contenedor principal */
   overflow: hidden;
   // border: solid 0.5px #ccc;
   flex-direction: row;
@@ -120,8 +121,9 @@ div.contiendescripcion {
 
   .product-images {
     width: 100%;
+    height: 100%;
     max-width: 500px;
-    max-height: 500px;
+    max-height: 550px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -129,9 +131,11 @@ div.contiendescripcion {
     overflow: hidden;
   
     .main-image {
-      width: 100%;
-      height: 474px;
-      object-fit: contain;
+      height: 550px;
+      width: 100%; /* La imagen ocupa todo el ancho del contenedor */
+      // height: 100%; /* La imagen ocupa toda la altura del contenedor */
+      // object-fit: contain; /* Ajusta la imagen sin deformarla */
+      // object-fit: contain;
       object-position: center;
       border-radius: 5px;
       transition: transform 0.2s ease-in-out;
@@ -268,10 +272,57 @@ div.contiendescripcion {
   z-index: 1000;
 
   .modal-image {
-    max-width: 90%;
-    max-height: 90%;
+    width: 100%;
+  height: 100%;
     object-fit: contain;
     cursor: pointer;
   }
 }
 
+
+
+
+// imagen zoom 
+.image-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* Fondo oscuro semitransparente */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* Asegura que el modal esté por encima de todo */
+}
+
+.modal-image-container {
+  width: 80%; /* Ancho del contenedor */
+  height: 80%; /* Alto del contenedor */
+  overflow: hidden; /* Oculta el desbordamiento de la imagen */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-image {
+
+  // object-fit: contain; /* Ajusta la imagen sin deformarla */
+  cursor: zoom-in; /* Cambia el cursor al hacer hover */
+  transition: transform 0.3s ease-in-out; /* Transición suave para el zoom */
+}
+.close-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1001; /* Asegura que el botón esté por encima de la imagen */
+}
+
+.close-button:hover {
+  color: #ffea00; /* Cambia el color al hacer hover */
+}

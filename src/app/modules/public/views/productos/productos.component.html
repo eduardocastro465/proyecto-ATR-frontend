@@ -7,10 +7,13 @@
     <div class="carousel-track">
       <div class="producto-card" *ngFor="let producto of productos">
         <div *ngIf="producto.isNuevo" class="ribbon">Nuevo</div>
-        <div class="product-image"  (click)="verDetalles(producto._id)">
+        <div class="product-image" (click)="verDetalles(producto._id)">
+          <!-- Mostrar la primera imagen por defecto -->
           <img
-            [src]="producto.imagenPrincipal"
+            [src]="producto.imagenes[0]"
             alt="{{ producto.nombre }}"
+            (mouseenter)="cambiarImagen(producto, $event)" 
+            (mouseleave)="restaurarImagen(producto, $event)"
           />
           <!-- 🔹 Nueva capa para efecto hover -->
           <div class="hover-overlay">Ver más detalles</div>

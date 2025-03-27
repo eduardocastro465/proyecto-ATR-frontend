@@ -1,64 +1,90 @@
 .floating-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #ffffff;
-    border-bottom: solid 1.5px #d2d7d9;
- 
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-  
-    .admin-info {
-      .date {
-        font-size: 14px;
-        color: #333;
-      }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 30px;
+  background-color: #ffffff;
+  // border-bottom: solid 1.5px #d2d7d9;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+/* Contenedor del logo y texto */
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Espacio entre la imagen y el texto */
+}
+
+/* Estilos para la imagen del logo */
+.logo-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%; /* Opcional: si quieres un logo redondo */
+  // border: dashed red 1px;
+
+  // padding: 3px;
+  object-fit: contain;
+}
+
+/* Estilos para el texto "Atelier" */
+.logo-text {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  // text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.5), -2px -2px 4px rgba(255, 255, 0, 0.5);
+}
+
+.admin-info {
+  .date {
+    font-size: 14px;
+    color: #333;
+  }
+}
+
+.profile-menu {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
-  
-    .profile-menu {
-      position: relative;
-      display: flex;
-      align-items: center;
-  
-      .avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        overflow: hidden;
-        cursor: pointer;
-  
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-      }
-  
-      .menu {
-        position: absolute;
-        top: 50px;
-        width: 100px;
-        
-        right: 0;
-        background-color: white;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        border-radius: 4px;
-        overflow: hidden;
-        z-index: 100;
-  
-        a {
-          display: block;
-          padding: 10px 15px;
-          color: #333;
-          text-decoration: none;
-          &:hover {
-            background-color: #f0f0f0;
-          }
-        }
+  }
+
+  .menu {
+    position: absolute;
+    top: 50px;
+    width: 100px;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    z-index: 100;
+
+    a {
+      display: block;
+      padding: 10px 15px;
+      color: #333;
+      text-decoration: none;
+
+      &:hover {
+        background-color: #f0f0f0;
       }
     }
   }
-  
+}

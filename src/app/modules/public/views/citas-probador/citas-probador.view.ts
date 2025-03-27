@@ -11,8 +11,8 @@ export interface DressItem {
   id: string;
   nombre: string;
   precio: number;
-  imagenPrincipal: string;
-  categoria: string; // Asegúrate de que la interfaz incluya la propiedad `categoria`
+  imagenes: string;
+  opcionesTipoTransaccion	: string; // Asegúrate de que la interfaz incluya la propiedad `opcionesTipoTransaccion	`
 }
 
 @Component({
@@ -47,18 +47,23 @@ export class CitasProbadorView implements OnInit {
     try {
       // Obtener productos desde IndexedDB
       const productos = await this.indexedDbService.obtenerProductosApartados();
+      
+      // Mostrar en consola los productos obtenidos de IndexedDB
+      console.log("Productos obtenidos de IndexedDB:", productos);
+      console.table(productos); // Esto mostrará los datos en formato de tabla
+      
+      // Corregir el filtrado (nota la propiedad y el valor exacto)
       this.productosRenta = productos.filter(
-        (item) => item.categoria === "renta"
+        (item) => item.opcionesTipoTransaccion?.toLowerCase() === "renta"
       );
       this.productosVenta = productos.filter(
-        (item) => item.categoria === "venta"
+        (item) => item.opcionesTipoTransaccion?.toLowerCase() === "venta"
       );
-
-      // Inicializar el carrito con los productos obtenidos
-      // this.cartService.initializeCart(productos);
-      // const productos =this.cartService.loadCartItems();
-      console.log("=>"+productos)
-
+  
+      // Mostrar los productos filtrados
+      console.log("Productos para renta:", this.productosRenta);
+      console.log("Productos para venta:", this.productosVenta);
+  
       this.calcularTotal();
       this.initializeTabs();
     } catch (error) {
@@ -136,5 +141,5 @@ export class CitasProbadorView implements OnInit {
     this.mostrarModal = true;
   }
 
-  descargarResumen() {}
+  continuarCompraTotal() {}
 }

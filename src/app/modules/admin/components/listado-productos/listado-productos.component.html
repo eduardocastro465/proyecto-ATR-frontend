@@ -1,5 +1,4 @@
 <p-toast></p-toast>
-<!-- <pre>{{allProducts|json}}</pre> -->
 
 <div class="ui basic test modal">
   <div class="ui icon header">
@@ -22,70 +21,76 @@
 </div>
 
 <section>
-  <h2>Lista de Productos</h2>
+  <h1>{{ mostrarModalAddVestido ? 'Agregar Producto' : 'Lista de Productos' }}</h1>
 
-  <button type="button" (click)="abrirModal()">Agregar Producto</button>
+  <button class="submit-btn" type="button" (click)="mostrarModalAddVestido ? cerrarModalHandler(false) : abrirModal()"
+    [ngClass]="mostrarModalAddVestido ? 'p-button-secondary' : 'p-button-primary'">
+    {{ mostrarModalAddVestido ? 'Cancelar' : 'Agregar Producto' }}
+  </button>
 
-  <app-registo-producto
-  [productoEditar]="productoEditar" 
-    [mostrarModalAddVestido]="mostrarModalAddVestido"
-    *ngIf="mostrarModalAddVestido"
-    (mostrarFormulario)="cerrarModalHandler($event)"
-  >
+  <app-registo-producto [productoEditar]="productoEditar" [mostrarModalAddVestido]="mostrarModalAddVestido"
+    *ngIf="mostrarModalAddVestido" (mostrarFormulario)="cerrarModalHandler($event)"
+    (onCancelar)="cerrarModal()">>
   </app-registo-producto>
 
-  <p-table
-    #dt
-    [value]="allProducts"
-    selectionMode="single"
-    dataKey="_id"
-    [paginator]="true"
-    [rows]="5"
-    [totalRecords]="totalRecords"
-    [first]="first"
-    (onPageChange)="onPageChange($event)"
-  >
-    <ng-template pTemplate="caption">
+  <p-table *ngIf="!mostrarModalAddVestido"
+  #dt
+  [value]="allProducts"
+  selectionMode="single"
+  dataKey="_id"
+  [paginator]="true"
+  [rows]="5"
+  [totalRecords]="totalRecords"
+  [first]="first"
+  (onPageChange)="onPageChange($event)"
+>
+  <ng-template pTemplate="caption">
       <span class="p-input-icon-left">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <input
-          pInputText
-          style="width: 150%; padding-left: 20%"
-          type="text"
-          (input)="onGlobalFilter($event)"
-          placeholder="Buscar producto..."
-          [(ngModel)]="filterText"
-        />
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input
+              pInputText
+              style="width: 150%; padding-left: 20%"
+              type="text"
+              (input)="onGlobalFilter($event)"
+              placeholder="Buscar producto..."
+              [(ngModel)]="filterText"
+          />
       </span>
-    </ng-template>
+  </ng-template>
 
-    <ng-template pTemplate="header">
+  <ng-template pTemplate="header">
       <tr>
-        <th>Imagen</th>
-        <th pSortableColumn="nombre">Nombre <p-sortIcon field="nombre"></p-sortIcon></th>
-        <th pSortableColumn="categoria">Categoría <p-sortIcon field="categoria"></p-sortIcon></th>
-        <th pSortableColumn="precio">Precio <p-sortIcon field="precio"></p-sortIcon></th>
-        <th>Acciones</th>
+          <th>Imagen</th>
+          <th pSortableColumn="nombre">Nombre <p-sortIcon field="nombre"></p-sortIcon></th>
+          <th pSortableColumn="categoria">Transacción<p-sortIcon field="opcionesTipoTransaccion"></p-sortIcon></th>
+          <th pSortableColumn="precio">Precio <p-sortIcon field="precio"></p-sortIcon></th>
+          <th pSortableColumn="precio">Color <p-sortIcon field="color"></p-sortIcon></th>
+          <th pSortableColumn="disponible">Disponible <p-sortIcon field="disponible"></p-sortIcon></th>
+          <th pSortableColumn="nuevo">Nuevo <p-sortIcon field="nuevo"></p-sortIcon></th>
+          <th>Acciones</th>
       </tr>
-    </ng-template>
+  </ng-template>
 
-    <ng-template pTemplate="body" let-product>
+  <ng-template pTemplate="body" let-product>
       <tr>
-        <td>
-          <img [src]="product.imagenPrincipal" alt="Imagen del producto" class="product-image" />
-        </td>
-        <td>{{ product.nombre }}</td>
-        <td>{{ product.categoria }}</td>
-        <td>{{ product.precio | currency }}</td>
-        <td>
-          <button (click)="editProduct(product._id)" class="custom-btn custom-btn-primary">Editar</button>
-          <button (click)="deleteProduct(product._id)" class="custom-btn custom-btn-danger">Eliminar</button>
-        </td>
+          <td>
+              <img [src]="product.imagenes[0]" alt="Imagen del producto" class="product-image" />
+          </td>
+          <td [title]="product.nombre">{{ truncateText(product.nombre, 20) }}</td>
+          <td>{{ product.opcionesTipoTransaccion	 }}</td>
+          <td>{{ product.precio | currency }}</td>
+          <td>{{ product.color}}</td>
+          <td>{{ product.disponible ? 'Sí' : 'No' }}</td>
+          <td>{{ product.nuevo ? 'Sí' : 'No' }}</td>
+          <td>
+              <button (click)="editProduct(product._id)" class="custom-btn custom-btn-primary">Editar</button>
+              <button (click)="deleteProduct(product._id)" class="custom-btn custom-btn-danger">Eliminar</button>
+          </td>
       </tr>
-    </ng-template>
+  </ng-template>
 
-    <ng-template pTemplate="paginatorleft">
+  <ng-template pTemplate="paginatorleft">
       <button pButton type="button" icon="pi pi-refresh" (click)="getProductos()" class="p-button-text"></button>
-    </ng-template>
-  </p-table>
+  </ng-template>
+</p-table>
 </section>

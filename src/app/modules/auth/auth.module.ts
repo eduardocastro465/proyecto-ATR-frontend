@@ -6,7 +6,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth.component';
-import { SignInView } from './view/sign-in/sign-in.view';
+// import { SignInView } from './view/sign-in/sign-in.view';
 import { SignUpView } from './view/sign-up/sign-up.view';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignInService } from './commons/services/sign-in.service';
@@ -44,7 +44,7 @@ import { PublicModule } from '../public/public.module';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { NgClass } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { LoginModalComponent } from './view/login-modal/login-modal.component';
+// import { LoginModalComponent } from './view/login-modal/login-modal.component';
 
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from '../../../environments/environment';
@@ -57,11 +57,11 @@ import { HeaderModule } from '../../shared/components/header/header.module';
     AuthComponent,
     SignUpView,
     RecuperarPasswordView,
-    SignInView,
+    // SignInView,
     VerificarCodigoView,
     RegistroView,
     RecuparByPreguntaComponent,RecuperarByEmailComponent,
-    LoginModalComponent,
+    // LoginModalComponent,
   ],
   imports: [
     InputOtpModule,

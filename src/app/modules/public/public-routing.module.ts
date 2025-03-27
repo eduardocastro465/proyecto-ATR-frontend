@@ -17,6 +17,8 @@ import { TagComponent } from "./components/tag/tag.component";
 import { ProcessRentaComponent } from "./views/process-renta/process-renta.component";
 // import { ComprasComponent } from "./views/compras/compras.component";
 import { ProcessCompraComponent } from "./views/process-compra/process-compra.component";
+import { MisionVisionComponent } from "./views/mision-vision/mision-vision.component";
+import { PreguntasComponent } from "./views/preguntas/preguntas.component";
 
 const routes: Routes = [
   {
@@ -53,6 +55,14 @@ const routes: Routes = [
         },
       },
       {
+        path: "Preguntas",
+        component: PreguntasComponent,
+        data: {
+          title: "Preguntas",
+          breadcrumb: "Preguntas",
+        },
+      },
+      {
         path: "politicas",
         component: PoliticasComponent,
         data: {
@@ -79,6 +89,14 @@ const routes: Routes = [
         data: {
           title: "Mi perfil",
           breadcrumb: "Mi perfil",
+        },
+      },
+      {
+        path: "MisionVision",
+        component: MisionVisionComponent,
+        data: {
+          title: "Misión y Visión",
+          breadcrumb: "Misión y Visión",
         },
       },
       {

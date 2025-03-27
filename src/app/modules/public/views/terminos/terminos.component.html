@@ -1,11 +1,20 @@
-<div *ngIf="terminos && terminos.length > 0; else noData">
-    <ul>
-      <li *ngFor="let termino of terminos">
-        {{ termino.titulo }} - {{ termino.contenido }}
-      </li>
-    </ul>
+<div data-aos="flip-up" class="terminos-container">
+  <div *ngIf="isLoading" class="loading-spinner">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Cargando términos y condiciones...</p>
   </div>
-  <ng-template #noData>
-    <p>No se encontraron términos disponibles.</p>
-  </ng-template>
-  
+
+  <div *ngIf="!isLoading && errorMessage" class="error-message">
+    <mat-icon>error_outline</mat-icon>
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <div *ngIf="!isLoading && !errorMessage" class="terminos-content">
+    <h1>Términos y Condiciones</h1>
+    
+    <div *ngFor="let termino of historialTerminos" class="termino-item">
+      <h2>{{ termino.titulo }}</h2>
+      <div class="contenido" [innerHTML]="formatContent(termino.contenido)"></div>
+    </div>
+  </div>
+</div>

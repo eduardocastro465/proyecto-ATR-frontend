@@ -1,11 +1,13 @@
+<!-- ✅ Loader de Bienvenida (solo primera vez) -->
 <ngx-ui-loader
+  *ngIf="firstTime"
   [bgsOpacity]="0.5"
   [bgsColor]="'#ebe3db'"
   [bgsPosition]="'bottom-right'"
   [bgsSize]="20"
   [bgsType]="'ball-spin-clockwise'"
   blur="10"
-  [fgsColor]="'#323343'"
+  [fgsColor]="'#FF69B4'"  
   [fgsPosition]="'center-center'"
   [fgsSize]="60"
   [fgsType]="'ball-spin-clockwise'"
@@ -15,16 +17,29 @@
   logoUrl="https://res.cloudinary.com/dvvhnrvav/image/upload/v1730395938/images-AR/wyicw2mh3xxocscx0diz.png"
   masterLoaderId="'master'"
   [overlayBorderRadius]="'0'"
-  [overlayColor]="'#fbfaf8'"
-  [pbColor]="'#5F6467FF'"
+  [overlayColor]="'rgba(0, 0, 0, 0)'" 
+  [pbColor]="'#FFA500'" 
   [pbDirection]="'ltr'"
   [pbThickness]="3"
   [hasProgressBar]="true"
   [text]="'Atelier'"
   [textColor]="'#333b43'"
-  [textPosition]="'center-center'"
+  [textPosition]="'center-center'">
+</ngx-ui-loader>
 
-></ngx-ui-loader>
+<!-- ✅ Loader de Carga (procesos como búsqueda) -->
+<ngx-ui-loader
+  *ngIf="isLoading"
+  [fgsColor]="'#FF69B4'"
+  [fgsSize]="40"
+  [overlayColor]="'rgba(0, 0, 0, 0)'" 
+  blur="10"
+  [pbColor]="'#FFA500'"
+  [hasProgressBar]="true"
+  [textColor]="'#FF69B4'" 
+  [textPosition]="'center-center'">
+</ngx-ui-loader>
+
 
 <router-outlet/>
 

@@ -65,7 +65,7 @@
 main{
   margin-left: 20%;
   margin-top: 6%;
-  border: 1px solid #e0ebebf7; /* Cambiado a un gris más claro */
+  // border: 1px solid #e0ebebf7; /* Cambiado a un gris más claro */
   padding: 20px;
   border-radius: 10px;
   box-shadow: 10px 16px 15px #e0ebebf7; /* Sombra más suave */
@@ -107,4 +107,9 @@ main{
   p {
     margin: 0;
   }
+}
+
+.content-all{
+  background: white;
+
 }

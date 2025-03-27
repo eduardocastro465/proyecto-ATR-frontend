@@ -287,3 +287,20 @@ h2 {
   font-weight: bold;
   color: green;
 }
+// 
+.login-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.switch-option {
+  color: #007bff;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.switch-option:hover {
+  text-decoration: underline;
+}

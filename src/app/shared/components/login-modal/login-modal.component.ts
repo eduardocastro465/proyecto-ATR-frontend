@@ -47,6 +47,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { DialogModule } from 'primeng/dialog';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { PasswordModule } from 'primeng/password';
+import AOS from 'aos';
 
 import {
   Auth,
@@ -132,21 +133,54 @@ export class LoginModalComponent implements OnInit, OnChanges, AfterViewInit {
 
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
-    this.loginForm = this.fb.group({
-      email: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(/^[\w.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/),
+    this.loginForm = this.fb.group(
+      {
+        email: [
+          '',
+          [
+            Validators.pattern(/^[\w.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/),
+          ],
         ],
-      ],
-      password: ['', Validators.required], // Validador requerido para la contraseña
-      captcha: ['', Validators.required], // Validador requerido para el captcha
-    });
+        telefono: [
+          '',
+          [Validators.pattern(/^[0-9]{10}$/)],
+        ],
+        password: ['', Validators.required], // Validador requerido para la contraseña
+        captcha: ['', Validators.required], // Validador requerido para el captcha
+      },
+      { validator: this.atLeastOneRequired('email', 'telefono') }
+    );
+    this.toggleValidation();
 
     this.isLoading = false;
   }
+
+
+
+  // Función personalizada para validar que al menos un campo esté lleno
+  atLeastOneRequired(control1: string, control2: string) {
+    return (formGroup: FormGroup) => {
+      const value1 = formGroup.controls[control1].value;
+      const value2 = formGroup.controls[control2].value;
+
+      if (!value1 && !value2) {
+        formGroup.controls[control1].setErrors({ required: true });
+        formGroup.controls[control2].setErrors({ required: true });
+      } else {
+        formGroup.controls[control1].setErrors(null);
+        formGroup.controls[control2].setErrors(null);
+      }
+    };
+  }
   async ngOnInit() {
+
+    AOS.init({
+      duration: 650, // Duración de la animación en milisegundos
+      // easing: 'ease-in-out', // Tipo de animación
+      once: true, // Si `true`, la animación solo se ejecuta una vez
+    });
+
+
     this.getCaptchaToken();
     this.loadCaptchaScript();
 
@@ -154,6 +188,20 @@ export class LoginModalComponent implements OnInit, OnChanges, AfterViewInit {
     this.loginForm.valueChanges.subscribe(() => {
       this.loginForm.markAllAsTouched();
     });
+  }
+  toggleValidation() {
+    if (this.usePhoneLogin) {
+      // Si usa teléfono, el campo email no es obligatorio
+      this.loginForm.get('email')?.clearValidators();
+      this.loginForm.get('telefono')?.setValidators([Validators.required, Validators.pattern('^[0-9]{10}$')]);
+    } else {
+      // Si usa email, el campo teléfono no es obligatorio
+      this.loginForm.get('telefono')?.clearValidators();
+      this.loginForm.get('email')?.setValidators([Validators.required, Validators.pattern(/^[\w.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]);
+    }
+
+    this.loginForm.get('email')?.updateValueAndValidity();
+    this.loginForm.get('telefono')?.updateValueAndValidity();
   }
 
   @ViewChild('passwordField') passwordField!: ElementRef;
@@ -199,6 +247,17 @@ export class LoginModalComponent implements OnInit, OnChanges, AfterViewInit {
 
   ngOnDestroy(): void {
     this.timerSubscription?.unsubscribe();
+  }
+
+
+
+  usePhoneLogin: boolean = false;
+
+  toggleLoginMethod() {
+    this.usePhoneLogin = !this.usePhoneLogin;
+    // Limpiar validaciones al cambiar el método
+    this.loginForm.get('email')?.reset();
+    this.loginForm.get('telefono')?.reset();
   }
 
   @Input() isModalVisible: boolean = false;
@@ -341,18 +400,18 @@ export class LoginModalComponent implements OnInit, OnChanges, AfterViewInit {
     this.loginError = '';
     this.captchaToken = this.loginForm.get('captcha')?.value;
     this.isLoading = true;
-
+    this.toggleValidation()
     if (this.isLocked) {
       this.loginError = `Has alcanzado el límite de intentos. Intenta de nuevo en ${this.remainingTime} segundos.`;
       this.isLoading = false;
       return;
     }
 
-    if (this.loginForm.invalid) {
-      this.loginError = 'Por favor, completa todos los campos';
-      this.isLoading = false;
-      return;
-    }
+    // if (this.loginForm.invalid) {
+    //   this.loginError = 'Por favor, completa todos los campos';
+    //   this.isLoading = false;
+    //   return;
+    // }
 
     if (!navigator.onLine) {
       this.loginError =
@@ -363,9 +422,10 @@ export class LoginModalComponent implements OnInit, OnChanges, AfterViewInit {
 
     const email = this.loginForm.value.email;
     const password = this.loginForm.value.password;
+    const telefono = this.loginForm.value.telefono;
 
     this.signInService
-      .signIn({ email, password, captchaToken: this.captchaToken })
+      .signIn({ email, password, telefono, captchaToken: this.captchaToken })
       .subscribe(
         (response) => {
           if (response) {

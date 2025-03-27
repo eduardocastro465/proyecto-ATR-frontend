@@ -8,13 +8,16 @@ import { VentasComponent } from './views/historial/ventas/ventas.component';
 import { RentasComponent } from './views/historial/rentas/rentas.component';
 import { InicioView } from './views/inicio/inicio.view';
 import { DashboardView } from './views/dashboard/dashboard.view';
-
+import { EstadisticaComponent } from './views/estadistica/estadistica.component';
 import { ChartModule } from 'primeng/chart';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { EstadisticaComponent } from './views/estadistica/estadistica.component';
-import { DropdownModule } from 'primeng/dropdown';
+import { MVVComponent } from './views/listados/mvv/mvv.component';
+import { MisionComponent } from './views/mvv/mision/mision.component';
+import { VisionComponent } from './views/mvv/vision/vision.component';
+import { ValoresComponent } from './views/mvv/valores/valores.component';
+
 @NgModule({
   declarations: [
     TitularComponent,
@@ -22,10 +25,14 @@ import { DropdownModule } from 'primeng/dropdown';
     VentasComponent,
     RentasComponent,
     InicioView,
-    DashboardView,EstadisticaComponent
+    DashboardView,
+    MVVComponent,
+    MisionComponent,
+    VisionComponent,
+    ValoresComponent,EstadisticaComponent
   ],
   imports: [TableModule,ButtonModule ,
-    CommonModule,ChartModule,DropdownModule,
+    CommonModule,ChartModule,
     TitularRoutingModule,ReactiveFormsModule,FormsModule
     
   ]

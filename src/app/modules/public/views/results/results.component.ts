@@ -1,142 +1,319 @@
-import { HttpClient } from "@angular/common/http";
-import {
-  Component,
-  OnInit,
-} from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ProductoService } from "../../../../shared/services/producto.service";
-import { environment } from "../../../../../environments/environment";
-
+import { NgxUiLoaderService } from "ngx-ui-loader";
+import { Subject, takeUntil, debounceTime, distinctUntilChanged } from "rxjs";
+import { CartService } from "../../../../shared/services/cart.service";
+import AOS from 'aos';
 @Component({
   selector: "app-results",
   templateUrl: "./results.component.html",
   styleUrls: ["./results.component.scss"],
 })
-export class ResultsComponent implements OnInit {
-  results: any[] = [];
-  query: string = '';
-  resultadosEncontrados: boolean = true;
-  todosProductos: any[] = []; // Variable que almacenará todos los productos
+export class ResultsComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
+  allProducts: any[] = [];
+  filteredProducts: any[] = [];
+  searchQuery: string = '';
+  hasResults: boolean = true;
+  isLoading: boolean = true;
+  showAllFallback: boolean = false;
+  public currentQueryParams: any = {}; // Nueva propiedad pública para los queryParams
 
+  // Añade esta propiedad para exponer Object al template
+  public Object = Object;
   constructor(
+    private cartService:CartService,
     private router: Router,
     private route: ActivatedRoute,
-    private http: HttpClient,
-    private productS_: ProductoService
-  ) {}
+    private productService: ProductoService,
+    private ngxService: NgxUiLoaderService
+  ) { }
 
   ngOnInit(): void {
     this.scrollToTop();
-
-    // Cargar todos los productos al inicio
-    this.cargarTodosLosProductos();
-
-    this.route.params.subscribe((params) => {
-      this.query = params['query'];
-
-      // Si el query es "vestidos", cargar todos los productos
-      if (this.query.toLowerCase() === 'vestidos') {
-        this.resultadosEncontrados = true; // Se consideran resultados
-        this.results = this.todosProductos; // Mostrar todos los productos
-        return;
-      }
-
-      // Si el query está vacío
-      if (!this.query || this.query.trim() === '') {
-        this.resultadosEncontrados = true; // Hay todos los productos
-        this.results = this.todosProductos; // Mostrar todos los productos
-        return;
-      }
-
-      // Si el query tiene valor, buscar productos
-      this.buscarProductos();
-    });
-
-    // Escuchar cambios en los parámetros de consulta para filtros avanzados
-    this.route.queryParams.subscribe((queryParams) => {
-      const { categoria, color, tallas } = queryParams;
-
-      // Si hay filtros en los parámetros de consulta
-      if (categoria || color || tallas) {
-        this.buscarProductosAvanzados(categoria, color, tallas); // Pasar tallas directamente
-      } else {
-        // Si no hay parámetros, cargar todos los productos
-        this.cargarTodosLosProductos();
-      }
+    this.ngxService.start();
+    this.initializeData();
+    AOS.init({
+      duration: 650, // Duración de la animación en milisegundos
+      once: true, // Si `true`, la animación solo se ejecuta una vez
     });
   }
-  scrollToTop() {
-    window.scrollTo(0, 0); // Esto lleva la página a la parte superior
-}
-  private buscarProductosAvanzados(
-    categoria: any,
-    color: any,
-    tallaDisponible: any // Recibe tallas directamente
-  ): void {
-    this.http
-      .post(`${environment.api}/producto/buscarAvanzados`, {
-        categoria,
-        color,
-        tallaDisponible,
-      })
+  // Método para verificar filtros activos
+  public hasActiveFilters(): boolean {
+    return (
+      this.currentQueryParams && 
+      (this.currentQueryParams['color'] || 
+       this.currentQueryParams['talla'] || 
+       this.currentQueryParams['tipoCuello'])
+    );
+  }
+
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private initializeData(): void {
+    this.loadAllProducts();
+    this.setupRouteListeners();
+  }
+
+  private loadAllProducts(): void {
+    this.productService.obtenerProductos()
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (data: any) => {
-          console.error("búsqueda avanzada:", categoria, color, tallaDisponible);
-          if (data && data.resultados && data.resultados.length > 0) {
-            this.results = data.resultados;
-            console.error("resultados de búsqueda avanzada:", data.resultados);
-            this.resultadosEncontrados = true;
-          } else {
-            this.resultadosEncontrados = false;
-            this.results = []; // No se encontraron resultados
-          }
+        next: (products) => {
+          this.allProducts = products;
+          this.filteredProducts = [...products];
+          this.hasResults = products.length > 0;
+          this.isLoading = false;
+          this.ngxService.stop();
         },
         error: (error) => {
-          console.error("Error en búsqueda avanzada:", error);
-          this.resultadosEncontrados = false;
-          this.results = []; // No se encontraron resultados
-        },
+          console.error("Error loading products:", error);
+          this.handleLoadError();
+        }
       });
   }
 
-  private buscarProductos(): void {
-    this.http
-      .get(`${environment.api}/producto/buscar/${this.query}`)
-      .subscribe({
-        next: (data: any) => {
-          if (data) {
-            this.results = data.resultados;
-            this.resultadosEncontrados = true; // Se encontraron resultados
-          this.cargarTodosLosProductos()
-          } else {
-            this.resultadosEncontrados = false; // No se encontraron resultados
-            this.results = this.todosProductos; // Mostrar todos los productos
-          }
-        },
-        error: (error) => {
-          console.error("Error en la búsqueda:", error);
-          this.resultadosEncontrados = false; // No se encontraron resultados
-          this.results = this.todosProductos; // Mostrar todos los productos
-        },
+  private setupRouteListeners(): void {
+    // Escuchar cambios en los parámetros de ruta
+    this.route.params
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(params => {
+        this.searchQuery = params['query'] || '';
+        this.applyFilters();
+      });
+
+    // Escuchar cambios en los queryParams con debounce
+    this.route.queryParams
+      .pipe(
+        takeUntil(this.destroy$),
+        debounceTime(300),
+        distinctUntilChanged()
+      )
+      .subscribe(queryParams => {
+        this.applyFilters();
       });
   }
 
-  private cargarTodosLosProductos(): void {
-    this.productS_.obtenerProductos().subscribe({
-      next: (data) => {
-        this.todosProductos = data;  // Asignar la respuesta a todosProductos
-        this.results = data;  // Asigna todos los productos a results para mostrar
-        this.resultadosEncontrados = true; // Inicialmente hay productos
-      },
-      error: (error) => {
-        console.error("Error al cargar todos los productos:", error);
-        this.resultadosEncontrados = false; // No se encontraron productos
-      },
-    });
+  
+  private filterProducts(): any[] {
+    let results = [...this.allProducts];
+    const { categoria, color, tallaDisponible } = this.route.snapshot.queryParams;
+
+    // Filtro por texto de búsqueda
+    if (this.searchQuery.trim()) {
+      const query = this.searchQuery.toLowerCase();
+      results = results.filter(product => 
+        product.nombre.toLowerCase().includes(query) ||
+        (product.descripcion?.toLowerCase().includes(query))
+      );
+    }
+
+    // Filtros adicionales
+    if (categoria) {
+      results = results.filter(p => p.categoria === categoria);
+    }
+    if (color) {
+      results = results.filter(p => p.colores?.includes(color));
+    }
+    if (tallaDisponible) {
+      results = results.filter(p => p.tallasDisponibles?.includes(tallaDisponible));
+    }
+
+    return results;
   }
 
-  // Navegar a detalles de producto
-  verDetalles(product: any): void {
-    this.router.navigateByUrl(`public/Detail/${product}`);
+
+  private hasActiveSearch(): boolean {
+    return this.searchQuery.trim() !== '' || this.hasQueryParams();
   }
+
+  private hasQueryParams(): boolean {
+    const { categoria, color, tallaDisponible } = this.route.snapshot.queryParams;
+    return !!categoria || !!color || !!tallaDisponible;
+  }
+
+  private handleLoadError(): void {
+    this.hasResults = false;
+    this.isLoading = false;
+    this.ngxService.stop();
+  }
+
+  scrollToTop(): void {
+    window.scrollTo(0, 0);
+  }
+
+  viewProductDetails(productId: string): void {
+    this.ngxService.start();
+    this.router.navigateByUrl(`public/Detail/${productId}`);
+  }
+
+
+
+  apartarRentar(producto: any) {
+    const body2 = {
+      id: producto._id,
+      nombre: producto.nombre,
+      precio: producto.precio,
+      imagenes: producto.imagenes[0],
+      opcionesTipoTransaccion: producto.opcionesTipoTransaccion,
+    };
+
+    try {
+      // Guardar el producto en IndexedDB
+      // this.indexedDbService.guardarProducto(body2);
+
+      // Agregar el producto al carrito usando el servicio
+      this.cartService.addToCart(body2);
+      console.error(body2);
+
+      // // Mostrar diálogo de confirmación
+      // this.confirmationService.confirm({
+      //   message: `
+      //     <div class="product-notification">
+      //       <img src="${producto.imagenPrincipal}" alt="${producto.nombre}" class="product-image" />
+      //       <div class="product-details">
+      //         <h4>${producto.nombre}</h4> 
+      //         <p>${producto.precio}</p>
+      //       </div>
+      //       <p>¿Deseas ir al carrito o iniciar sesión?</p>
+      //     </div>
+      //   `,
+      //   header: 'Producto agregado',
+      //   acceptLabel: 'Ir al carrito',
+      //   rejectLabel: 'Iniciar sesión',
+      //   accept: () => {
+      //     // Lógica para ir al carrito
+      //     this.goToCart();
+      //   },
+      //   reject: () => {
+      //     // Lógica para iniciar sesión
+      //     this.login();
+      //   },
+      // });
+    } catch (error) {
+      console.error('Error al guardar el producto:', error);
+    }
+  }
+  // 
+
+
+   
+  
+    // Método público para el template
+    public applyFilters(): void {
+      if (!this.allProducts.length) return;
+  
+      this.ngxService.start();
+      this.isLoading = true;
+      this.showAllFallback = false;
+  
+      const normalizedQuery = this.searchQuery.trim().toLowerCase();
+      const queryParams = this.route.snapshot.queryParams as {
+        color?: string;
+        talla?: string;
+        tipoCuello?: string;
+        [key: string]: any;
+      };
+  
+      let results = [...this.allProducts];
+  
+      if (normalizedQuery) {
+        results = results.filter(product => 
+          this.productMatchesQuery(product, normalizedQuery)
+        );
+      }
+  
+      if (queryParams.color) {
+        const normalizedColor = queryParams.color.toLowerCase();
+        results = results.filter(p => 
+          p.color?.toLowerCase() === normalizedColor
+        );
+      }
+  
+      if (queryParams.talla) {
+        const normalizedTalla = queryParams.talla.toUpperCase();
+        results = results.filter(p => 
+          p.talla?.toUpperCase() === normalizedTalla
+        );
+      }
+  
+      if (queryParams.tipoCuello) {
+        const normalizedCuello = queryParams.tipoCuello.toLowerCase();
+        results = results.filter(p => 
+          p.tipoCuello?.toLowerCase() === normalizedCuello
+        );
+      }
+  
+      this.handleFilterResults(results);
+    }
+  
+    // Método público para limpiar filtros
+    public clearFilter(filterName: string): void {
+      const queryParams = {...this.route.snapshot.queryParams};
+      delete queryParams[filterName];
+      
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams,
+        queryParamsHandling: 'merge'
+      });
+    }
+  
+    // Resto de métodos permanecen igual...
+    private productMatchesQuery(product: any, query: string): boolean {
+      const priorityFields = [
+        product.nombre,
+        product.color,
+        product.tipoCuello,
+        product.talla,
+        product.descripcion,
+        product.tipoCola,
+        product.tipoHombro
+      ];
+  
+      return priorityFields.some(field => 
+        field?.toString().toLowerCase().includes(query)
+      );
+    }
+  
+    private handleFilterResults(results: any[]): void {
+      this.filteredProducts = results;
+      this.hasResults = results.length > 0;
+  
+      if (!this.hasResults && this.hasActiveSearch()) {
+        this.filteredProducts = [...this.allProducts];
+        this.showAllFallback = true;
+        this.hasResults = true;
+      }
+  
+      this.isLoading = false;
+      this.ngxService.stop();
+    }
+  
+    public getSearchSuggestions(): string[] {
+      if (!this.searchQuery.trim()) return [];
+  
+      const query = this.searchQuery.toLowerCase();
+      const suggestions = new Set<string>();
+  
+      this.allProducts.forEach(product => {
+        if (product.color.toLowerCase().includes(query)) {
+          suggestions.add(`Color: ${product.color}`);
+        }
+        if (product.tipoCuello.toLowerCase().includes(query)) {
+          suggestions.add(`Cuello: ${product.tipoCuello}`);
+        }
+        if (product.talla.toUpperCase().includes(query.toUpperCase())) {
+          suggestions.add(`Talla: ${product.talla}`);
+        }
+      });
+  
+      return Array.from(suggestions).slice(0, 5);
+    }
+  
 }
