@@ -1,3 +1,4 @@
+import { RecuperarByTelefonoComponent } from './view/recuperar-password/recuperar-by-telefono/recuperar-by-telefono.component';
 import {
   CUSTOM_ELEMENTS_SCHEMA,
   importProvidersFrom,
@@ -52,6 +53,7 @@ import { RecuparByPreguntaComponent } from './view/recuperar-password/recupar-by
 import { RecuperarByEmailComponent } from './view/recuperar-password/recuperar-by-email/recuperar-by-email.component';
 import { HeaderModule } from '../../shared/components/header/header.module';
 
+
 @NgModule({
   declarations: [
     AuthComponent,
@@ -59,9 +61,11 @@ import { HeaderModule } from '../../shared/components/header/header.module';
     RecuperarPasswordView,
     // SignInView,
     VerificarCodigoView,
+    RecuperarByTelefonoComponent,
     RegistroView,
     RecuparByPreguntaComponent,RecuperarByEmailComponent,
     // LoginModalComponent,
+    
   ],
   imports: [
     InputOtpModule,
