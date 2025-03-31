@@ -54,6 +54,8 @@
     "primeicons": "^7.0.0",
     "primeng": "^17.18.15",
     "rxjs": "~7.8.0",
+    "semantic-ui-css": "^2.5.0",
+    "smart-webcomponents-angular": "^22.0.0",
     "sweetalert": "^2.1.2",
     "sweetalert2": "^11.14.3",
     "swiper": "^11.2.2",
