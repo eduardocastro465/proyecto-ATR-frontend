@@ -1,0 +1,36 @@
+name: SonarCloud Analysis
+
+on:
+  push:
+    branches:
+      - main  # O la rama que desees que se analice automáticamente
+  pull_request:
+    branches:
+      - main  # Analiza los PR que vayan a la rama principal
+
+jobs:
+  sonarcloud:
+    runs-on: windows-latest  # El sistema operativo para ejecutar el análisis
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4  # Acción para hacer checkout del código del repositorio
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3  # Acción para configurar Node.js en el entorno
+        with:
+          node-version: '18'  # Asegúrate de usar la versión correcta de Node.js
+
+      - name: Install dependencies
+        run: npm install  # Instala las dependencias del proyecto
+
+      - name: Run tests with coverage
+        run: ng test --code-coverage --watch=false  # Ejecuta las pruebas con cobertura (opcional)
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v1.0  # Acción oficial de SonarCloud
+        with:
+          organization: 'eduardocastro465'  # Reemplaza con tu organización en SonarCloud
+          projectKey: 'eduardocastro465_proyecto-ATR-frontend'  # Reemplaza con el Project Key de tu proyecto
+          projectName: 'proyecto-ATR-frontend'  # Nombre de tu proyecto
+        env:
+          SONAR_TOKEN: ${{ secrets.sonarToken }}  # El token que configuraste en los GitHub Secrets
