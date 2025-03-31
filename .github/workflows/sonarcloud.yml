@@ -23,6 +23,10 @@ jobs:
       - name: Install dependencies
         run: npm install  # Instala las dependencias del proyecto
 
+
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
+
       - name: Run tests with coverage
         run: ng test --code-coverage --watch=false  # Ejecuta las pruebas con cobertura (opcional)
 
